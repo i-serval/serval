@@ -1,0 +1,57 @@
+.nowrap{ white-space: nowrap; }
+.red{ color: red; }
+.green{ color: green; }
+
+    /* tables global */
+
+td.number-col{ width: 5px; }
+td.col-3-chars{ width: 64px; }
+td.col-4-chars{ width: 75px; }
+td.col-10-chars{ width: 90px; }
+td.col-13-chars-t{ width: 121px; }
+td.col-13-chars{ width: 150px; } /* 7,2 px per char + 18 px */
+
+td.col-150px-chars{ width: 167px; } /*+17px*/
+
+
+th.action-3-items{ min-width: 68px; width: 68px; }
+
+.country-index table { width: 600px; }
+.country-view table{ width: 600px; }
+.country-form{ width: 300px; min-width: 300px;}
+
+.tour-form{ width: 1190px; min-width: 1190px; }
+.tour-form #tourform-price{ width: 100px; }
+.tour-form #tourform-country_id{ width: 150px; }
+.tour-form #tourform-is_promo_tour{ width: 80px; }
+.tour-form #tourform-is_hot{ width: 80px; }
+.tour-form #tourform-is_active{ width: 80px; }
+.tour-view table{ width: 600px; }
+.tour-form #tourform-description{ visibility:hidden; position: absolute;}
+
+div.grid-view table.article-table{ width: 1240px; max-width: 1240px; }
+.article-view table{ width: 1240px; max-width: 1240px; }
+.article-form { width: 1185px; min-width: 900px; }
+.article-form #article-title { visibility:hidden; position: absolute;}
+.article-form #article-description { visibility:hidden; position: absolute;}
+
+.carousel-form { width: 600px; }
+#carouselform-order { width: 45px; }
+.carousel-view table{ width: 1200px; max-width: 1200px; }
+
+
+.page-form{ width: 1185px; }
+.page-form #page-title { visibility:hidden; position: absolute; }
+.page-form #page-content { visibility:hidden; position: absolute; }
+div.page-view table.detail-view{ max-width:1200px; width:1200px;}
+div.page-view table.detail-view tr td { flex-wrap: nowrap;}
+
+.user-create form{ width: 400px;}
+.user-update form{ width: 400px;}
+.user-view table.detail-view{ width: 600px; max-width: 600px;}
+.user-index table { width: 1500px; }
+
+.meta-tags-form{
+    width: 900px;
+}
+
