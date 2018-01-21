@@ -1,5 +1,6 @@
 <?php
-namespace common\models;
+
+namespace common\models\serval\user;
 
 use Yii;
 use yii\base\NotSupportedException;
@@ -7,22 +8,8 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
-/**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- */
 
-class ServalUser extends ActiveRecord implements IdentityInterface
+class AServalUser extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
@@ -47,29 +34,29 @@ class ServalUser extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public static function findIdentity( $id )
+    public static function findIdentity($id)
     {
-        return static::findOne( [ 'id' => $id, 'status' => self::STATUS_ACTIVE ] );
+        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
-    public static function findIdentityByAccessToken( $token, $type = null )
+    public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
-    public static function findByUsername( $username )
+    public static function findByUsername($username)
     {
-        return static::findOne( ['username' => $username, 'status' => self::STATUS_ACTIVE ] );
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
-    public static function findByEmail( $email )
+    public static function findByEmail($email)
     {
-        return static::findOne( [ 'email' => $email, 'status' => self::STATUS_ACTIVE ] );
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
-    public static function findByPasswordResetToken( $token )
+    public static function findByPasswordResetToken($token)
     {
-        if ( !static::isPasswordResetTokenValid( $token ) ) {
+        if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
 
@@ -79,14 +66,14 @@ class ServalUser extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    public static function isPasswordResetTokenValid( $token )
+    public static function isPasswordResetTokenValid($token)
     {
-        if ( empty( $token ) ) {
+        if (empty($token)) {
             return false;
         }
 
-        $timestamp = (int) substr( $token, strrpos($token, '_') + 1 );
-        $expire = Yii::$app->params[ 'user.passwordResetTokenExpire' ];
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
@@ -110,9 +97,9 @@ class ServalUser extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
-    public function setPassword( $password )
+    public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash( $password );
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     public function generateAuthKey()

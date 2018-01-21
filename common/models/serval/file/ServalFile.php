@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\serval\files;
+namespace common\models\serval\file;
 
 use Yii;
 use yii\base\Model;
@@ -22,8 +22,7 @@ class ServalFile extends Model
 
     protected $uploads_folder = 'uploads';
     protected $to_tmp_folder = false;
-    protected $uploaded_file;           //object yii\web\UploadedFile
-    public $file;                       // input name for validation rules
+    public $file;                       // input name for validation rules, object yii\web\UploadedFile
 
     public function __construct(array $config = [])
     {
@@ -74,20 +73,45 @@ class ServalFile extends Model
 
         if ($this->isNewRecord()) {
 
+            $this->setScenario('create');
             return $this->insert();
 
         }
 
+        $this->setScenario('update');
         return $this->update();
+
+    }
+
+    public function loadByID($id)
+    {
+
+        $query_cmd = Yii::$app->db->createCommand("SELECT * FROM file WHERE id=:id ")->bindValue(':id', $id);
+        $result = $query_cmd->queryOne();
+
+        $this->id = $result['id'];
+        $this->file_name = $result['file_name'];
+        $this->file_orign_name = $result['file_orign_name'];
+        $this->file_ext = $result['file_ext'];
+        $this->file_type = $result['file_type'];
+        $this->size = $result['size'];
+        $this->upload_timestamp = $result['upload_timestamp'];
+        $this->upload_user = $result['upload_user'];
+
+        return $this;
 
     }
 
     protected function insert()
     {
 
-        $this->uploaded_file = UploadedFile::getInstance($this, 'file');
+        $this->file = UploadedFile::getInstance($this, 'file');
 
         if ($this->validate()) {
+
+            if ($this->file === null) {
+                return true;                        // skip file if it not requaired in validation rules
+            }
 
             $this->file_name = md5(uniqid(mt_rand(), true));
 
@@ -95,10 +119,10 @@ class ServalFile extends Model
                 $this->file_name .= '-' . time();
             }
 
-            $this->file_orign_name = $this->uploaded_file->baseName;
-            $this->file_ext = $this->uploaded_file->extension;
-            $this->file_type = $this->uploaded_file->type;
-            $this->size = $this->uploaded_file->size;
+            $this->file_orign_name = $this->file->name;
+            $this->file_ext = $this->file->extension;
+            $this->file_type = $this->file->type;
+            $this->size = $this->file->size;
             $this->upload_timestamp = time();
             $this->upload_user = Yii::$app->user->id;
 
@@ -106,9 +130,55 @@ class ServalFile extends Model
 
             if ($this->moveUploadedFile() !== true) {
 
-              $this->delete();
+                $this->delete();
+                return false;
 
             }
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+    protected function update()
+    {
+
+        $this->file = UploadedFile::getInstance($this, 'file');
+
+        if ( $this->file != null && $this->validate()) {
+
+            if ($this->file === null) {
+                return true;                        // skip file if it not requaired in validation rules
+            }
+
+            $this->delete();
+
+            $this->file_name = md5(uniqid(mt_rand(), true));
+
+            if ($this->to_tmp_folder === true) {
+                $this->file_name .= '-' . time();
+            }
+
+            $this->file_orign_name = $this->file->name;
+            $this->file_ext = $this->file->extension;
+            $this->file_type = $this->file->type;
+            $this->size = $this->file->size;
+            $this->upload_timestamp = time();
+            $this->upload_user = Yii::$app->user->id;
+
+            $this->executeUpdate();
+
+            if ($this->moveUploadedFile() !== true) {
+
+                $this->delete();
+                return false;
+
+            }
+
+            return true;
 
         }
 
@@ -154,20 +224,25 @@ class ServalFile extends Model
 
     }
 
-    protected function delete()
+    protected function executeUpdate()
+    {
+        $this->executeInsertion();
+    }
+
+    public function delete()
     {
 
-        if( $this->id != null ) {
-            Yii::$app->db->createCommand("DELETE FORM file WHERE id=:id")
+        if ($this->id != null) {
+            Yii::$app->db->createCommand("DELETE FROM file WHERE id=:id")
                 ->bindValue(':id', $this->id)
                 ->execute();
         }
 
-        $file_path = $this->getUploadPath( ) . '/' . $this->file_name . '.' . $this->file_ext;
+        $file_path = $this->getUploadPath() . '/' . $this->file_name . '.' . $this->file_ext;
 
-        if( file_exists( $file_path ) ) {
+        if ( file_exists($file_path) && is_file( $file_path)) {
 
-            unlink( $file_path );
+            unlink($file_path);
 
         }
 
@@ -178,13 +253,13 @@ class ServalFile extends Model
 
         try {
 
-            $this->uploaded_file->saveAs( $this->getUploadPath() . '/' . $this->file_name . '.' . $this->file_ext );
+            $this->file->saveAs($this->getUploadPath() . '/' . $this->file_name . '.' . $this->file_ext);
             return true;
 
-        } catch (  ErrorException $e ) {
+        } catch (ErrorException $e) {
 
             $this->errors[] = $e->getMessage();
-            Yii::error( $e->getMessage() );
+            Yii::error($e->getMessage());
 
         }
 
@@ -192,26 +267,14 @@ class ServalFile extends Model
 
     }
 
-    protected function getUploadPath( )
+    protected function getUploadPath()
     {
 
-        $path_parts = explode('.', number_format($this->id / 1000, 4, '.', ''));
+        $path = $this->getFilePath();
 
-        $path = '';
+        if (!file_exists($path)) {
 
-        if ( $this->to_tmp_folder === true ) {
-
-            $path = $this->uploads_folder . '/tmp';
-
-        } else {
-
-            $path = $this->uploads_folder . '/' . $path_parts['0'] . '/' . substr($path_parts['1'], 0, 1);
-
-        }
-
-        if( ! file_exists( $path ) ) {
-
-            mkdir( $path, 0777, $recursive = true );
+            mkdir($path, 0777, $recursive = true);
             //mkdir( $path, 0756, $recursive = true );
 
         }
@@ -220,4 +283,57 @@ class ServalFile extends Model
 
     }
 
+    protected function getFilePath()
+    {
+
+        if ($this->to_tmp_folder === true) {
+
+            return $this->uploads_folder . '/tmp';
+
+        } else {
+
+            $path_parts = explode('.', number_format($this->id / 1000, 4, '.', ''));
+            return $this->uploads_folder . '/' . $path_parts['0'] . '/' . substr($path_parts['1'], 0, 1);
+
+        }
+
+    }
+
+    public function getFileOrignName()
+    {
+        return $this->file_orign_name;
+    }
+
+    public function getFileName()
+    {
+        return $this->file_name;
+    }
+
+    public function getFileExtension()
+    {
+        return $this->file_ext;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getFileUrl()
+    {
+
+        if( $this->id != null ) {
+
+            return '/' . $this->getFilePath() . '/' . $this->getFileName() . '.' . $this->getFileExtension();
+
+        } else {
+
+            return null;
+        }
+
+    }
+
 }
+
+
+
