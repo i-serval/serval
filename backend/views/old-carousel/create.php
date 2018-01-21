@@ -13,7 +13,7 @@ $this->title = 'Create Carousel Item';
 <div class="carousel-create">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
 
     <?= $this->render('carousel_form', [

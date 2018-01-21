@@ -26,62 +26,62 @@ class UserDropDown extends Widget
     public function run()
     {
 
-        if ( $this->route === null && Yii::$app->controller !== null ) {
+        if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
 
-        if ( $this->params === null ) {
+        if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
 
-        if ( !empty( $this->items ) ) {
+        if (!empty($this->items)) {
 
-            echo Html::tag( 'div', $this->renderDropDown(), [ 'id' => 'user-dropdown-menu' ] );
+            echo Html::tag('div', $this->renderDropDown(), ['id' => 'user-dropdown-menu']);
 
         }
 
     }
 
-    protected function renderDropDown( )
+    protected function renderDropDown()
     {
 
-        $label = ( isset( $this->options['label'] ) ) ? $this->options['label'] : '';
-        $tag = ( isset( $this->options['tag'] ) ) ? $this->options['tag'] : 'div';
+        $label = (isset($this->options['label'])) ? $this->options['label'] : '';
+        $tag = (isset($this->options['tag'])) ? $this->options['tag'] : 'div';
 
-        unset( $this->options['label'] );
-        unset( $this->options['tag'] );
+        unset($this->options['label']);
+        unset($this->options['tag']);
 
-        return Html::tag( $tag, $label, $this->options ) . $this->renderItems();
+        return Html::tag($tag, $label, $this->options) . $this->renderItems();
     }
 
-    protected function renderItems( )
+    protected function renderItems()
     {
 
         $lines = [];
 
-        foreach ( $this->items as $item ) {
+        foreach ($this->items as $item) {
 
-            $options = ArrayHelper::removeValue( $item, 'options', [ 'class' => 'user-dropdown-menu-item'] );
+            $options = ArrayHelper::removeValue($item, 'options', ['class' => 'user-dropdown-menu-item']);
 
             $url = $item['url'];
 
             $a_tag_options = [];
-            $li_tag_options = ArrayHelper::getValue( $item, 'options', ['class' => 'user-dropdown-menu-item'] );
+            $li_tag_options = ArrayHelper::getValue($item, 'options', ['class' => 'user-dropdown-menu-item']);
 
-            if( $url != '#' ) {
-                $url = Html::encode( Url::to( $url ) );
+            if ($url != '#') {
+                $url = Html::encode(Url::to($url));
             }
 
             $a_tag_options['href'] = $url;
             $a_tag_options['class'] = 'user-dropdown-menu-link';
 
-            $lines[] = Html::tag( 'li',
-                            Html::tag('a', $item[ 'label' ], $a_tag_options ),
-                            $li_tag_options
-                       );
+            $lines[] = Html::tag('li',
+                Html::tag('a', $item['label'], $a_tag_options),
+                $li_tag_options
+            );
         }
 
-        return Html::tag('ul', implode( "\n", $lines ) );
+        return Html::tag('ul', implode("\n", $lines));
 
     }
 

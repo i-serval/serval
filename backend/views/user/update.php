@@ -13,9 +13,9 @@ $this->title = 'Update User';
 <div class="user-update">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
-    
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

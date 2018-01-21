@@ -24,7 +24,7 @@ class ServalUserSearch extends AServalUser
         return Model::scenarios();
     }
 
-    public function search( $params )
+    public function search($params)
     {
         $query = AServalUser::find();
 

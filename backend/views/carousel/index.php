@@ -13,14 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="carousel-index">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
-    
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a('Create Carousel', ['create'], ['class' => 'btn btn-success']) . '   ' ?>
-        <?=Html::tag('a', Html::encode('Open in frontend'), [ 'href' => Yii::$app->params['frontendDomain'], 'target' => '_blank', 'class' => 'btn btn-info' ] ); ?>
+        <?= Html::a('Create Carousel', ['create'], ['class' => 'btn btn-success']) . '   ' ?>
+        <?= Html::tag('a', Html::encode('Open in frontend'), ['href' => Yii::$app->params['frontendDomain'], 'target' => '_blank', 'class' => 'btn btn-info']); ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,37 +28,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn',
-                'contentOptions' => [ 'class'=>'number-col' ],
+                'contentOptions' => ['class' => 'number-col'],
             ],
 
             [
                 'attribute' => 'id',
-                'contentOptions' => [ 'class'=>'col-4-chars' ],
+                'contentOptions' => ['class' => 'col-4-chars'],
             ],
             'title',
             'description',
             [
                 'attribute' => 'order',
-                'contentOptions' => [ 'class'=>'col-3-chars' ],
+                'contentOptions' => ['class' => 'col-3-chars'],
             ],
             [
                 'attribute' => 'image',
-                'value' => function( $carousel_item ) {
+                'value' => function ($carousel_item) {
 
-                    if ( ! is_object( $carousel_item->image ) ) {
+                    if (!is_object($carousel_item->image)) {
                         return '';
                     }
-                    return Html::img( $carousel_item->image->getImageUrl(), ['width' => '150px', 'height' => 'auto' ]);
+                    return Html::img($carousel_item->image->getImageUrl(), ['width' => '150px', 'height' => 'auto']);
                 },
                 'format' => 'html',
-                'contentOptions' => [ 'class'=>'col-150px-chars' ],
+                'contentOptions' => ['class' => 'col-150px-chars'],
 
             ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header'=>'Action',
-                'headerOptions' => [ 'class' => 'action-3-items' ],
+                'header' => 'Action',
+                'headerOptions' => ['class' => 'action-3-items'],
             ],
         ],
     ]); ?>

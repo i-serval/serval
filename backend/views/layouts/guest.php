@@ -6,7 +6,7 @@
 use backend\assets\ServalAsset;
 use yii\helpers\Html;
 
-ServalAsset::register( $this );
+ServalAsset::register($this);
 
 ?>
 <?php $this->beginPage() ?>
@@ -28,37 +28,38 @@ ServalAsset::register( $this );
 </head>
 <body>
 <?php $this->beginBody() ?>
-    <header class="fixed page-width flex-container" style="box-shadow: 0px 5px 13px 0px rgba(0,0,0,0.40);" >
-        <div class="logo-wrapper header-item">
-            <h1 style="font-size:33px; margin-top: 0px; font-family: 'UbuntuBold'">
-                <a class="text-decoration-off" href="/">
-                    <span style="font-weight: 800; color: #F48024; letter-spacing: 5px;">SERVAL</span>
-                </a>
-            </h1>
-        </div>
-        <div class="flex-item header-item"></div>
-        <div class="flex-item header-item"></div>
-        <div class="user-menu-flex header-item">
-        </div>
-    </header>
-    <main style="padding-right:80px; padding-left: 80px;">
-        <div class="content-wrapper">
-            <?= $content ?>
-        </div>
-        <div class="fake-footer"></div>
-    </main>
-    <footer>
-        <?php
-            $copyright_year = 2017;
+<header class="fixed page-width flex-container" style="box-shadow: 0px 5px 13px 0px rgba(0,0,0,0.40);">
+    <div class="logo-wrapper header-item">
+        <h1 style="font-size:33px; margin-top: 0px; font-family: 'UbuntuBold'">
+            <a class="text-decoration-off" href="/">
+                <span style="font-weight: 800; color: #F48024; letter-spacing: 5px;">SERVAL</span>
+            </a>
+        </h1>
+    </div>
+    <div class="flex-item header-item"></div>
+    <div class="flex-item header-item"></div>
+    <div class="user-menu-flex header-item">
+    </div>
+</header>
+<main style="padding-right:80px; padding-left: 80px;">
+    <div class="content-wrapper">
+        <?= $content ?>
+    </div>
+    <div class="fake-footer"></div>
+</main>
+<footer>
+    <?php
+    $copyright_year = 2017;
 
-            if( date( 'Y' ) > $copyright_year ) {
-                $copyright_year .= '-' . date( 'Y' );
-            }
-        ?>
-        <div class="foter-content">
-            Copyright &copy; <?=$copyright_year?> <a class="link-copyright" href="http://google.com" target="_blank" title="Google">Serval</a>. All rights reserved.
-        </div>
-    </footer>
+    if (date('Y') > $copyright_year) {
+        $copyright_year .= '-' . date('Y');
+    }
+    ?>
+    <div class="foter-content">
+        Copyright &copy; <?= $copyright_year ?> <a class="link-copyright" href="http://google.com" target="_blank"
+                                                   title="Google">Serval</a>. All rights reserved.
+    </div>
+</footer>
 <?php $this->endBody() ?>
 </body>
 </html>

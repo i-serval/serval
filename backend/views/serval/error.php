@@ -11,7 +11,7 @@ $this->title = $name;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="alert alert-danger">
-        <?= nl2br( Html::encode($message) ) ?>
+        <?= nl2br(Html::encode($message)) ?>
     </div>
 
     <h5>Serval error file</h5>

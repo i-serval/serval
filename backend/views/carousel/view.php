@@ -13,7 +13,7 @@ $this->title = 'View Carousel Item';
 <div class="carousel-view">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
 
     <p>
@@ -26,7 +26,7 @@ $this->title = 'View Carousel Item';
             ],
         ]) ?>
         &nbsp;
-        <?= Html::a('Go to List', ['/carousel'], [ 'class' => 'btn btn-info' ]) ?>
+        <?= Html::a('Go to List', ['/carousel'], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -38,13 +38,13 @@ $this->title = 'View Carousel Item';
             'order',
             [
                 'label' => 'Image',
-                'value' => function( $carousel ) {
+                'value' => function ($carousel) {
 
-                    if ( ! is_object( $carousel->image ) ) {
+                    if (!is_object($carousel->image)) {
                         return '';
                     }
 
-                    return Html::img( $carousel->image->getFileUrl(), ['width' => '400px', 'height' => 'auto' ]);
+                    return Html::img($carousel->image->getFileUrl(), ['width' => '400px', 'height' => 'auto']);
                 },
                 'format' => 'html',
             ]

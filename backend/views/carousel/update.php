@@ -13,9 +13,9 @@ $this->title = 'Update Carousel: ';
 <div class="carousel-update">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
-    
+
     <?= $this->render('carousel_form', [
         'carousel' => $carousel,
     ]) ?>

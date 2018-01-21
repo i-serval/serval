@@ -20,15 +20,15 @@ class CarouselController extends ServalController
     public function behaviors()
     {
 
-        return  ArrayHelper::merge( parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
 
-                    'verbs' => [
-                        'class' => VerbFilter::className(),
-                        'actions' => [
-                            //'delete' => ['POST'],
-                        ]
-                    ]
-                ]);
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    //'delete' => ['POST'],
+                ]
+            ]
+        ]);
 
     }
 
@@ -45,11 +45,11 @@ class CarouselController extends ServalController
         echo "_______index";
     }
 
-    public function actionView( $id )
+    public function actionView($id)
     {
-        $carousel = (new Carousel())->loadByID( $id );
+        $carousel = (new Carousel())->loadByID($id);
 
-        return $this->render( 'view', [
+        return $this->render('view', [
             'carousel' => $carousel,
         ]);
     }
@@ -59,13 +59,13 @@ class CarouselController extends ServalController
 
         $carousel = new Carousel();
 
-        if ( $carousel->load( Yii::$app->request->post() ) && $carousel->save() ) {
+        if ($carousel->load(Yii::$app->request->post()) && $carousel->save()) {
 
-            return $this->redirect( ['view', 'id' => $carousel->id ] );
+            return $this->redirect(['view', 'id' => $carousel->id]);
 
         } else {
 
-            return $this->render( 'create', [
+            return $this->render('create', [
                 'carousel' => $carousel,
             ]);
 
@@ -73,14 +73,14 @@ class CarouselController extends ServalController
 
     }
 
-    public function actionUpdate( $id )
+    public function actionUpdate($id)
     {
 
-        $carousel = (new Carousel())->loadByID( $id );
+        $carousel = (new Carousel())->loadByID($id);
 
-        if ( $carousel->load( Yii::$app->request->post() ) && $carousel->save() ) {
+        if ($carousel->load(Yii::$app->request->post()) && $carousel->save()) {
 
-            return $this->redirect( [ 'view', 'id' => $carousel->id ] );
+            return $this->redirect(['view', 'id' => $carousel->id]);
 
         } else {
 
@@ -91,12 +91,12 @@ class CarouselController extends ServalController
         }
     }
 
-    public function actionDelete( $id )
+    public function actionDelete($id)
     {
 
-        (new Carousel())->loadByID( $id )->delete();
+        (new Carousel())->loadByID($id)->delete();
 
-        return $this->redirect( ['index'] );
+        return $this->redirect(['index']);
 
     }
 

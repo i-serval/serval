@@ -8,7 +8,7 @@
 use backend\assets\LoginAsset;
 use yii\helpers\Html;
 
-LoginAsset::register( $this );
+LoginAsset::register($this);
 
 ?>
 <?php $this->beginPage() ?>
@@ -30,7 +30,7 @@ LoginAsset::register( $this );
 </head>
 <body>
 <?php $this->beginBody() ?>
-    <?= $content ?>
+<?= $content ?>
 <?php $this->endBody() ?>
 </body>
 </html>

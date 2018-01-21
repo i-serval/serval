@@ -9,9 +9,9 @@ $this->title = 'Add User';
 <div class="user-create">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
-    
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

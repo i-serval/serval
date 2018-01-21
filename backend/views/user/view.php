@@ -13,7 +13,7 @@ $this->title = 'Edit User';
 <div class="user-view">
 
     <div class="page-title-wrapper">
-        <h1><?=$this->title?></h1>
+        <h1><?= $this->title ?></h1>
     </div>
 
     <p>
@@ -24,9 +24,9 @@ $this->title = 'Edit User';
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) */?>
+        ]) */ ?>
         &nbsp;
-        <?= Html::a('Go to List', ['/user'], [ 'class' => 'btn btn-info' ]) ?>
+        <?= Html::a('Go to List', ['/user'], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -37,8 +37,8 @@ $this->title = 'Edit User';
             'email:email',
             [
                 'attribute' => 'status',
-                'value' => function( $user_info ) {
-                    if( $user_info->status == 10 ){
+                'value' => function ($user_info) {
+                    if ($user_info->status == 10) {
                         return 'active';
                     }
                     return '';
@@ -46,13 +46,13 @@ $this->title = 'Edit User';
             ],
             [
                 'attribute' => 'created_at',
-                'value' => function( $user_info ) {
-                        return date('d-m-Y', $user_info->created_at);
-                    },
+                'value' => function ($user_info) {
+                    return date('d-m-Y', $user_info->created_at);
+                },
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function( $user_info ) {
+                'value' => function ($user_info) {
                     return date('d-m-Y', $user_info->updated_at);
                 },
             ],

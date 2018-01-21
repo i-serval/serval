@@ -1,14 +1,14 @@
 <?php
 
 //    use scotthuangzl\googlechart\GoogleChart;
-    use yii\helpers\Html;
+use yii\helpers\Html;
 
-    $this->title = 'Dashboard';
+$this->title = 'Dashboard';
 
 ?>
 
 <div class="page-title-wrapper">
-    <h1><?=$this->title?></h1>
+    <h1><?= $this->title ?></h1>
 </div>
 
 <?php /*
@@ -111,4 +111,4 @@
     <?=Html::a('UPDATE DATA', ['/?update=true'], [ 'class' => 'btn btn-success btn-default' ])?>
 </div>
  */
- ?>
+?>
