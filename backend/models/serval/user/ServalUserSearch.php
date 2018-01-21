@@ -1,14 +1,14 @@
 <?php
 
-namespace common\models;
+namespace common\models\serval\user;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ServalUser;
+use common\models\serval\user\AServalUser;
 
 
-class ServalUserSearch extends ServalUser
+class ServalUserSearch extends AServalUser
 {
 
     public function rules()
@@ -26,7 +26,7 @@ class ServalUserSearch extends ServalUser
 
     public function search( $params )
     {
-        $query = ServalUser::find();
+        $query = AServalUser::find();
 
         // add conditions that should always apply here
 
