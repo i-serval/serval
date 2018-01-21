@@ -1,14 +1,15 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
-use common\models\ServalUser;
-use common\models\ServalUserSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\controllers\ServalController;
 use yii\helpers\ArrayHelper;
-use backend\models\UserCreateForm;
+use backend\models\serval\user\AServalUser;
+use backend\models\serval\user\ServalUserSearch;
+use backend\models\serval\user\UserCreateForm;
+use backend\controllers\ServalController;
 
 
 class UserController extends ServalController
@@ -17,7 +18,7 @@ class UserController extends ServalController
     public function behaviors()
     {
 
-        return  ArrayHelper::merge( parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
 
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -54,11 +55,11 @@ class UserController extends ServalController
 
         $user_form->setScenario('create');
 
-        if ( $user_form->load( Yii::$app->request->post() ) ) {
+        if ($user_form->load(Yii::$app->request->post())) {
 
-            if ( $user = $user_form->save() ) {
+            if ($user = $user_form->save()) {
 
-                return $this->redirect( [ 'view', 'id' => $user->id ] );
+                return $this->redirect(['view', 'id' => $user->id]);
 
             }
         }
@@ -69,20 +70,20 @@ class UserController extends ServalController
 
     }
 
-    public function actionUpdate( $id )
+    public function actionUpdate($id)
     {
 
-        $user = $this->findModel( $id );
+        $user = $this->findModel($id);
 
         $user_form = new UserCreateForm();
-        $user_form->setAttributes( $user->getAttributes() );
+        $user_form->setAttributes($user->getAttributes());
         $user_form->id = $user->id;
 
-        if ( $user_form->load( Yii::$app->request->post() )  ) {
+        if ($user_form->load(Yii::$app->request->post())) {
 
-            if( $updated_user = $user_form->update( $user ) ) {
+            if ($updated_user = $user_form->update($user)) {
 
-                return $this->redirect( ['view', 'id' => $updated_user->id] );
+                return $this->redirect(['view', 'id' => $updated_user->id]);
 
             }
 
@@ -104,7 +105,7 @@ class UserController extends ServalController
 
     protected function findModel($id)
     {
-        if (($model = ServalUser::findOne($id)) !== null) {
+        if (($model = AServalUser::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

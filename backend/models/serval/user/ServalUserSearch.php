@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\serval\user;
+namespace backend\models\serval\user;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\serval\user\AServalUser;
+use backend\models\serval\user\AServalUser;
 
 
 class ServalUserSearch extends AServalUser

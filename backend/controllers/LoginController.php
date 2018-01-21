@@ -1,9 +1,10 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use backend\models\UserLoginForm;
+use backend\models\serval\user\UserLoginForm;
 use yii\helpers\ArrayHelper;
 use backend\controllers\ServalController;
 
@@ -15,7 +16,7 @@ class LoginController extends ServalController
 
     public function behaviors()
     {
-        return  ArrayHelper::merge( parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
 
             'access' => [
                 'class' => AccessControl::className(),
@@ -34,19 +35,19 @@ class LoginController extends ServalController
     public function actionIndex()
     {
 
-        if ( !Yii::$app->user->isGuest ) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new UserLoginForm();
 
-        if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             return $this->goBack();
 
         } else {
 
-            return $this->render( 'login', [ 'model' => $model ] );
+            return $this->render('login', ['model' => $model]);
 
         }
 

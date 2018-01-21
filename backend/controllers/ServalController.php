@@ -35,9 +35,9 @@ class ServalController extends Controller
 
         $exception = Yii::$app->errorHandler->exception;
 
-        if ( $exception !== null ) {
+        if ($exception !== null) {
 
-            if( yii::$app->user->isGuest ) {
+            if (yii::$app->user->isGuest) {
 
                 $this->layout = 'guest';
 
@@ -52,7 +52,7 @@ class ServalController extends Controller
 
         } else {
 
-            throw new NotFoundHttpException( Yii::t('yii', 'Page not found.') );
+            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
 
         }

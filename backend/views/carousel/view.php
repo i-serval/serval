@@ -17,8 +17,8 @@ $this->title = 'View Carousel Item';
     </div>
 
     <p>
-        <?= Html::a('Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Edit', ['update', 'id' => $carousel->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $carousel->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -30,7 +30,7 @@ $this->title = 'View Carousel Item';
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
+        'model' => $carousel,
         'attributes' => [
             'id',
             'title',
@@ -38,13 +38,13 @@ $this->title = 'View Carousel Item';
             'order',
             [
                 'label' => 'Image',
-                'value' => function( $carousel_item ) {
+                'value' => function( $carousel ) {
 
-                    if ( ! is_object( $carousel_item->image ) ) {
+                    if ( ! is_object( $carousel->image ) ) {
                         return '';
                     }
 
-                    return Html::img( $carousel_item->image->getImageUrl(), ['width' => '400px', 'height' => 'auto' ]);
+                    return Html::img( $carousel->image->getFileUrl(), ['width' => '400px', 'height' => 'auto' ]);
                 },
                 'format' => 'html',
             ]

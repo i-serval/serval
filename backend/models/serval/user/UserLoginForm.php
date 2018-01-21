@@ -1,10 +1,10 @@
 <?php
-namespace backend\models;
+
+namespace backend\models\serval\user;
 
 use Yii;
 use yii\base\Model;
-use common\models\ServalUser;
-
+use common\models\serval\user\AServalUser;
 
 
 class UserLoginForm extends Model
@@ -27,21 +27,21 @@ class UserLoginForm extends Model
 
     public function validatePassword($attribute, $params)
     {
-        if ( !$this->hasErrors() ) {
+        if (!$this->hasErrors()) {
 
             $user = $this->getUser();
 
-            if ( !$user || !$user->validatePassword( $this->password ) ) {
-                $this->addError( $attribute, 'Incorrect username or password.' );
+            if (!$user || !$user->validatePassword($this->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
             }
         }
     }
 
     public function login()
     {
-        if ( $this->validate() ) {
+        if ($this->validate()) {
 
-            return Yii::$app->user->login( $this->getUser(), $this->remember_me ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->remember_me ? 3600 * 24 * 30 : 0);
 
         } else {
 
@@ -52,9 +52,9 @@ class UserLoginForm extends Model
 
     protected function getUser()
     {
-        if ( $this->_user === null ) {
-            
-            $this->_user = ServalUser::findByEmail( $this->email );
+        if ($this->_user === null) {
+
+            $this->_user = AServalUser::findByEmail($this->email);
 
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
@@ -13,7 +14,7 @@ class LogoutController extends ServalController
     public function behaviors()
     {
 
-        return  ArrayHelper::merge( parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
 
             'verbs' => [
                 'class' => VerbFilter::className(),

@@ -17,7 +17,7 @@ $this->title = 'Update Carousel: ';
     </div>
     
     <?= $this->render('carousel_form', [
-        'carousel_form' => $carousel_form,
+        'carousel' => $carousel,
     ]) ?>
 
 </div>

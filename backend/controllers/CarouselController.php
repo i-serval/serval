@@ -4,12 +4,14 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\CarouselForm;
-use common\models\Carousel;
+
 use common\models\CarouselSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use backend\controllers\ServalController;
+
+use common\models\serval\carousel\Carousel;
 
 
 class CarouselController extends ServalController
@@ -23,7 +25,7 @@ class CarouselController extends ServalController
                     'verbs' => [
                         'class' => VerbFilter::className(),
                         'actions' => [
-                            'delete' => ['POST'],
+                            //'delete' => ['POST'],
                         ]
                     ]
                 ]);
@@ -32,104 +34,70 @@ class CarouselController extends ServalController
 
     public function actionIndex()
     {
-        $searchModel = new CarouselSearch();
+        /*$searchModel = new CarouselSearch();
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
+
+        echo "_______index";
     }
 
     public function actionView( $id )
     {
+        $carousel = (new Carousel())->loadByID( $id );
+
         return $this->render( 'view', [
-            'model' => $this->findModel( $id ),
+            'carousel' => $carousel,
         ]);
     }
-
-
-//------------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------------
 
     public function actionCreate()
     {
 
-        $carousel_form = new CarouselForm();
-        $carousel_form->setScenario('create');
+        $carousel = new Carousel();
 
-        if ( $carousel_form->load( Yii::$app->request->post() ) && $carousel_form->save() ) {
+        if ( $carousel->load( Yii::$app->request->post() ) && $carousel->save() ) {
 
-            return $this->redirect( ['view', 'id' => $carousel_form->carousel_id ] );
+            return $this->redirect( ['view', 'id' => $carousel->id ] );
 
         } else {
 
             return $this->render( 'create', [
-                'carousel_form' => $carousel_form,
+                'carousel' => $carousel,
             ]);
-        }
-    }
 
-//------------------------------------------------------------------------------------------------------------------------------
+        }
+
+    }
 
     public function actionUpdate( $id )
     {
-        $carousel = $this->findModel( $id );
 
-        $carousel_form = new CarouselForm( );
-        $carousel_form->setAttributes( $carousel->getAttributes() );
-        $carousel_form->setScenario('update');
+        $carousel = (new Carousel())->loadByID( $id );
 
-        $carousel_form->id = $carousel->id;
-        $carousel_form->image_file = $carousel->image;
-        $carousel_form->image_id = $carousel->image_id;
+        if ( $carousel->load( Yii::$app->request->post() ) && $carousel->save() ) {
 
-        if ( $carousel_form->load( Yii::$app->request->post() ) && $carousel_form->update() ) {
-
-            return $this->redirect( [ 'view', 'id' => $carousel_form->carousel_id ] );
+            return $this->redirect( [ 'view', 'id' => $carousel->id ] );
 
         } else {
 
-            $carousel_form->id = $carousel->id;
-            $carousel_form->image_file = $carousel->image;
-
             return $this->render('update', [
-                'carousel_form' => $carousel_form,
+                'carousel' => $carousel,
             ]);
 
         }
     }
-
-
-    //------------------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------------------
-
 
     public function actionDelete( $id )
     {
 
-        $carousel_item = Carousel::find()
-            ->with('image')
-            ->Where( ['id' => $id ] )
-            ->one();
-
-        $carousel_item->delete();
+        (new Carousel())->loadByID( $id )->delete();
 
         return $this->redirect( ['index'] );
 
-    }
-
-    protected function findModel($id)
-    {
-        if (($model = Carousel::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 }

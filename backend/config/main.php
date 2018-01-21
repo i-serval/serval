@@ -24,7 +24,7 @@ $params = array_merge(
          ],
 
          'user' => [
-             'identityClass' => 'common\models\ServalUser',
+             'identityClass' => 'common\models\serval\user\AServalUser',
              'enableAutoLogin' => true,
              'identityCookie' => [
                  'name' => '_identity-backend',

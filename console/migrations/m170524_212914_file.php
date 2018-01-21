@@ -22,7 +22,8 @@ class m170524_212914_file extends Migration
             'file_ext' => $this->string(10),
             'file_type' => $this->string(25),
             'size' => $this->Integer(),
-            'upload_date' => $this->date(),
+            'category' => $this->string(255),
+            'upload_timestamp' => $this->integer(),
             'upload_user' => $this->integer(),
         ], $tableOptions );
 
@@ -30,7 +31,7 @@ class m170524_212914_file extends Migration
 
     public function down()
     {
-        $this->dropTable('{{%carousel}}');
+        $this->dropTable('{{%file}}');
     }
 
 }
