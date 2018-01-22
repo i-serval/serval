@@ -6,9 +6,9 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use backend\models\serval\carousel\CarouselForm;
-use backend\models\serval\carousel\CarouselManager;
-use backend\models\serval\carousel\CarouselSearch;
+use backend\models\serval\carousel\CarouselItemForm;
+use backend\models\serval\carousel\CarouselItemManager;
+use backend\models\serval\carousel\CarouselItemSearch;
 
 
 class CarouselItemController extends \backend\controllers\ServalController
@@ -32,7 +32,7 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionIndex()
     {
 
-        $search_model = new CarouselSearch();
+        $search_model = new CarouselItemSearch();
         $data_provider = $search_model->search( Yii::$app->request->queryParams );
 
         return $this->render('index', compact('search_model','data_provider') );
@@ -42,7 +42,7 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionView($id)
     {
 
-        if (($carousel = (new CarouselManager())->getModelByID($id)) === null) {
+        if (($carousel = (new CarouselItemManager())->getModelByID($id)) === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -53,11 +53,11 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionCreate()
     {
 
-        $carousel_form = new CarouselForm();
+        $carousel_form = new CarouselItemForm();
 
         if ($carousel_form->load(Yii::$app->request->post()) && $carousel_form->save()) {
 
-            return $this->redirect(['carousel/view', 'id' => $carousel_form->carousel->id]);
+            return $this->redirect(['view', 'id' => $carousel_form->carousel->id]);
 
         }
 
@@ -91,7 +91,7 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionDelete($id)
     {
 
-        $model = (new CarouselManager())->getModelByID($id);
+        $model = (new CarouselItemManager())->getModelByID($id);
 
         if( $model !== null){
             $model->delete();

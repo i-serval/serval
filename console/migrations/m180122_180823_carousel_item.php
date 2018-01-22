@@ -23,7 +23,7 @@ class m180122_180823_carousel_item extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string(),
             'description' => $this->string(),
-            'order' => $this->smallInteger(),
+            'order' => $this->Integer(),
             'image_id' => $this->integer(),
         ], $tableOptions );
 

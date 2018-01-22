@@ -5,9 +5,9 @@ namespace backend\models\serval\carousel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\serval\carousel\CarouselRecord;
+use common\models\serval\carousel\CarouselItemRecord;
 
-class CarouselSearch extends CarouselRecord
+class CarouselItemSearch extends CarouselItemRecord
 {
 
     public function rules()
@@ -25,7 +25,7 @@ class CarouselSearch extends CarouselRecord
 
     public function search($params)
     {
-        $query = CarouselRecord::find();
+        $query = CarouselItemRecord::find();
 
         // add conditions that should always apply here
 

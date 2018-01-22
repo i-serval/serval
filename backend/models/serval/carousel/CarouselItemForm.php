@@ -4,10 +4,10 @@ namespace backend\models\serval\carousel;
 
 use yii\base\Model;
 use common\models\serval\carousel\CarouselImageRecord;
-use common\models\serval\carousel\CarouselRecord;
+use common\models\serval\carousel\CarouselItemRecord;
 
 
-class CarouselForm extends Model
+class CarouselItemForm extends Model
 {
 
     public $carousel;
@@ -18,7 +18,7 @@ class CarouselForm extends Model
 
         parent::__construct($config);
 
-        $this->carousel = new CarouselRecord();
+        $this->carousel = new CarouselItemRecord();
         $this->carousel_image = new CarouselImageRecord();
 
     }

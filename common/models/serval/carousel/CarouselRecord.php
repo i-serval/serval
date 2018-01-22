@@ -3,32 +3,23 @@
 namespace common\models\serval\carousel;
 
 use Yii;
-use yii\db\ActiveRecord;
-use common\models\serval\carousel\CarouselImageRecord;
 
-
-class CarouselRecord extends ActiveRecord
+class CarouselRecord extends \yii\db\ActiveRecord
 {
 
     public static function tableName()
     {
-        return '{{%carousel}}';
+        return 'carousel';
     }
 
     public function rules()
     {
         return [
-            [['order', 'image'], 'integer'],
+            [['created', 'updated', 'activate_at', 'is_active'], 'integer'],
             [['title', 'description'], 'string', 'max' => 255],
-            [['title', 'description', 'order'], 'required'],
-            [['order'], 'number'],
         ];
     }
 
-    public function getImage()
-    {
-        return $this->hasOne(CarouselImageRecord::className(), ['id' => 'image_id']);
-    }
 
     public function attributeLabels()
     {
@@ -36,30 +27,10 @@ class CarouselRecord extends ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'order' => 'Order',
-            'image' => 'Image',
+            'created' => 'Created',
+            'updated' => 'Updated',
+            'activate_at' => 'Activate At',
+            'is_active' => 'Is Active',
         ];
     }
-
-    public function getImageUrl(){
-
-        if( $this->image != null ) {
-            return $this->image->getFileUrl();
-        } else{
-            return '/img/no_image.png';
-        }
-
-    }
-
-    public function delete()
-    {
-
-        if( $this->image !== null ){
-            $this->image->delete();
-        }
-
-        return parent::delete();
-
-    }
-
 }

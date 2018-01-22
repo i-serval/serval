@@ -26,7 +26,7 @@ $this->title = 'View Carousel Item';
             ],
         ]) ?>
         &nbsp;
-        <?= Html::a('Go to List', ['/carousel'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Go to List', '/carousel-item', ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([

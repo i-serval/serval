@@ -2,10 +2,10 @@
 
 namespace backend\models\serval\carousel;
 
-use common\models\serval\carousel\CarouselRecord;
+use common\models\serval\carousel\CarouselItemRecord;
 
 
-class CarouselManager
+class CarouselItemManager
 {
     public function __construct()
     {
@@ -15,7 +15,7 @@ class CarouselManager
     public function getModelByID( $id )
     {
 
-        return CarouselRecord::find()->Where( ['id' => $id ] )->one();
+        return CarouselItemRecord::find()->Where( ['id' => $id ] )->one();
 
     }
 
