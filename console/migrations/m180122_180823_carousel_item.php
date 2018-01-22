@@ -2,9 +2,12 @@
 
 use yii\db\Migration;
 
-
-class m170524_201341_carousel extends Migration
+/**
+ * Class m180122_180823_carousel_item
+ */
+class m180122_180823_carousel_item extends Migration
 {
+
     public function up()
     {
 
@@ -16,7 +19,7 @@ class m170524_201341_carousel extends Migration
 
         }
 
-        $this->createTable('{{%carousel}}', [
+        $this->createTable('{{%carousel_item}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string(),
             'description' => $this->string(),
@@ -28,6 +31,9 @@ class m170524_201341_carousel extends Migration
 
     public function down()
     {
-        $this->dropTable('{{%carousel}}');
+
+        return $this->dropTable('{{%carousel_item}}');
+
     }
+
 }

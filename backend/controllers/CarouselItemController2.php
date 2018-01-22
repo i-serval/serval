@@ -11,7 +11,7 @@ use backend\models\serval\carousel\CarouselManager;
 use backend\models\serval\carousel\CarouselSearch;
 
 
-class CarouselController extends \backend\controllers\ServalController
+class CarouselItemController extends \backend\controllers\ServalController
 {
 
     public function behaviors()
