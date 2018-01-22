@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::tag('a', Html::encode('Open in frontend'), ['href' => Yii::$app->params['frontendDomain'], 'target' => '_blank', 'class' => 'btn btn-info']); ?>
     </p>
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'dataProvider' => $data_provider,
+        'filterModel' => $search_model,
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn',
@@ -45,10 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'image',
                 'value' => function ($carousel_item) {
 
-                    if (!is_object($carousel_item->image)) {
-                        return '';
-                    }
-                    return Html::img($carousel_item->image->getImageUrl(), ['width' => '150px', 'height' => 'auto']);
+                    return Html::img($carousel_item->getImageUrl(), ['width' => '150px', 'height' => 'auto']);
+
                 },
                 'format' => 'html',
                 'contentOptions' => ['class' => 'col-150px-chars'],

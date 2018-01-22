@@ -3,18 +3,15 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\CarouselForm;
-
-use common\models\CarouselSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use backend\controllers\ServalController;
+use backend\models\serval\carousel\CarouselForm;
+use backend\models\serval\carousel\CarouselManager;
+use backend\models\serval\carousel\CarouselSearch;
 
-use common\models\serval\carousel\Carousel;
 
-
-class CarouselController extends ServalController
+class CarouselController extends \backend\controllers\ServalController
 {
 
     public function behaviors()
@@ -34,49 +31,49 @@ class CarouselController extends ServalController
 
     public function actionIndex()
     {
-        /*$searchModel = new CarouselSearch();
-        $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);*/
+        $search_model = new CarouselSearch();
+        $data_provider = $search_model->search( Yii::$app->request->queryParams );
 
-        echo "_______index";
+        return $this->render('index', compact('search_model','data_provider') );
+
     }
 
     public function actionView($id)
     {
-        $carousel = (new Carousel())->loadByID($id);
 
-        return $this->render('view', [
-            'carousel' => $carousel,
-        ]);
+        if (($carousel = (new CarouselManager())->getModelByID($id)) === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->render('view', compact('carousel'));
+
     }
 
     public function actionCreate()
     {
 
-        $carousel = new Carousel();
+        $carousel_form = new CarouselForm();
 
-        if ($carousel->load(Yii::$app->request->post()) && $carousel->save()) {
+        if ($carousel_form->load(Yii::$app->request->post()) && $carousel_form->save()) {
 
-            return $this->redirect(['view', 'id' => $carousel->id]);
-
-        } else {
-
-            return $this->render('create', [
-                'carousel' => $carousel,
-            ]);
+            return $this->redirect(['carousel/view', 'id' => $carousel_form->carousel->id]);
 
         }
+
+        return $this->render('create', compact('carousel_form'));
 
     }
 
     public function actionUpdate($id)
     {
 
-        $carousel = (new Carousel())->loadByID($id);
+        var_dump("update");
+        die();
+        $carousel = CarouselRecord::findOne($id);
+        var_dump($carousel);
+
+        die();
 
         if ($carousel->load(Yii::$app->request->post()) && $carousel->save()) {
 
@@ -94,7 +91,11 @@ class CarouselController extends ServalController
     public function actionDelete($id)
     {
 
-        (new Carousel())->loadByID($id)->delete();
+        $model = (new CarouselManager())->getModelByID($id);
+
+        if( $model !== null){
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
 

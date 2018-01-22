@@ -4,7 +4,7 @@ namespace backend\models\serval\user;
 
 use Yii;
 use yii\base\Model;
-use common\models\serval\user\AServalUser;
+use common\models\serval\user\UserIdentityRecord;
 
 
 class UserLoginForm extends Model
@@ -54,7 +54,7 @@ class UserLoginForm extends Model
     {
         if ($this->_user === null) {
 
-            $this->_user = AServalUser::findByEmail($this->email);
+            $this->_user = UserIdentityRecord::findByEmail($this->email);
 
         }
 

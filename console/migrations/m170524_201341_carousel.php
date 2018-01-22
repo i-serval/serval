@@ -21,7 +21,7 @@ class m170524_201341_carousel extends Migration
             'title' => $this->string(),
             'description' => $this->string(),
             'order' => $this->smallInteger(),
-            'image' => $this->integer(),
+            'image_id' => $this->integer(),
         ], $tableOptions );
 
     }

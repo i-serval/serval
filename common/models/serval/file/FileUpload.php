@@ -3,11 +3,10 @@
 namespace common\models\serval\file;
 
 use Yii;
-use yii\base\Model;
 use yii\web\UploadedFile;
 
 
-class ServalFile extends Model
+class FileUpload extends yii\base\Model
 {
 
     protected $id;

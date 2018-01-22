@@ -24,7 +24,7 @@ return [
         ],
 
         'user' => [
-            'identityClass' => 'common\models\serval\user\AServalUser',
+            'identityClass' => 'common\models\serval\user\UserIdentityRecord',
             'enableAutoLogin' => true,
             'identityCookie' => [
                 'name' => '_identity-backend',

@@ -3,7 +3,7 @@
 namespace backend\models\serval\user;
 
 use yii\base\Model;
-use backend\models\serval\user\AServalUser;
+use backend\models\serval\user\UserRecord;
 
 
 class UserCreateForm extends Model
@@ -19,14 +19,14 @@ class UserCreateForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\backend\models\serval\user\AServalUser', 'message' => 'This username has already been taken.', 'on' => 'create'],
+            ['username', 'unique', 'targetClass' => '\backend\models\serval\user\UserRecord', 'message' => 'This username has already been taken.', 'on' => 'create'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\backend\models\serval\user\AServalUser', 'message' => 'This email address has already been taken.', 'on' => 'create'],
+            ['email', 'unique', 'targetClass' => '\backend\models\serval\user\UserRecord', 'message' => 'This email address has already been taken.', 'on' => 'create'],
 
             [
                 ['password'], 'required', 'on' => 'create'
@@ -48,7 +48,7 @@ class UserCreateForm extends Model
             return null;
         }
 
-        $user = new AServalUser();
+        $user = new UserRecord();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
@@ -68,7 +68,7 @@ class UserCreateForm extends Model
 
         if ($user->username != $this->username) {
 
-            if (AServalUser::find()->where('id != :id AND username = :username', [':id' => $user->id, ':username' => $this->username])->one() !== null) {
+            if (UserRecord::find()->where('id != :id AND username = :username', [':id' => $user->id, ':username' => $this->username])->one() !== null) {
                 $this->addError('username', 'This username has already been taken.');
                 return null;
             }
@@ -76,7 +76,7 @@ class UserCreateForm extends Model
 
         if ($user->email != $this->email) {
 
-            if (AServalUser::find()->where('id != :id AND email = :email', [':id' => $user->id, ':status' => $this->email])->one() !== null) {
+            if (UserRecord::find()->where('id != :id AND email = :email', [':id' => $user->id, ':status' => $this->email])->one() !== null) {
                 $this->addError('username', 'This email address has already been taken.');
                 return null;
             }

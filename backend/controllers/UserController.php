@@ -6,13 +6,12 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use backend\models\serval\user\AServalUser;
-use backend\models\serval\user\ServalUserSearch;
+use backend\models\serval\user\UserRecord;
+use backend\models\serval\user\UserSearch;
 use backend\models\serval\user\UserCreateForm;
-use backend\controllers\ServalController;
 
 
-class UserController extends ServalController
+class UserController extends \backend\controllers\ServalController
 {
 
     public function behaviors()
@@ -32,7 +31,7 @@ class UserController extends ServalController
 
     public function actionIndex()
     {
-        $searchModel = new ServalUserSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -105,7 +104,7 @@ class UserController extends ServalController
 
     protected function findModel($id)
     {
-        if (($model = AServalUser::findOne($id)) !== null) {
+        if (($model = UserRecord::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
