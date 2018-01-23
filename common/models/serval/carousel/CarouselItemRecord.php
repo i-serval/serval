@@ -41,6 +41,11 @@ class CarouselItemRecord extends ActiveRecord
         ];
     }
 
+    /*public function getCarousels() {
+        return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
+            ->viaTable('carousel_carousel_item', ['carousel_id' => 'id']);
+    }*/
+
     public function getImageUrl(){
 
         if( $this->image != null ) {

@@ -3,12 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 
-class ServalController extends Controller
+class ServalController extends \yii\web\Controller
 {
 
     public function behaviors()
@@ -28,6 +27,16 @@ class ServalController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function init()
+    {
+        parent::init();
+        #add your logic: read the cookie and then set the language
+
+        //Yii::$app->language = 'uk-UA';
+
+
     }
 
     public function actionError()

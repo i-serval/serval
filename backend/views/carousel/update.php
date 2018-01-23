@@ -1,21 +1,18 @@
 <?php
 
 use yii\helpers\Html;
+use Yii;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\serval\carousel\CarouselRecord */
-
-$this->title = 'Update Carousel Record: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Carousel Records', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('carousel','Edit Carousel Record');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel','Carousel Record'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('carousel', 'Edit');
 ?>
 <div class="carousel-record-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-title-wrapper">
+        <h1><?= $this->title ?></h1>
+    </div>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= $this->render('_form', compact('carousel_form')) ?>
 
 </div>

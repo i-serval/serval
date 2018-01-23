@@ -1,10 +1,9 @@
 <?php
 
-//    use scotthuangzl\googlechart\GoogleChart;
 use yii\helpers\Html;
 
-$this->title = 'Dashboard';
-
+$this->title = Yii::t('serval', 'Dashboard');
+$this->params['breadcrumbs'][] = '';
 ?>
 
 <div class="page-title-wrapper">

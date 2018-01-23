@@ -2,7 +2,7 @@
 .red{ color: red; }
 .green{ color: green; }
 
-    /* tables global */
+/* grid view global */
 
 td.number-col{ width: 5px; }
 td.col-3-chars{ width: 64px; }
@@ -11,12 +11,22 @@ td.col-10-chars{ width: 90px; }
 td.col-13-chars-t{ width: 121px; }
 td.col-13-chars{ width: 150px; } /* 7,2 px per char + 18 px */
 
+
 td.col-150px-chars{ width: 167px; } /*+17px*/
+td.col-80px{ width: 80px }
+td.col-550px{ width: 550px }
 
 
-th.action-3-items{ min-width: 68px; width: 68px; }
+th.action-3-items{ width: 75px; }
 
-.country-index table { width: 600px; }
+/*  forms eements */
+
+.yes-no-drop-down{
+    width: 95px;
+}
+
+
+/*.country-index table { width: 600px; }
 .country-view table{ width: 600px; }
 .country-form{ width: 300px; min-width: 300px;}
 
@@ -53,5 +63,5 @@ div.page-view table.detail-view tr td { flex-wrap: nowrap;}
 
 .meta-tags-form{
     width: 900px;
-}
+}*/
 

@@ -3,11 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\CarouselSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Carousels';
+$this->title = Yii::t('carousel','Carousels');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carousel-index">

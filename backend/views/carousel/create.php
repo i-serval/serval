@@ -6,16 +6,16 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\serval\carousel\CarouselRecord */
 
-$this->title = 'Create Carousel Record';
-$this->params['breadcrumbs'][] = ['label' => 'Carousel Records', 'url' => ['index']];
+$this->title = Yii::t('carousel', 'Create Carousel');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Carousel Records'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carousel-record-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-title-wrapper">
+        <h1><?= $this->title ?></h1>
+    </div>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= $this->render('_form', compact('carousel_form')) ?>
 
 </div>

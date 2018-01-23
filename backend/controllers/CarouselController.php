@@ -5,18 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\serval\carousel\CarouselRecord;
 use backend\models\serval\carousel\CarouselSearch;
-use backend\controllers\ServalController;
+use backend\models\serval\carousel\CarouselForm;
+use backend\models\serval\carousel\CarouselManager;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * CarouselController implements the CRUD actions for CarouselRecord model.
- */
-class CarouselController extends ServalController
+
+class CarouselController extends \backend\controllers\ServalController
 {
-    /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
         return [
@@ -29,99 +26,76 @@ class CarouselController extends ServalController
         ];
     }
 
-    /**
-     * Lists all CarouselRecord models.
-     * @return mixed
-     */
     public function actionIndex()
     {
-        $searchModel = new CarouselSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $search_model = new CarouselSearch();
+        $data_provider = $search_model->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', compact('search_model', 'data_provider'));
     }
 
-    /**
-     * Displays a single CarouselRecord model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+
+        if (($carousel = (new CarouselManager())->getModelByID($id)) === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->render('view', compact('carousel'));
+
     }
 
-    /**
-     * Creates a new CarouselRecord model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
-        $model = new CarouselRecord();
+        $carousel_form = new CarouselForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($carousel_form->load(Yii::$app->request->post())) {
+
+            if ($carousel = $carousel_form->save()) {
+
+                Yii::$app->session->setFlash('success', Yii::t('serval', 'New record saved successfully'));
+
+                return $this->redirect(['view', 'id' => $carousel->id]);
+            }
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render('create', compact('carousel_form'));
     }
 
-    /**
-     * Updates an existing CarouselRecord model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $carousel = (new CarouselManager())->getModelByID($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $carousel_form = new CarouselForm();
+        $carousel_form->setAttributes($carousel->getAttributes());
+        $carousel_form->id = $carousel->id;
+
+        if ($carousel_form->load(Yii::$app->request->post())) {
+
+            if ($updated_carousel = $carousel_form->update($carousel)) {
+
+                Yii::$app->session->setFlash('success', Yii::t('serval', 'Record updated successfully'));
+
+                return $this->redirect(['view', 'id' => $updated_carousel->id]);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+        return $this->render('update', compact('carousel_form'));
 
-    /**
-     * Deletes an existing CarouselRecord model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+     }
+
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $carousel = (new CarouselManager())->getModelByID($id);
+
+        if( $carousel !== null){
+            $carousel->delete();
+        }
+
+        Yii::$app->session->setFlash('success', Yii::t('serval', 'Record deleted successfully'));
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the CarouselRecord model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return CarouselRecord the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = CarouselRecord::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

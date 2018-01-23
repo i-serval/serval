@@ -3,37 +3,95 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel backend\models\serval\carousel\CarouselSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Carousel Records';
+$this->title = Yii::t('carousel', 'Carousel Records');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="carousel-record-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-title-wrapper">
+        <h1><?= $this->title ?></h1>
+    </div>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Carousel Record', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('carousel', 'Create Carousel'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'dataProvider' => $data_provider,
+        'filterModel' => $search_model,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
-            'description',
-            'created',
-            'updated',
-            'activate_at',
-            'is_active',
+            [
+                'attribute' => 'id',
+                'contentOptions' => [ 'class'=>'col-4-chars' ],
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'title',
+                'label' => Yii::t('carousel','Name'),
+                'contentOptions' => [ 'class'=>'col-550px' ],
+            ],
+
+            [
+                'attribute' => 'description',
+                'label' => Yii::t('carousel','Description'),
+            ],
+
+            [
+                'attribute' => 'created',
+                'label' => Yii::t('serval','Created'),
+                'value' =>function( $carousel )
+                {
+                    return Yii::$app->formatter->asDate( $carousel->created, 'php:d-m-Y H:i:s');
+                },
+                'contentOptions' => [ 'class'=>'col-13-chars' ],
+            ],
+
+            [
+                'attribute' => 'updated',
+                'label' => Yii::t('serval','Updated'),
+                'value' =>function( $carousel )
+                {
+                    return Yii::$app->formatter->asDate( $carousel->updated, 'php:d-m-Y H:i:s');
+                },
+                'contentOptions' => [ 'class'=>'col-13-chars' ],
+            ],
+
+            [
+                'attribute' => 'activate_at',
+                'label' => Yii::t('carousel','Activate at'),
+                'value' =>function( $carousel )
+                {
+                    if( $carousel->activate_at != null ) {
+                        return Yii::$app->formatter->asDate($carousel->activate_at, 'php:d-m-Y H:i:s');
+                    }
+
+                    return '-';
+                },
+                'contentOptions' => [ 'class'=>'col-13-chars' ],
+            ],
+
+            [
+                'attribute' => 'is_active',
+                'label' => Yii::t('carousel','is Active'),
+                'value' =>  function( $carousel )
+                {
+                    return ( $carousel->is_active == 1 ) ? '<span class="green">' . Yii::t('serval','Yes') . '</span>' : '<span class="red"> ' . Yii::t('serval','No') . '</span>';
+                },
+                'filter' => ['0'=> Yii::t('serval','No'), '1' => Yii::t('serval','Yes') ],
+                'format' => 'html',
+                'contentOptions' => [ 'class'=>'col-80px' ],
+            ],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=> Yii::t('grid-view','Action'),
+                'headerOptions' => [ 'class' => 'action-3-items' ],
+            ],
         ],
     ]); ?>
 </div>

@@ -14,6 +14,7 @@ return [
     'modules' => [],
     'layout' => 'serval',   //'layoutPath' => '@app/views/layouts-2'
     'timeZone' => 'Europe/Kiev',
+
     'defaultRoute' => 'dashboard',  // default controller name
 
     'components' => [
@@ -49,6 +50,15 @@ return [
 
         'errorHandler' => [
             'errorAction' => 'serval/error',
+        ],
+
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'forceTranslation'=>true,
+                ]
+            ],
         ],
 
         'urlManager' => [

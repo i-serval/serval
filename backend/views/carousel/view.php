@@ -6,17 +6,19 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\serval\carousel\CarouselRecord */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Carousel Records', 'url' => ['index']];
+$this->title = Yii::t('carousel', 'Carousel view' );
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Carousel Records' ), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carousel-record-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-title-wrapper">
+        <h1><?= $this->title ?></h1>
+    </div>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('serval', 'Edit' ), ['update', 'id' => $carousel->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('serval', 'Delete' ), ['delete', 'id' => $carousel->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
+        'model' => $carousel,
         'attributes' => [
             'id',
             'title',

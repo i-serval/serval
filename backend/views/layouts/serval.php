@@ -274,6 +274,14 @@ ServalAsset::register($this);
 </nav>
 <main class="page-width">
     <div class="content-wrapper">
+        <?= Breadcrumbs::widget([
+            'homeLink'      =>  [
+                'label'     =>  Yii::t('serval', 'Dashboard'),
+                'url'       =>  ['/'],
+            ],
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
     <div class="fake-footer"></div>

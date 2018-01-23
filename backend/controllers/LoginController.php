@@ -6,10 +6,9 @@ use Yii;
 use yii\filters\AccessControl;
 use backend\models\serval\user\UserLoginForm;
 use yii\helpers\ArrayHelper;
-use backend\controllers\ServalController;
 
 
-class LoginController extends ServalController
+class LoginController extends \backend\controllers\ServalController
 {
 
     public $layout = 'login/login';

@@ -10,8 +10,8 @@ class ServalAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/serval.css',
-        'css/tapal.css',
+        'css/serval-layout.css',
+        'css/serval-bootstrap.css',
     ];
     public $js = [
         'js/serval.js',

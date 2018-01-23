@@ -5,10 +5,9 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use backend\controllers\ServalController;
 
 
-class LogoutController extends ServalController
+class LogoutController extends \backend\controllers\ServalController
 {
 
     public function behaviors()
