@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\serval\carousel\CarouselRecord */
 
-$this->title = Yii::t('carousel', 'Carousel view' );
-$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Carousel Records' ), 'url' => ['index']];
+$this->title = Yii::t('carousel', 'Slider View' );
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Sliders List' ), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carousel-record-view">
@@ -40,4 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
+
+<div>
+    <?= Html::a(Yii::t('serval', 'Add Slide' ), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id], ['class' => 'btn btn-success']) ?>
 </div>

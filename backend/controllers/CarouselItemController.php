@@ -14,6 +14,7 @@ use backend\models\serval\carousel\CarouselItemSearch;
 class CarouselItemController extends \backend\controllers\ServalController
 {
 
+    /*
     public function behaviors()
     {
 
@@ -22,12 +23,12 @@ class CarouselItemController extends \backend\controllers\ServalController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'delete' => ['POST'],
+                    'delete' => ['POST'],
                 ]
             ]
         ]);
 
-    }
+    }*/
 
     public function actionIndex()
     {
@@ -53,15 +54,19 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionCreate()
     {
 
-        $carousel_form = new CarouselItemForm();
+        $carousel_item_form = new CarouselItemForm();
 
-        if ($carousel_form->load(Yii::$app->request->post()) && $carousel_form->save()) {
+        if ($carousel_item_form->load(Yii::$app->request->post())) {
 
-            return $this->redirect(['view', 'id' => $carousel_form->carousel->id]);
+            if( ($carousel_item_model = $carousel_item_form->save()) != null ) {
+
+                return $this->redirect(['view', 'id' => $carousel_item_model->id]);
+
+            }
 
         }
 
-        return $this->render('create', compact('carousel_form'));
+        return $this->render('create', compact('carousel_item_form'));
 
     }
 

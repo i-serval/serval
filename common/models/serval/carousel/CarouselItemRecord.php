@@ -4,7 +4,7 @@ namespace common\models\serval\carousel;
 
 use Yii;
 use yii\db\ActiveRecord;
-use common\models\serval\carousel\CarouselImageRecord;
+use common\models\serval\carousel\CarouselItemImageRecord;
 
 
 class CarouselItemRecord extends ActiveRecord
@@ -18,16 +18,15 @@ class CarouselItemRecord extends ActiveRecord
     public function rules()
     {
         return [
-            [['order', 'image'], 'integer'],
+            [['order', 'image_id'], 'integer'],
             [['title', 'description'], 'string', 'max' => 255],
-            [['title', 'description', 'order'], 'required'],
-            [['order'], 'number'],
+            ['order', 'required'],
         ];
     }
 
     public function getImage()
     {
-        return $this->hasOne(CarouselImageRecord::className(), ['id' => 'image_id']);
+        return $this->hasOne(CarouselItemImageRecord::className(), ['id' => 'image_id']);
     }
 
     public function attributeLabels()
@@ -37,14 +36,9 @@ class CarouselItemRecord extends ActiveRecord
             'title' => 'Title',
             'description' => 'Description',
             'order' => 'Order',
-            'image' => 'Image',
+            'image_id' => 'Image',
         ];
     }
-
-    /*public function getCarousels() {
-        return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
-            ->viaTable('carousel_carousel_item', ['carousel_id' => 'id']);
-    }*/
 
     public function getImageUrl(){
 

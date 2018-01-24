@@ -46,7 +46,7 @@ $yes_no_items = [
     if ($carousel_form->id !== null) {
 
         echo $form->field($carousel_form, 'is_active')
-            ->dropDownList($yes_no_items, ['prompt' => Yii::t('serval', 'Select...'), 'class' => 'form-control yes-no-drop-down ']);
+            ->dropDownList($yes_no_items, ['class' => 'form-control yes-no-drop-down ']);
 
     }
 

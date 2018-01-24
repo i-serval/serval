@@ -2,15 +2,17 @@
 
 namespace backend\models\serval\carousel;
 
-use yii\base\Model;
-use common\models\serval\carousel\CarouselImageRecord;
+use backend\models\serval\carousel\CarouselItemImageUploadRecord;
 use common\models\serval\carousel\CarouselItemRecord;
 
 
-class CarouselItemForm extends Model
+class CarouselItemForm extends \yii\base\Model
 {
 
-    public $carousel;
+    public $id;
+    public $title;
+    public $description;
+    public $order;
     public $carousel_image;
 
     public function __construct(array $config = [])
@@ -18,65 +20,65 @@ class CarouselItemForm extends Model
 
         parent::__construct($config);
 
-        $this->carousel = new CarouselItemRecord();
-        $this->carousel_image = new CarouselImageRecord();
-
     }
 
-    public function load($data, $formName = null)
+    public function rules()
     {
 
-        if ($this->carousel->load($data) && $this->carousel_image->load($data)) {
-
-            return true;
-
-        }
-
-        return false;
+        return [
+            [['title', 'description'], 'string', 'max' => 255],
+            ['order', 'required'],
+            [['carousel_image'], 'image', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'minWidth' => 1125, 'maxWidth' => 1125, 'minHeight' => 600, 'maxHeight' => 600, 'on' => 'create'],
+            [['carousel_image'], 'image', 'extensions' => 'png, jpg', 'minWidth' => 1125, 'maxWidth' => 1125, 'minHeight' => 600, 'maxHeight' => 600, 'on' => 'update']
+        ];
 
     }
 
     public function save()
     {
 
-        $this->initScenario();
+        $this->scenario = 'create';
 
-        $is_valid = $this->carousel->validate();
-        $is_valid = $this->carousel_image->validate() && $is_valid;
+        $carousel_image = (new CarouselItemImageUploadRecord())->bind($this, 'carousel_image');
 
-        if ($is_valid) {
-
-            if ($this->carousel_image->save(false)) {
-
-                $this->carousel->image_id = $this->carousel_image->id;
-
-                if ($this->carousel->save(false)) {
-
-                    return true;
-
-                }
-
-            }
-
+        if (!$this->validate()) {
+            return null;
         }
 
-        return false;
+        $carousel_item = new CarouselItemRecord();
+        $carousel_item->title = $this->title;
+        $carousel_item->description = $this->description;
+        $carousel_item->order = (int)$this->order;
 
-    }
 
-    protected function initScenario()
-    {
+        if ($carousel_image->save()) {
 
-        if ($this->carousel->id == null) {
-
-            $this->carousel_image->scenario = 'create';
+            $carousel_item->image_id = $carousel_image->id;
 
         } else {
 
-            $this->carousel_image->scenario = 'update';
-
+            return null;
         }
 
+
+        /*
+                $r = $carousel_item->save();
+                $errors =  $carousel_item->getErrors();
+
+                $a = 234;*/
+
+        return $carousel_item->save() ? $carousel_item : null;
+
+
+    }
+
+    public function isNewRecord()
+    {
+        if ($this->id === null) {
+            return true;
+        }
+
+        return false;
     }
 
 }

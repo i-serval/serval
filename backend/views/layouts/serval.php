@@ -25,11 +25,13 @@ ServalAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
 
-    <?php $this->registerLinkTag(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => '/favicons/favicon.ico']); ?>
-    <?php $this->registerLinkTag(['rel' => 'icon', 'sizes' => '32x32', 'href' => '/favicons/favicon-32x32.png']); ?>
-    <?php $this->registerLinkTag(['rel' => 'icon', 'sizes' => '48x48', 'href' => '/favicons/favicon-48x48.png']); ?>
-    <?php $this->registerLinkTag(['rel' => 'icon', 'sizes' => '96x96', 'href' => '/favicons/favicon-96x96.png']); ?>
-    <?php $this->registerLinkTag(['rel' => 'icon', 'sizes' => '144x144', 'href' => '/favicons/favicon-144x144.png']); ?>
+    <?php
+    $this->registerLinkTag(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => '/favicons/favicon.ico']);
+    $this->registerLinkTag(['rel' => 'icon', 'sizes' => '32x32', 'href' => '/favicons/favicon-32x32.png']);
+    $this->registerLinkTag(['rel' => 'icon', 'sizes' => '48x48', 'href' => '/favicons/favicon-48x48.png']);
+    $this->registerLinkTag(['rel' => 'icon', 'sizes' => '96x96', 'href' => '/favicons/favicon-96x96.png']);
+    $this->registerLinkTag(['rel' => 'icon', 'sizes' => '144x144', 'href' => '/favicons/favicon-144x144.png']);
+    ?>
 
     <?php $this->head() ?>
 </head>
@@ -64,8 +66,7 @@ ServalAsset::register($this);
                     'label' => '<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;Logout',
                 ]
             ]
-        ]);
-        ?>
+        ]); ?>
     </div>
 </header>
 <nav>
@@ -107,8 +108,8 @@ ServalAsset::register($this);
                             [
 
                                 [
-                                    'label' => 'Carousel',
-                                    'url' => ['/carousel', '/carousel/index', '/carousel/view', '/carousel/update', '/carousel/create'],
+                                    'label' => Yii::t('serval','Slider'),
+                                    'url' => ['/carousel', '/carousel/index', '/carousel/view', '/carousel/update', '/carousel/create', 'carousel-item/create'],
                                 ],
 
                                 [
@@ -275,9 +276,9 @@ ServalAsset::register($this);
 <main class="page-width">
     <div class="content-wrapper">
         <?= Breadcrumbs::widget([
-            'homeLink'      =>  [
-                'label'     =>  Yii::t('serval', 'Dashboard'),
-                'url'       =>  ['/'],
+            'homeLink' => [
+                'label' => Yii::t('serval', 'Dashboard'),
+                'url' => ['/'],
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

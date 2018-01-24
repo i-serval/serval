@@ -16,6 +16,6 @@ $this->title = 'Create Carousel Item';
         <h1><?= $this->title ?></h1>
     </div>
 
-    <?= $this->render('carousel_form', compact('carousel_form') ) ?>
+    <?= $this->render('carousel_form', compact('carousel_item_form')) ?>
 
 </div>

@@ -29,7 +29,7 @@ class CarouselItemSearch extends CarouselItemRecord
 
         // add conditions that should always apply here
 
-        //$query->joinWith('image');
+        //$query->joinWith('image');   minimaze db queries from 16 to 12
 
         $data_provider = new ActiveDataProvider([
             'query' => $query,

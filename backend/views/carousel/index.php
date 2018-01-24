@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = Yii::t('carousel', 'Carousel Records');
+$this->title = Yii::t('carousel', 'Sliders List');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('carousel', 'Create Carousel'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('carousel', 'Create Slider'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

@@ -10,16 +10,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($carousel_form->carousel, 'title')->textInput() ?>
+    <?= $form->field($carousel_item_form, 'title')->textInput() ?>
 
-    <?= $form->field($carousel_form->carousel, 'description')->textArea(['maxlength' => true]) ?>
+    <?= $form->field($carousel_item_form, 'description')->textArea(['maxlength' => true]) ?>
 
-    <?= $form->field($carousel_form->carousel, 'order')->textInput() ?>
+    <?= $form->field($carousel_item_form, 'order')->textInput() ?>
 
     <?php
 
-    $img_tag = ($carousel_form->carousel_image->getFileUrl() != null) ? Html::img($carousel_form->carousel_image->getFileUrl(), ['width' => '200px', 'height' => 'auto']) . '<br /><br />' : '';
+    //$img_tag = ($carousel_form->carousel_image->getFileUrl() != null) ? Html::img($carousel_form->carousel_image->getFileUrl(), ['width' => '200px', 'height' => 'auto']) . '<br /><br />' : '';
 
+    $img_tag = 'erfgergergergerg';
 
     $input_options = ['template' => '
             
@@ -31,10 +32,12 @@ use yii\widgets\ActiveForm;
                 {hint}
                 {error}'
     ] ?>
-    <?= $form->field($carousel_form->carousel_image, 'file', $input_options)->fileInput() ?>
+    <?= $form->field($carousel_item_form, 'carousel_image', $input_options)->fileInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($carousel_form->carousel->isNewRecord ? 'Create' : 'Save', ['class' => $carousel_form->carousel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($carousel_item_form->isNewRecord() ? 'Create' : 'Save',
+            ['class' => $carousel_item_form->isNewRecord() ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,42 +2,16 @@
 
 namespace common\models\serval\file;
 
-use Yii;
-use yii\web\UploadedFile;
+// parent class for all file types ( Active Record )
 
-
-class FileRecord extends yii\db\ActiveRecord
+class FileRecord extends \common\models\serval\file\BaseFileRecord
 {
 
-
-    public static function tableName()
+    public function __construct(array $config = [])
     {
-        return '{{%file}}';
-    }
 
-    public function rules()
-    {
-        return [
-            [['size', 'upload_user', 'upload_date'], 'integer'],
-            [['file_name', 'file_orign_name'], 'string', 'max' => 255],
-            [['file_ext'], 'string', 'max' => 10],
-            [['file_type'], 'string', 'max' => 25],
-        ];
-    }
+        parent::__construct($config);
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'file_name' => 'File Name',
-            'file_orign_name' => 'File Orign Name',
-            'file_ext' => 'File Ext',
-            'file_type' => 'File Type',
-            'size' => 'Size',
-            'category' => 'Category',
-            'upload_date' => 'Upload Date',
-            'upload_user' => 'Upload User',
-        ];
     }
 
 }

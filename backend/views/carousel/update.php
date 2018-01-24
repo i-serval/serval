@@ -1,10 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-use Yii;
-
-$this->title = Yii::t('carousel','Edit Carousel Record');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel','Carousel Record'), 'url' => ['index']];
+$this->title = Yii::t('carousel','Edit Slider Record');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel','Sliders List'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('carousel', 'Edit');
 ?>
 <div class="carousel-record-update">

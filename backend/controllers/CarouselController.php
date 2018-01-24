@@ -3,28 +3,31 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\serval\carousel\CarouselRecord;
 use backend\models\serval\carousel\CarouselSearch;
 use backend\models\serval\carousel\CarouselForm;
 use backend\models\serval\carousel\CarouselManager;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
+//use yii\filters\VerbFilter;
+//use yii\helpers\ArrayHelper;
 
 
 class CarouselController extends \backend\controllers\ServalController
 {
 
-    public function behaviors()
+    /*public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+                ]
+            ]
+        ]);
+
+    }*/
 
     public function actionIndex()
     {
@@ -33,6 +36,7 @@ class CarouselController extends \backend\controllers\ServalController
         $data_provider = $search_model->search(Yii::$app->request->queryParams);
 
         return $this->render('index', compact('search_model', 'data_provider'));
+
     }
 
     public function actionView($id)
@@ -48,6 +52,7 @@ class CarouselController extends \backend\controllers\ServalController
 
     public function actionCreate()
     {
+
         $carousel_form = new CarouselForm();
 
         if ($carousel_form->load(Yii::$app->request->post())) {
@@ -61,10 +66,12 @@ class CarouselController extends \backend\controllers\ServalController
         }
 
         return $this->render('create', compact('carousel_form'));
+
     }
 
     public function actionUpdate($id)
     {
+
         $carousel = (new CarouselManager())->getModelByID($id);
 
         $carousel_form = new CarouselForm();
@@ -83,19 +90,29 @@ class CarouselController extends \backend\controllers\ServalController
 
         return $this->render('update', compact('carousel_form'));
 
-     }
+    }
 
     public function actionDelete($id)
     {
-        $carousel = (new CarouselManager())->getModelByID($id);
 
-        if( $carousel !== null){
+        if (($carousel = (new CarouselManager())->getModelByID($id)) != null) {
             $carousel->delete();
         }
 
         Yii::$app->session->setFlash('success', Yii::t('serval', 'Record deleted successfully'));
 
         return $this->redirect(['index']);
+
+    }
+
+
+    public function actionAddCarouselItem()
+    {
+
+        //$this->carousel
+        //use views forms from carouselitem
+
+
     }
 
 }
