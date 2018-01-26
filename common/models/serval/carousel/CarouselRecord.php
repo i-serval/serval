@@ -2,7 +2,8 @@
 
 namespace common\models\serval\carousel;
 
-use \common\models\serval\carousel\CarouselItemRecord;
+use common\models\serval\carousel\CarouselItemRecord;
+use common\models\serval\helper\DateTimeHelper;
 
 
 class CarouselRecord extends \yii\db\ActiveRecord
@@ -16,7 +17,8 @@ class CarouselRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created', 'updated', 'activate_at', 'is_active'], 'integer'],
+            [['is_active'], 'string', 'max' => 3, 'min' => 2],
+            [['created_at', 'updated_at', 'activate_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
             [['title', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -27,8 +29,8 @@ class CarouselRecord extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'created' => 'Created',
-            'updated' => 'Updated',
+            'created_at' => 'Created',
+            'updated_at' => 'Updated',
             'activate_at' => 'Time of activation',
             'is_active' => 'Is Active',
         ];
@@ -38,6 +40,66 @@ class CarouselRecord extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
             ->viaTable('carousel_carousel_item', ['carousel_id' => 'id']);
+    }
+
+    public function setTitle($title)
+    {
+
+        $this->title = $title;
+        return $this;
+
+    }
+
+    public function setDescription($description)
+    {
+
+        $this->description = $description;
+        return $this;
+
+    }
+
+    public function setCreatedAt($data_time)
+    {
+
+        $this->created_at = DateTimeHelper::getMysqlTimestamp($data_time);
+        return $this;
+
+    }
+
+    public function setUpdatedAt($data_time)
+    {
+
+        $this->updated_at = DateTimeHelper::getMysqlTimestamp($data_time);
+        return $this;
+
+    }
+
+    public function setActivateAt($data_time)
+    {
+
+        $this->activate_at = DateTimeHelper::getMysqlTimestamp($data_time);
+        return $this;
+
+    }
+
+    public function setIsActive($yes_no)
+    {
+
+        if (is_int($yes_no)) {
+
+            if ($yes_no == 0) {
+                $yes_no = 'no';
+            }
+
+            if ($yes_no == 1) {
+                $yes_no = 'yes';
+            }
+
+        }
+
+        $this->is_active = $yes_no;
+        return $this;
+
     }
 
 }

@@ -44,9 +44,9 @@ class UserIdentityRecord extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
-    public static function findByUsername($username)
+    public static function findByUsername($name)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['name' => $name, 'status' => self::STATUS_ACTIVE]);
     }
 
     public static function findByEmail($email)

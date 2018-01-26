@@ -42,21 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-                'attribute' => 'created',
+                'attribute' => 'created_at',
                 'label' => Yii::t('serval','Created'),
                 'value' =>function( $carousel )
                 {
-                    return Yii::$app->formatter->asDate( $carousel->created, 'php:d-m-Y H:i:s');
+                    return Yii::$app->formatter->asDate( $carousel->created_at, 'php:d-m-Y H:i:s');
                 },
                 'contentOptions' => [ 'class'=>'col-13-chars' ],
             ],
 
             [
-                'attribute' => 'updated',
+                'attribute' => 'updated_at',
                 'label' => Yii::t('serval','Updated'),
                 'value' =>function( $carousel )
                 {
-                    return Yii::$app->formatter->asDate( $carousel->updated, 'php:d-m-Y H:i:s');
+                    return Yii::$app->formatter->asDate( $carousel->updated_at, 'php:d-m-Y H:i:s');
                 },
                 'contentOptions' => [ 'class'=>'col-13-chars' ],
             ],

@@ -9,7 +9,7 @@ use backend\models\serval\user\UserRecord;
 class UserCreateForm extends Model
 {
     public $id;
-    public $username;
+    public $name;
     public $email;
     public $password;
     public $re_password;
@@ -49,7 +49,7 @@ class UserCreateForm extends Model
         }
 
         $user = new UserRecord();
-        $user->username = $this->username;
+        $user->name = $this->name;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
@@ -66,10 +66,10 @@ class UserCreateForm extends Model
             return null;
         }
 
-        if ($user->username != $this->username) {
+        if ($user->name != $this->name) {
 
-            if (UserRecord::find()->where('id != :id AND username = :username', [':id' => $user->id, ':username' => $this->username])->one() !== null) {
-                $this->addError('username', 'This username has already been taken.');
+            if (UserRecord::find()->where('id != :id AND name = :name', [':id' => $user->id, ':name' => $this->name])->one() !== null) {
+                $this->addError('name', 'This name has already been taken.');
                 return null;
             }
         }
@@ -77,13 +77,13 @@ class UserCreateForm extends Model
         if ($user->email != $this->email) {
 
             if (UserRecord::find()->where('id != :id AND email = :email', [':id' => $user->id, ':status' => $this->email])->one() !== null) {
-                $this->addError('username', 'This email address has already been taken.');
+                $this->addError('name', 'This email address has already been taken.');
                 return null;
             }
 
         }
 
-        $user->username = $this->username;
+        $user->name = $this->name;
         $user->email = $this->email;
 
         if ($this->password !== '') {

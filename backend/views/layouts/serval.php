@@ -54,7 +54,7 @@ ServalAsset::register($this);
             'options' => [
                 'id' => 'user-dropdown-menu-btn',
                 'tag' => 'div',
-                'label' => 'Hi, ' . Yii::$app->user->identity->username,
+                'label' => 'Hi, ' . Yii::$app->user->identity->name,
             ],
             'items' => [
                 [

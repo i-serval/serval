@@ -13,7 +13,7 @@ class CarouselItemSearch extends CarouselItemRecord
     public function rules()
     {
         return [
-            [['id', 'order'], 'integer'],
+            ['id', 'integer'],
             [['title', 'description'], 'safe'],
         ];
     }
@@ -46,7 +46,6 @@ class CarouselItemSearch extends CarouselItemRecord
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'order' => $this->order,
 
         ]);
 

@@ -32,7 +32,7 @@ class UserLoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, Yii::t('serval','Incorrect email or password.'));
             }
         }
     }

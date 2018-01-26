@@ -7,6 +7,7 @@ use DateTime;
 use yii\base\Model;
 use common\models\serval\carousel\CarouselRecord;
 use backend\models\serval\carousel\CarouselManager;
+use common\models\serval\helper\DateTimeHelper;
 
 
 class CarouselForm extends Model
@@ -14,6 +15,8 @@ class CarouselForm extends Model
     public $id;
     public $title;
     public $description;
+    public $activate_at_date;
+    public $activate_at_time;
     public $activate_at;
     public $is_active;
 
@@ -33,7 +36,7 @@ class CarouselForm extends Model
             ['title', 'required'],
             ['activate_at', 'datetime', 'format' => 'php:d-m-Y H:i:s'],
             ['activate_at', 'validateActivationTime'],
-            ['is_active', 'in', 'range' => [0, 1]],
+            ['is_active', 'in', 'range' => ['no', 'yes']],
             ['is_active', 'default', 'value' => 0],
             ['is_active', 'validateIsActive', 'on' => 'update'],
         ];
@@ -52,22 +55,20 @@ class CarouselForm extends Model
     public function save()
     {
 
+        $this->activate_at = $this->activate_at_date .' '. $this->activate_at_time;
+
+
         if (!$this->validate()) {
             return null;
         }
 
         $carousel = new CarouselRecord();
-        $carousel->title = $this->title;
-        $carousel->description = $this->description;
-        $carousel->is_active = $this->is_active;
-        $carousel->created = (new DateTime())->getTimestamp();
-        $carousel->updated = $carousel->created;
-
-        if ($this->activate_at != '') {
-
-            $carousel->activate_at = (new DateTime($this->activate_at))->getTimestamp();
-
-        }
+        $carousel->setTitle($this->title)
+            ->setDescription($this->description)
+            ->setCreatedAt(new DateTime())
+            ->setUpdatedAt($carousel->created_at)
+            ->setIsActive($this->is_active)
+            ->setActivateAt($this->activate_at);
 
         return $carousel->save() ? $carousel : null;
 
@@ -84,22 +85,15 @@ class CarouselForm extends Model
             return null;
         }
 
-        $carousel->title = $this->title;
-        $carousel->description = $this->description;
-        $carousel->activate_at = $this->activate_at;
-        $carousel->is_active = $this->is_active;
-        $carousel->updated = (new DateTime())->getTimestamp();
-
-        if ($this->activate_at != '') {
-
-            $carousel->activate_at = (new DateTime($this->activate_at))->getTimestamp();
-
-        }
+        $carousel->setTitle($this->title)
+            ->setDescription($this->description)
+            ->setUpdatedAt(new DateTime())
+            ->setIsActive($this->is_active)
+            ->setActivateAt($this->activate_at);
 
         if ($carousel->save()) {
 
-
-            if ($this->carousel_instance->is_active != $this->is_active && $this->is_active == 1) {
+            if ($this->carousel_instance->is_active != $this->is_active && $this->is_active == 'yes') {
 
                 (new CarouselManager())->tryDeactivateAllExeptCurrent($carousel);
 
@@ -121,13 +115,13 @@ class CarouselForm extends Model
 
             if ($this->scenario == 'update') {
 
-                if ($this->carousel_instance->activate_at === (new DateTime($this->activate_at))->getTimestamp()) {
+                if (DateTimeHelper::comapre($this->carousel_instance->activate_at, $this->activate_at) === 0) {   // -1 0 1 like spaceship <=>
                     return;
                 }
 
             }
 
-            if ((new DateTime($this->activate_at))->getTimestamp() < (new DateTime())->getTimestamp()) {
+            if (DateTimeHelper::comapre($this->activate_at, new DateTime()) === -1) { // -1 0 1 like spaceship <=>
 
                 $this->addError('activate_at', Yii::t('carousel', 'Carousel activation time set in past'));
 
@@ -139,17 +133,17 @@ class CarouselForm extends Model
     public function validateIsActive($attribute, $params)
     {
 
-        if ($this->carousel_instance->is_active == 0 && $this->is_active == 1) {
+        if ($this->carousel_instance->is_active == 'no' && $this->is_active == 'yes') {
 
             if (count($this->carousel_instance->carouselItems) < 1) {
 
-                $this->addError('is_active', Yii::t('carousel', 'For activation slider must have at least one image'));
+                $this->addError('is_active', Yii::t('carousel', 'For activation slider must have at least one slide image'));
 
             }
 
         }
 
-        if ($this->carousel_instance->is_active == 1 && $this->is_active == 0) {
+        if ($this->carousel_instance->is_active == 'no' && $this->is_active == 'yes') {
 
             $this->addError('is_active', Yii::t('carousel', 'You cannot deactivate the slider, just activate the other one and this is automatically deactivated'));
 

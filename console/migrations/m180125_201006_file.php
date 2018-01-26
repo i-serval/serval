@@ -1,15 +1,16 @@
 <?php
 
 use yii\db\Migration;
+use yii\db\Schema;
 
-class m170524_212914_file extends Migration
+class m180125_201006_file extends Migration
 {
-    public function up()
+    public function safeUp()
     {
 
         $tableOptions = null;
 
-        if ( $this->db->driverName === 'mysql' ) {
+        if ($this->db->driverName === 'mysql') {
 
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
 
@@ -17,36 +18,21 @@ class m170524_212914_file extends Migration
 
         $this->createTable('{{%file}}', [
             'id' => $this->primaryKey(),
-            'file_name' => $this->string(255),
-            'file_orign_name' => $this->string(255),
-            'file_ext' => $this->string(10),
-            'file_type' => $this->string(25),
+            'name' => $this->string(255),
+            'original_name' => $this->string(255),
+            'ext' => $this->string(10),
+            'type' => $this->string(25),
             'size' => $this->Integer(),
             'category' => $this->string(255),
-            'upload_timestamp' => $this->integer(),
+            'upload_time' => Schema::TYPE_DATETIME . ' NOT NULL',
             'upload_user' => $this->integer(),
-        ], $tableOptions );
+        ], $tableOptions);
 
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('{{%file}}');
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

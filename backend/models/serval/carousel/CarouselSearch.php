@@ -18,7 +18,8 @@ class CarouselSearch extends CarouselRecord
     public function rules()
     {
         return [
-            [['id', 'created', 'updated', 'activate_at', 'is_active'], 'integer'],
+            [['id', 'is_active'], 'integer'],
+            [['created_at', 'updated_at', 'activate_at'], 'date', 'format' => 'php:Y-m-d H:i:s' ],
             [['title', 'description'], 'safe'],
         ];
     }
@@ -60,8 +61,8 @@ class CarouselSearch extends CarouselRecord
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created' => $this->created,
-            'updated' => $this->updated,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'activate_at' => $this->activate_at,
             'is_active' => $this->is_active,
         ]);

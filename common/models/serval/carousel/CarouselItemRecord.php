@@ -18,9 +18,8 @@ class CarouselItemRecord extends ActiveRecord
     public function rules()
     {
         return [
-            [['order', 'image_id'], 'integer'],
+            ['image_id', 'integer'],
             [['title', 'description'], 'string', 'max' => 255],
-            ['order', 'required'],
         ];
     }
 
@@ -35,7 +34,6 @@ class CarouselItemRecord extends ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'order' => 'Order',
             'image_id' => 'Image',
         ];
     }

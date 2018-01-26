@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 
+use backend\assets\DateTimePickerAsset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\serval\carousel\CarouselRecord */

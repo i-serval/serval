@@ -1,17 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\widgets\ActiveForm;
 use yii\bootstrap\ActiveForm;
-use yii\jui\DatePicker;
+//use yii\jui\DatePicker;
+use backend\widgets\datetime\DateTimePicker;
 
 ?>
 
 <?php
-
 $yes_no_items = [
-    0 => Yii::t('serval', 'No'),
-    1 => Yii::t('serval', 'Yes'),
+    'no' => Yii::t('serval', 'No'),
+    'yes' => Yii::t('serval', 'Yes'),
 ]
 ?>
 
@@ -34,12 +33,38 @@ $yes_no_items = [
 
     <?= $form->field($carousel_form, 'description')->textarea(['rows' => '4']) ?>
 
-    <?= $form->field($carousel_form, 'activate_at')
-        ->widget(\yii\jui\DatePicker::classname(), [
+    <?php
+
+    $img_tag = 'some tag';
+    $input_options = ['template' => '
+            
+            <label class="control-label" for="articleform-description">Carousel Image ( 1125 x 600 px ):</label> <br />
+            <div class="input-group">
+                ' . $img_tag . '
+                {input}
+             </div>
+                {hint}
+                {error}'
+    ] ?>
+
+    <?= $form->field($carousel_form, 'activate_at_date', DateTimePicker::getActivFieldOptions())
+        ->widget(DateTimePicker::classname(), [
             'language' => explode('-', Yii::$app->language)[0],
             'dateFormat' => 'php:d-m-Y 00:00:00',
+
         ])
         ->label($carousel_form->getAttributeLabel('activate_at') . ' : '); ?>
+
+
+    <?php /*$form->field($carousel_form, 'activate_at_date')
+        ->widget(DatePicker::classname(), [
+            'language' => explode('-', Yii::$app->language)[0],
+            ////'dateFormat' => 'php:d-m-Y 00:00:00',
+
+        ])
+        ->label($carousel_form->getAttributeLabel('activate_at') . ' : '); */ ?>
+
+
 
     <?php
 

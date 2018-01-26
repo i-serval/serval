@@ -3,6 +3,10 @@
 /yii_test
 /yii_test.bat
 
+/migrations_up.sh
+/clear_assets.sh
+/migrations_down_readme
+
 # phpstorm project files
 .idea
 
