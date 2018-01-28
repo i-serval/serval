@@ -15,8 +15,6 @@ class CarouselForm extends Model
     public $id;
     public $title;
     public $description;
-    public $activate_at_date;
-    public $activate_at_time;
     public $activate_at;
     public $is_active;
 
@@ -34,7 +32,7 @@ class CarouselForm extends Model
         return [
             [['title', 'description'], 'string', 'max' => 255],
             ['title', 'required'],
-            ['activate_at', 'datetime', 'format' => 'php:d-m-Y H:i:s'],
+            ['activate_at', 'datetime', 'format' => Yii::$app->formatter->datetimeFormat],
             ['activate_at', 'validateActivationTime'],
             ['is_active', 'in', 'range' => ['no', 'yes']],
             ['is_active', 'default', 'value' => 0],
@@ -54,9 +52,6 @@ class CarouselForm extends Model
 
     public function save()
     {
-
-        $this->activate_at = $this->activate_at_date .' '. $this->activate_at_time;
-
 
         if (!$this->validate()) {
             return null;

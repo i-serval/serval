@@ -1,27 +1,29 @@
 <?php
 
-namespace backend\assets;
+namespace common\components\widgets\datetime;
 
 use yii\web\AssetBundle;
 
 
 class DateTimePickerAsset extends AssetBundle
 {
+
     public $baseUrl = '@web';
-    public $sourcePath = '@bower/eonasdan-bootstrap-datetimepicker/build';
+
+    public $sourcePath = __DIR__ . '/assets';
 
     public $css = [
         'css/bootstrap-datetimepicker.min.css',
+        'css/datetimepicker.css',
     ];
 
     public $js = [
+        'js/moment-with-locales.min.js',        // important moment before datetimepicker
         'js/bootstrap-datetimepicker.min.js',
     ];
 
     public $depends = [
-        'yii\web\JqueryAsset',
-        'backend\assets\MomentAsset',
-        'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
+
 }

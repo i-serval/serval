@@ -32,8 +32,6 @@ return [
             ],
         ],
 
-
-
     ],
 
     'params' => $params,
