@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['class' => 'col-4-chars'],
                 'headerOptions' => ['class' => 'col-4-chars'],
             ],
-            'username',
+            'name',
             'email:email',
             [
                 'attribute' => 'status',
@@ -51,17 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'created_at',
-                'value' => function ($user_info) {
-                    return date('d-m-Y', $user_info->created_at);
-                },
+
                 'headerOptions' => ['class' => 'col-10-chars'],
                 'contentOptions' => ['class' => 'col-10-chars'],
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function ($user_info) {
-                    return date('d-m-Y', $user_info->updated_at);
-                },
+
                 'headerOptions' => ['class' => 'col-13-chars-t'],
                 'contentOptions' => ['class' => 'col-13-chars-t'],
 

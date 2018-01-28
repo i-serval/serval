@@ -6,11 +6,22 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+$i18n = array_merge(
+    require __DIR__ . '/../../common/config/i18n.php',
+    require __DIR__ . '/../../common/config/i18n-local.php',
+    require __DIR__ . '/i18n.php',
+    require __DIR__ . '/i18n-local.php'
+);
+
+$params['i18n'] = $i18n;
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'language' => $i18n['language'],
+    'timeZone' => $i18n['timeZone'],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',

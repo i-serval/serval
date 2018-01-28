@@ -33,7 +33,7 @@ $this->title = 'Edit User';
         'model' => $model,
         'attributes' => [
             'id',
-            'username',
+            'name',
             'email:email',
             [
                 'attribute' => 'status',
@@ -46,15 +46,11 @@ $this->title = 'Edit User';
             ],
             [
                 'attribute' => 'created_at',
-                'value' => function ($user_info) {
-                    return date('d-m-Y', $user_info->created_at);
-                },
+
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function ($user_info) {
-                    return date('d-m-Y', $user_info->updated_at);
-                },
+
             ],
         ],
     ]) ?>

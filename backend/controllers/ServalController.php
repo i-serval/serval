@@ -31,11 +31,8 @@ class ServalController extends \yii\web\Controller
 
     public function init()
     {
+
         parent::init();
-        #add your logic: read the cookie and then set the language
-
-        //Yii::$app->language = 'uk-UA';
-
 
     }
 

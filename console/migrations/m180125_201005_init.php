@@ -37,6 +37,7 @@ class m180125_201005_init extends Migration
             'created_at' => Schema::TYPE_DATETIME . ' NOT NULL',
             'updated_at' => Schema::TYPE_DATETIME . ' NULL DEFAULT NULL',
             'login_at' => Schema::TYPE_DATETIME . ' NULL DEFAULT NULL',
+            'language' => $this->string(10) . ' NULL DEFAULT NULL',
         ], $tableOptions);
 
         $this->batchInsert('{{%user}}', [

@@ -2,11 +2,13 @@
 
 namespace common\models\serval\user;
 
+use common\components\widgets\datetime\DateTimePicker;
 use Yii;
 use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use DateTime;
+
 
 
 class UserIdentityRecord extends ActiveRecord implements IdentityInterface
@@ -17,13 +19,6 @@ class UserIdentityRecord extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return '{{%user}}';
-    }
-
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
     }
 
     public function rules()

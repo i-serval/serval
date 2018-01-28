@@ -4,12 +4,14 @@ namespace common\components\widgets\datetime;
 
 use Yii;
 use yii\base\Model;
+
 //use yii\base\InvalidParamException;
 ///use yii\helpers\FormatConverter;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use common\components\widgets\datetime\DateTimePickerAsset;
+use common\models\serval\helper\DateTimeHelper;
 
 class DateTimePicker extends \yii\base\Widget
 {
@@ -54,6 +56,11 @@ class DateTimePicker extends \yii\base\Widget
     public $noIcon = false;                     // switch on/off icon image near input
     public $iconClass = 'glyphicon-calendar';   // icon image near input
 
+    public $timeWithSeconds = false;
+
+    protected $defaultPlaginOptions = [];
+
+
     public function init()
     {
 
@@ -71,8 +78,9 @@ class DateTimePicker extends \yii\base\Widget
             $this->dateTimeFormat = Yii::$app->formatter->datetimeFormat;
         }
 
-        $this->divTagOptions['class'] .= ' ' . $this->divTagClasses[$this->type];
-        $this->spanTagOptions['class'] .= ' ' . $this->iconClass;
+        $this->initDefaulPlaginOptions();
+
+        $this->pluginOptions = ArrayHelper::merge($this->defaultPlaginOptions, $this->pluginOptions);
 
     }
 
@@ -85,7 +93,7 @@ class DateTimePicker extends \yii\base\Widget
         echo $this->renderWidget() . "\n";
 
 
-        $language = $this->pluginOptions['locale'] ? $this->pluginOptions['locale'] : Yii::$app->language;
+        //$language = $this->pluginOptions['locale'] ? $this->pluginOptions['locale'] : Yii::$app->language;
 
 
         // залежно від нашого формату втсновлюємо необхідний для жабаскрипт плагіну
@@ -166,49 +174,34 @@ class DateTimePicker extends \yii\base\Widget
 
     }
 
-    /*protected function registerClientOptions($name, $id)
+    protected function initDefaulPlaginOptions()
     {
-        if ($this->clientOptions !== false) {
-            $options = empty($this->clientOptions) ? '' : Json::htmlEncode($this->clientOptions);
-            $js = "jQuery('#$id').$name($options);";
-            $this->getView()->registerJs($js);
-        }
-    }*/
 
-    /**
-     * Registers a specific jQuery UI widget events
-     * @param string $name the name of the jQuery UI widget
-     * @param string $id the ID of the widget
-     */
-   /* protected function registerClientEvents($name, $id)
+        $this->defaultPlaginOptions['locale'] = explode('-', Yii::$app->language)[0];
+
+        $this->divTagOptions['class'] .= ' ' . $this->divTagClasses[$this->type];
+        $this->spanTagOptions['class'] .= ' ' . $this->iconClass;
+
+        if ($this->type == 'date-time') {
+            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->datetimeFormat);
+        } elseif ($this->type == 'date') {
+            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->dateFormat);
+        } elseif ($this->type == 'time') {
+            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->timeFormat);
+        }
+
+    }
+
+    protected function convertFormat($format)
     {
-        if (!empty($this->clientEvents)) {
-            $js = [];
-            foreach ($this->clientEvents as $event => $handler) {
-                if (isset($this->clientEventMap[$event])) {
-                    $eventName = $this->clientEventMap[$event];
-                } else {
-                    $eventName = strtolower($name . $event);
-                }
-                $js[] = "jQuery('#$id').on('$eventName', $handler);";
-            }
-            $this->getView()->registerJs(implode("\n", $js));
-        }
-    }*/
 
-    /**
-     * Registers a specific jQuery UI widget asset bundle, initializes it with client options and registers related events
-     * @param string $name the name of the jQuery UI widget
-     * @param string $id the ID of the widget. If null, it will use the `id` value of [[options]].
-     */
-   /* protected function registerWidget($name, $id = null)
-    {
-        if ($id === null) {
-            $id = $this->options['id'];
+        if (!$this->timeWithSeconds) {
+            $format = DateTimeHelper::modifyFormat($format, [':s' => '']);
+        } else {
+            $this->divTagOptions['class'] .= ' ' . 'with-seconds';
         }
-        JuiAsset::register($this->getView());
-        $this->registerClientEvents($name, $id);
-        $this->registerClientOptions($name, $id);
-    }*/
 
+        return DateTimeHelper::convertPHPToMomentFormat($format);
+
+    }
 }

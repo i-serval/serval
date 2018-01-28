@@ -29,7 +29,7 @@ LoginAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<?php $this->beginBody() ?>z
 <?= $content ?>
 <?php $this->endBody() ?>
 </body>

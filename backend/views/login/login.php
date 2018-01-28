@@ -79,6 +79,13 @@ $this->title = 'Login - Serval';
 
             </div>
 
+            <div style="clear:both;">
+                <?= \lajax\languagepicker\widgets\LanguagePicker::widget([
+                    'skin' => \lajax\languagepicker\widgets\LanguagePicker::SKIN_BUTTON,
+                    'size' => \lajax\languagepicker\widgets\LanguagePicker::SIZE_SMALL
+                ]); ?>
+            </div>
+
             <?php
 
             $copyright_year = 2017;

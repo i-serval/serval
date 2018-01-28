@@ -1,12 +1,20 @@
 
+.input-group.date.s-widget-date-time.with-seconds{
+    width: 200px;
+}
+
 .input-group.date.s-widget-date-time{
-    width: 175px;
+    width: 180px;
 }
 
 .input-group.date.s-widget-date{
+    width: 180px;
+}
 
+.input-group.date.s-widget-time.with-seconds{
+    width: 180px;
 }
 
 .input-group.date.s-widget-time{
-
+    width: 180px;
 }

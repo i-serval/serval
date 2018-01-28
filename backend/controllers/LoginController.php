@@ -42,11 +42,34 @@ class LoginController extends \backend\controllers\ServalController
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
+            $this->synchronizeLanguageAfterLogin();
+
             return $this->goBack();
 
         } else {
 
             return $this->render('login', ['model' => $model]);
+
+        }
+
+    }
+
+    protected function synchronizeLanguageAfterLogin()
+    {
+
+        $current_cookie_lang = Yii::$app->languagepicker->getLanguage();
+
+        $current_user_lang = Yii::$app->user->identity->language;
+
+        if( $current_user_lang !== null ) { // if user have not null lang set lang to cookie
+
+            Yii::$app->languagepicker->saveLanguageIntoCookie($current_user_lang);
+
+        } else { // if user lang is null set lang from cookie to user.
+
+            $user = Yii::$app->user->identity;
+            $user->language = $current_cookie_lang;
+            $user->save();
 
         }
 

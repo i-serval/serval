@@ -30,13 +30,12 @@ $yes_no_items = [
 
     <?= $form->field($carousel_form, 'description')->textarea(['rows' => '4']) ?>
 
-    <?= $form->field($carousel_form, 'activate_at' )
+    <?= $form->field($carousel_form, 'activate_at')
         ->widget(DateTimePicker::classname(), [
-
-            'pluginOptions'=>[
-                'locale' => explode('-', Yii::$app->language)[0],
+            'pluginOptions' => [
+                'showTodayButton' => true,
+                'showClear' => true,
             ]
-
         ]); ?>
 
     <?php

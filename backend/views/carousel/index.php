@@ -43,21 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' => 'created_at',
+                'format' => 'datetime',
                 'label' => Yii::t('serval','Created'),
-                'value' =>function( $carousel )
-                {
-                    return Yii::$app->formatter->asDate( $carousel->created_at, 'php:d-m-Y H:i:s');
-                },
                 'contentOptions' => [ 'class'=>'col-13-chars' ],
             ],
 
             [
                 'attribute' => 'updated_at',
                 'label' => Yii::t('serval','Updated'),
-                'value' =>function( $carousel )
-                {
-                    return Yii::$app->formatter->asDate( $carousel->updated_at, 'php:d-m-Y H:i:s');
-                },
+                'format' => 'datetime',
                 'contentOptions' => [ 'class'=>'col-13-chars' ],
             ],
 
@@ -66,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => Yii::t('carousel','Activate at'),
                 'value' =>function( $carousel )
                 {
-                    if( $carousel->activate_at != null ) {
-                        return Yii::$app->formatter->asDate($carousel->activate_at, 'php:d-m-Y H:i:s');
+                    if( $carousel->activate_at  != null ) {
+                        return Yii::$app->formatter->asDatetime($carousel->activate_at);
                     }
 
                     return '-';

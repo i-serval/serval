@@ -6,11 +6,22 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+$i18n = array_merge(
+    require __DIR__ . '/../../common/config/i18n.php',
+    require __DIR__ . '/../../common/config/i18n-local.php',
+    require __DIR__ . '/i18n.php',
+    require __DIR__ . '/i18n-local.php'
+);
+
+$params['i18n'] = $i18n;
+
 return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
+    'language' => $i18n['language'],
+    'timeZone' => $i18n['timeZone'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -31,6 +42,10 @@ return [
                 ],
             ],
         ],
+
+        'authManager'  => [
+            'class'        => 'yii\rbac\DbManager',
+        ]
 
     ],
 

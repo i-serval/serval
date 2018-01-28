@@ -32,7 +32,7 @@ class CarouselForm extends Model
         return [
             [['title', 'description'], 'string', 'max' => 255],
             ['title', 'required'],
-            ['activate_at', 'datetime', 'format' => Yii::$app->formatter->datetimeFormat],
+            ['activate_at', 'datetime', 'format' => DateTimeHelper::modifyFormat(Yii::$app->formatter->datetimeFormat, [':s' => ''])],  // validate date&time without seconds
             ['activate_at', 'validateActivationTime'],
             ['is_active', 'in', 'range' => ['no', 'yes']],
             ['is_active', 'default', 'value' => 0],
