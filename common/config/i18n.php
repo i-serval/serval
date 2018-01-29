@@ -3,7 +3,6 @@ return [
 
     'language' => 'en-US',
     'timeZone' => 'Europe/Kiev',
-    //'timeZone' => 'UTC',
     'supportedLanguages' => [
         'en-US' => 'English',
         'uk-UA' => 'Ukrainian',
@@ -18,6 +17,7 @@ return [
             'datetimeFormat' => 'php:m/d/Y H:i:s',
             'currencyCode' => 'USD',
             'locale' => 'en-US',
+            'timeZone' => 'UTC'
         ],
 
         'uk-UA' => [
@@ -26,6 +26,7 @@ return [
             'datetimeFormat' => 'php:d.m.Y H:i:s',
             'currencyCode' => 'UAN',
             'locale' => 'uk-UA',
+            'timeZone' => 'UTC'
         ],
 
         'ru-RU' => [
@@ -34,6 +35,7 @@ return [
             'datetimeFormat' => 'php:d.m.Y H:i:s',
             'currencyCode' => 'RUB',
             'locale' => 'ru-RU',
+            'timeZone' => 'UTC'
         ],
 
     ]

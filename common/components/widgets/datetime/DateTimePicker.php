@@ -4,28 +4,22 @@ namespace common\components\widgets\datetime;
 
 use Yii;
 use yii\base\Model;
-
-//use yii\base\InvalidParamException;
-///use yii\helpers\FormatConverter;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
-use common\components\widgets\datetime\DateTimePickerAsset;
 use common\models\serval\helper\DateTimeHelper;
+use common\components\widgets\datetime\DateTimePickerAsset;
 
 class DateTimePicker extends \yii\base\Widget
 {
 
-    protected $clientEventMap = [];
-    public $clientOptions = [];
-    public $clientEvents = [];
-    public $containerOptions = []; // field container options
-    public $name;
+    public $containerOptions = [];  // field container options
+    public $name;                   // input name
     public $inline = false;         // display inline picker
     public $model;                  // form model
     public $attribute;              // form model attribute name
     public $value;                  // input value
-    public $dateTimeFormat;         // format for input value
+    public $format;                 // format for input value
     public $pluginOptions = [];     // array set as json config to datetimepicker
     public $language;               // locale
     public $container_id;           // container id for form field
@@ -74,11 +68,13 @@ class DateTimePicker extends \yii\base\Widget
             $this->containerOptions['id'] = $this->options['id'] . '-container';
         }
 
-        if ($this->dateTimeFormat === null) {
-            $this->dateTimeFormat = Yii::$app->formatter->datetimeFormat;
-        }
-
         $this->initDefaulPlaginOptions();
+
+        if( $this->format != null ){
+
+            $this->format = $this->prepareFormat($this->format);
+
+        }
 
         $this->pluginOptions = ArrayHelper::merge($this->defaultPlaginOptions, $this->pluginOptions);
 
@@ -91,19 +87,6 @@ class DateTimePicker extends \yii\base\Widget
         $this->divTagOptions['id'] = $container_id;
 
         echo $this->renderWidget() . "\n";
-
-
-        //$language = $this->pluginOptions['locale'] ? $this->pluginOptions['locale'] : Yii::$app->language;
-
-
-        // залежно від нашого формату втсновлюємо необхідний для жабаскрипт плагіну
-        /*if (strncmp($this->dateTimeFormat, 'php:', 4) === 0) {
-            $this->clientOptions['dateTimeFormat'] = FormatConverter::convertDatePhpToJui(substr($this->dateTimeFormat, 4));
-        } else {
-            $this->clientOptions['dateTimeFormat'] = FormatConverter::convertDateIcuToJui($this->dateTimeFormat, 'date', $language);
-        }*/
-
-        //$this->registerClientEvents('datepicker', $containerID);
 
         $options = Json::htmlEncode($this->pluginOptions);
 
@@ -126,7 +109,7 @@ class DateTimePicker extends \yii\base\Widget
         if ($value !== null && $value !== '') {
             // format value according to dateFormat
             try {
-                $value = Yii::$app->formatter->asDatetime($value, $this->dateTimeFormat);
+                $value = Yii::$app->formatter->asDatetime($value, $this->format);
             } catch (InvalidParamException $e) {
                 // ignore exception and keep original value if it is not a valid date
             }
@@ -149,11 +132,9 @@ class DateTimePicker extends \yii\base\Widget
             } else {
                 $contents[] = Html::hiddenInput($this->name, $value, $options);
             }
-            $this->clientOptions['defaultDate'] = $value;
-            $this->clientOptions['altField'] = '#' . $this->options['id'];
+
             $contents[] = Html::tag('div', null, $this->containerOptions);
         }
-
 
         $input_tag = implode("\n", $contents);
 
@@ -182,26 +163,36 @@ class DateTimePicker extends \yii\base\Widget
         $this->divTagOptions['class'] .= ' ' . $this->divTagClasses[$this->type];
         $this->spanTagOptions['class'] .= ' ' . $this->iconClass;
 
+        $format = null;
+
         if ($this->type == 'date-time') {
-            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->datetimeFormat);
+            $format = $this->prepareFormat(Yii::$app->formatter->datetimeFormat);
         } elseif ($this->type == 'date') {
-            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->dateFormat);
+            $format = $this->prepareFormat(Yii::$app->formatter->dateFormat);
         } elseif ($this->type == 'time') {
-            $this->defaultPlaginOptions['format'] = $this->convertFormat(Yii::$app->formatter->timeFormat);
+            $format = $this->prepareFormat(Yii::$app->formatter->timeFormat);
         }
+
+        $this->format = $format;
+
+        $this->defaultPlaginOptions['format']  = DateTimeHelper::convertPHPToMomentFormat($format);
 
     }
 
-    protected function convertFormat($format)
+    protected function prepareFormat($format)
     {
 
         if (!$this->timeWithSeconds) {
+
             $format = DateTimeHelper::modifyFormat($format, [':s' => '']);
+
         } else {
+
             $this->divTagOptions['class'] .= ' ' . 'with-seconds';
+
         }
 
-        return DateTimeHelper::convertPHPToMomentFormat($format);
+        return $format;
 
     }
 }

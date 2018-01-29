@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\serval\helper\DateTimeHelper;
+use common\models\serval\helper\GridViewHelper;
 
 $this->title = Yii::t('carousel', 'Sliders List');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
 <div class="carousel-record-index">
 
     <div class="page-title-wrapper">
@@ -23,68 +26,65 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $data_provider,
         'filterModel' => $search_model,
         'columns' => [
+
             ['class' => 'yii\grid\SerialColumn'],
 
             [
                 'attribute' => 'id',
-                'contentOptions' => [ 'class'=>'col-4-chars' ],
+                'headerOptions' => ['class' => 'col-4-chars'],
+                'filterOptions' => ['class' => 'col-4-chars'],
+                'contentOptions' => ['class' => 'col-4-chars'],
             ],
 
             [
                 'attribute' => 'title',
-                'label' => Yii::t('carousel','Name'),
-                'contentOptions' => [ 'class'=>'col-550px' ],
+                'label' => Yii::t('carousel', 'Name'),
+                'contentOptions' => ['class' => 'col-550px'],
             ],
 
             [
                 'attribute' => 'description',
-                'label' => Yii::t('carousel','Description'),
+                'label' => Yii::t('carousel', 'Description'),
             ],
 
             [
                 'attribute' => 'created_at',
                 'format' => 'datetime',
-                'label' => Yii::t('serval','Created'),
-                'contentOptions' => [ 'class'=>'col-13-chars' ],
+                'label' => Yii::t('serval', 'Created'),
+                'contentOptions' => ['class' => 'col-data-time seconds'],
             ],
 
             [
                 'attribute' => 'updated_at',
-                'label' => Yii::t('serval','Updated'),
+                'label' => Yii::t('serval', 'Updated'),
                 'format' => 'datetime',
-                'contentOptions' => [ 'class'=>'col-13-chars' ],
+                'contentOptions' => ['class' => 'col-data-time seconds'],
             ],
 
             [
                 'attribute' => 'activate_at',
-                'label' => Yii::t('carousel','Activate at'),
-                'value' =>function( $carousel )
-                {
-                    if( $carousel->activate_at  != null ) {
-                        return Yii::$app->formatter->asDatetime($carousel->activate_at);
-                    }
-
-                    return '-';
+                'label' => Yii::t('carousel', 'Activate at'),
+                'value' => function ($carousel) {
+                    return DateTimeHelper::getDatetimeWithoutSeconds($carousel->activate_at);
                 },
-                'contentOptions' => [ 'class'=>'col-13-chars' ],
+                'contentOptions' => ['class' => 'col-data-time'],
             ],
 
             [
                 'attribute' => 'is_active',
-                'label' => Yii::t('carousel','is Active'),
-                'value' =>  function( $carousel )
-                {
-                    return ( $carousel->is_active == 1 ) ? '<span class="green">' . Yii::t('serval','Yes') . '</span>' : '<span class="red"> ' . Yii::t('serval','No') . '</span>';
+                'label' => Yii::t('carousel', 'is Active'),
+                'value' => function ($carousel) {
+                    return GridViewHelper::yesNo($carousel->is_active);
                 },
-                'filter' => ['0'=> Yii::t('serval','No'), '1' => Yii::t('serval','Yes') ],
+                'filter' => ['no' => Yii::t('serval', 'No'), 'yes' => Yii::t('serval', 'Yes')],
                 'format' => 'html',
-                'contentOptions' => [ 'class'=>'col-80px' ],
+                'contentOptions' => ['class' => 'col-yes-no'],
             ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header'=> Yii::t('grid-view','Action'),
-                'headerOptions' => [ 'class' => 'action-3-items' ],
+                'header' => Yii::t('grid-view', 'Action'),
+                'headerOptions' => ['class' => 'action-3-items'],
             ],
         ],
     ]); ?>

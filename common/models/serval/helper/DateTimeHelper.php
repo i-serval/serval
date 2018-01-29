@@ -3,6 +3,7 @@
 namespace common\models\serval\helper;
 
 use DateTime;
+use Yii;
 
 class DateTimeHelper
 {
@@ -18,7 +19,7 @@ class DateTimeHelper
 
         }
 
-        if ( $stamp == null || $stamp == 0 || $stamp == false || $stamp == '' ){
+        if ($stamp == null || $stamp == 0 || $stamp == false || $stamp == '') {
             return null;
         }
 
@@ -53,6 +54,9 @@ class DateTimeHelper
 
     public static function convertToUTC($date_time)
     {
+        if( $date_time == null ){
+            return null;
+        }
 
         if (is_object($date_time)) {
 
@@ -123,6 +127,19 @@ class DateTimeHelper
     {
 
         return strtr($format, $replacements);
+
+    }
+
+    public static function getDatetimeWithoutSeconds($date_time, $not_set_value = '-')
+    {
+
+        if ($date_time != null) {
+
+            return Yii::$app->formatter->asDatetime($date_time, DateTimeHelper::modifyFormat(Yii::$app->formatter->datetimeFormat, [':s' => '']));
+
+        }
+
+        return $not_set_value;
 
     }
 

@@ -1,30 +1,64 @@
+
 .nowrap{ white-space: nowrap; }
 .red{ color: red; }
 .green{ color: green; }
 
-/* grid view global */
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* GridView Global */
 
 td.number-col{ width: 5px; }
+th.number-col{ width: 5px; }
+
+
 td.col-3-chars{ width: 64px; }
+th.col-3-chars{ width: 64px; }
+
 td.col-4-chars{ width: 75px; }
+th.col-4-chars{ width: 75px; }
+
 td.col-10-chars{ width: 90px; }
-td.col-13-chars-t{ width: 121px; }
-td.col-13-chars{ width: 150px; } /* 7,2 px per char + 18 px */
+th.col-10-chars{ width: 90px; }
+
+/*td.col-13-chars-t{ width: 121px; }
+td.col-13-chars{ width: 150px; }*/ /* 7,2 px per char + 18 px */
 
 
-td.col-150px-chars{ width: 167px; } /*+17px*/
-td.col-80px{ width: 80px }
-td.col-550px{ width: 550px }
+td.col-150px{ width: 167px; } /*+17px*/
+th.col-150px{ width: 167px; }
+
+td.col-80px{ width: 80px; }
+th.col-80px{ width: 80px; }
+
+td.col-550px{ width: 550px; }
+th.col-550px{ width: 550px; }
 
 
+td.col-yes-no{ width: 84px; }
+th.col-yes-no{ width: 84px; }
+
+td.col-data-time{ width: 130px; }
+th.col-data-time{ width: 130px; }
+
+td.col-data-time.seconds{ width: 152px; }
+th.col-data-time.seconds{ width: 152px; }
+
+td.action-3-items{ width: 75px; }
 th.action-3-items{ width: 75px; }
 
-/*  forms eements */
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*  Forms Elements */
+
 
 .yes-no-drop-down{
     width: 95px;
 }
 
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /*.country-index table { width: 600px; }
 .country-view table{ width: 600px; }
