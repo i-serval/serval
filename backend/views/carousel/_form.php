@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\components\widgets\datetime\DateTimePicker;
+use common\models\serval\helper\DateTimeHelper;
+use common\components\datetimepicker\widget\DateTimePicker;
 
 $yes_no_items = [
     'no' => Yii::t('serval', 'No'),
@@ -20,18 +21,18 @@ $yes_no_items = [
             'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
         ],
         'options' => [
-            'class' => 'col-sm-6',
+            'class' => 'col-sm-5',
         ]
     ]);
 
     ?>
-
     <?= $form->field($carousel_form, 'title')->textInput() ?>
 
     <?= $form->field($carousel_form, 'description')->textarea(['rows' => '4']) ?>
 
     <?= $form->field($carousel_form, 'activate_at')
         ->widget(DateTimePicker::classname(), [
+            'format' => DateTimeHelper::modifyFormat(Yii::$app->formatter->datetimeFormat, [':s' => '']),
             'pluginOptions' => [
                 'showTodayButton' => true,
                 'showClear' => true,

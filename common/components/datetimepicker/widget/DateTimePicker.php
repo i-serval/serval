@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\widgets\datetime;
+namespace common\components\datetimepicker\widget;
 
 use Yii;
 use yii\base\Model;
@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use common\models\serval\helper\DateTimeHelper;
-use common\components\widgets\datetime\DateTimePickerAsset;
+use common\components\datetimepicker\widget\DateTimePickerAsset;
 
 class DateTimePicker extends \yii\base\Widget
 {
@@ -49,11 +49,8 @@ class DateTimePicker extends \yii\base\Widget
 
     public $noIcon = false;                     // switch on/off icon image near input
     public $iconClass = 'glyphicon-calendar';   // icon image near input
-
-    public $timeWithSeconds = false;
-
+    public $wrapperCssClass = null;
     protected $defaultPlaginOptions = [];
-
 
     public function init()
     {
@@ -70,10 +67,8 @@ class DateTimePicker extends \yii\base\Widget
 
         $this->initDefaulPlaginOptions();
 
-        if( $this->format != null ){
-
-            $this->format = $this->prepareFormat($this->format);
-
+        if( $this->wrapperCssClass != null) {
+            $this->divTagOptions['class'] .= ' ' . $this->wrapperCssClass;
         }
 
         $this->pluginOptions = ArrayHelper::merge($this->defaultPlaginOptions, $this->pluginOptions);
@@ -163,36 +158,28 @@ class DateTimePicker extends \yii\base\Widget
         $this->divTagOptions['class'] .= ' ' . $this->divTagClasses[$this->type];
         $this->spanTagOptions['class'] .= ' ' . $this->iconClass;
 
-        $format = null;
 
-        if ($this->type == 'date-time') {
-            $format = $this->prepareFormat(Yii::$app->formatter->datetimeFormat);
-        } elseif ($this->type == 'date') {
-            $format = $this->prepareFormat(Yii::$app->formatter->dateFormat);
-        } elseif ($this->type == 'time') {
-            $format = $this->prepareFormat(Yii::$app->formatter->timeFormat);
-        }
+        if( $this->format == null ) {
 
-        $this->format = $format;
+            $format = null;
 
-        $this->defaultPlaginOptions['format']  = DateTimeHelper::convertPHPToMomentFormat($format);
+            if ($this->type == 'date-time') {
+                $format = Yii::$app->formatter->datetimeFormat;
+            } elseif ($this->type == 'date') {
+                $format = Yii::$app->formatter->dateFormat;
+            } elseif ($this->type == 'time') {
+                $format = Yii::$app->formatter->timeFormat;
+            }
 
-    }
+            $this->defaultPlaginOptions['format'] = DateTimeHelper::convertPHPToMomentFormat($format);
 
-    protected function prepareFormat($format)
-    {
+        } else{
 
-        if (!$this->timeWithSeconds) {
-
-            $format = DateTimeHelper::modifyFormat($format, [':s' => '']);
-
-        } else {
-
-            $this->divTagOptions['class'] .= ' ' . 'with-seconds';
+            $this->pluginOptions['format'] = DateTimeHelper::convertPHPToMomentFormat($this->format);
 
         }
 
-        return $format;
 
     }
+
 }
