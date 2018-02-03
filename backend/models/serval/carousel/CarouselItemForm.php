@@ -27,7 +27,6 @@ class CarouselItemForm extends \yii\base\Model
 
         return [
             [['title', 'description'], 'string', 'max' => 255],
-            ['order', 'required'],
             [['carousel_image'], 'image', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'minWidth' => 1125, 'maxWidth' => 1125, 'minHeight' => 600, 'maxHeight' => 600, 'on' => 'create'],
             [['carousel_image'], 'image', 'extensions' => 'png, jpg', 'minWidth' => 1125, 'maxWidth' => 1125, 'minHeight' => 600, 'maxHeight' => 600, 'on' => 'update']
         ];
@@ -48,8 +47,6 @@ class CarouselItemForm extends \yii\base\Model
         $carousel_item = new CarouselItemRecord();
         $carousel_item->title = $this->title;
         $carousel_item->description = $this->description;
-        $carousel_item->order = (int)$this->order;
-
 
         if ($carousel_image->save()) {
 

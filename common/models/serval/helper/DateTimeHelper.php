@@ -10,7 +10,7 @@ class DateTimeHelper
 
     const UTC_STAMP_FORMAT = 'Y-m-d H:i:s';
 
-    public static function getMysqlTimestamp($stamp)
+    public static function getMysqlTimestamp($stamp = null)
     {
 
         if (is_object($stamp)) {
@@ -22,6 +22,13 @@ class DateTimeHelper
         if ($stamp == null || $stamp == 0 || $stamp == false || $stamp == '') {
             return null;
         }
+
+        return (new DateTime($stamp))->format(self::UTC_STAMP_FORMAT);
+
+    }
+
+    public static function getCurrentMysqlTimestamp($stamp = null)
+    {
 
         return (new DateTime($stamp))->format(self::UTC_STAMP_FORMAT);
 
@@ -140,6 +147,13 @@ class DateTimeHelper
         }
 
         return $not_set_value;
+
+    }
+
+    public static function getTimeFormatWithoutSeconds()
+    {
+
+        return DateTimeHelper::modifyFormat(Yii::$app->formatter->timeFormat, [':s' => '']);
 
     }
 

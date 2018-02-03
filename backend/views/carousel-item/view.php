@@ -6,9 +6,9 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Carousel */
 
-$this->title = 'View Carousel Item';
-//$this->params['breadcrumbs'][] = ['label' => 'Carousels', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('carousel', 'Slide View' );
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Slides List' ), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carousel-view">
 
@@ -17,25 +17,22 @@ $this->title = 'View Carousel Item';
     </div>
 
     <p>
-        <?= Html::a('Edit', ['update', 'id' => $carousel->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $carousel->id], [
+        <?= Html::a('Edit', ['update', 'id' => $carousel_item->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $carousel_item->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
-        &nbsp;
-        <?= Html::a('Go to List', '/carousel-item', ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
-        'model' => $carousel,
+        'model' => $carousel_item,
         'attributes' => [
             'id',
             'title',
             'description',
-            'order',
             [
                 'label' => 'Image',
                 'value' => function ($carousel) {

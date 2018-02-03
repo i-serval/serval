@@ -9,6 +9,8 @@ use common\models\serval\helper\DateTimeHelper;
 class CarouselRecord extends \yii\db\ActiveRecord
 {
 
+    public $carousel_items_count;
+
     public static function tableName()
     {
         return '{{%carousel}}';
@@ -36,10 +38,19 @@ class CarouselRecord extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getCarouselItems()
+    public function getCarousel_items()  // use underscore for right property name
     {
+
         return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
             ->viaTable('carousel_carousel_item', ['carousel_id' => 'id']);
+
+    }
+
+    public function getCarouselItemsCounts()
+    {
+
+        return count($this->carousel_items);
+
     }
 
     public function setTitle($title)

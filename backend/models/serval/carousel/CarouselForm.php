@@ -90,7 +90,12 @@ class CarouselForm extends Model
 
             if ($this->carousel_instance->is_active != $this->is_active && $this->is_active == 'yes') {
 
-                (new CarouselManager())->tryDeactivateAllExeptCurrent($carousel);
+                (new CarouselManager())->tryDeactivateAllExeptCurrent($carousel->id)
+                    ->setNullForExpiredActivationTime();
+
+                $carousel->activate_at = null;
+                $carousel->last_activation_at = DateTimeHelper::getCurrentMysqlTimestamp();
+                $carousel->save();
 
             }
 
@@ -130,7 +135,7 @@ class CarouselForm extends Model
 
         if ($this->carousel_instance->is_active == 'no' && $this->is_active == 'yes') {
 
-            if (count($this->carousel_instance->carouselItems) < 1) {
+            if (count($this->carousel_instance->carousel_items) < 1) {
 
                 $this->addError('is_active', Yii::t('carousel', 'For activation slider must have at least one slide image'));
 

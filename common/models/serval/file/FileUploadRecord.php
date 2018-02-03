@@ -5,7 +5,7 @@ namespace common\models\serval\file;
 use Yii;
 use DateTime;
 use yii\web\UploadedFile;
-
+use common\models\serval\helper\DateTimeHelper;
 
 class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
 {
@@ -61,21 +61,20 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
 
         if (parent::beforeSave($insert)) {
 
-            $time_stamp = (new DateTime())->getTimestamp();
 
-            $this->file_name = md5(uniqid(mt_rand(), true));
+            $this->name = md5(uniqid(mt_rand(), true));
 
             if ($this->to_tmp_folder === true) {
 
-                $this->file_name .= '-' . $time_stamp;
+                $this->name .= '-' . DateTimeHelper::getCurrentMysqlTimestamp();
 
             }
 
-            $this->file_orign_name = $this->uploaded_file->name;
-            $this->file_ext = $this->uploaded_file->extension;
-            $this->file_type = $this->uploaded_file->type;
+            $this->original_name = $this->uploaded_file->name;
+            $this->ext = $this->uploaded_file->extension;
+            $this->type = $this->uploaded_file->type;
             $this->size = $this->uploaded_file->size;
-            $this->upload_timestamp = $time_stamp;
+            $this->upload_time = DateTimeHelper::getCurrentMysqlTimestamp();
             $this->upload_user = Yii::$app->user->id;
 
             if ($this->moveUploadedFile()) {
@@ -90,7 +89,7 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
     protected function moveUploadedFile()
     {
 
-        return $this->uploaded_file->saveAs($this->getUploadPath() . '/' . $this->file_name . '.' . $this->file_ext);
+        return $this->uploaded_file->saveAs($this->getUploadPath() . '/' . $this->name . '.' . $this->ext);
 
     }
 

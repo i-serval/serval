@@ -8,26 +8,8 @@ use backend\models\serval\carousel\CarouselForm;
 use backend\models\serval\carousel\CarouselManager;
 use yii\web\NotFoundHttpException;
 
-//use yii\filters\VerbFilter;
-//use yii\helpers\ArrayHelper;
-
-
 class CarouselController extends \backend\controllers\ServalController
 {
-
-    /*public function behaviors()
-    {
-        return ArrayHelper::merge(parent::behaviors(), [
-
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ]
-            ]
-        ]);
-
-    }*/
 
     public function actionIndex()
     {
@@ -96,10 +78,15 @@ class CarouselController extends \backend\controllers\ServalController
     {
 
         if (($carousel = (new CarouselManager())->getModelByID($id)) != null) {
-            $carousel->delete();
-        }
 
-        Yii::$app->session->setFlash('success', Yii::t('serval', 'Record deleted successfully'));
+            $carousel->delete();
+            Yii::$app->session->setFlash('success', Yii::t('carousel', 'Slider deleted successfully'));
+
+        } else {
+
+            Yii::$app->session->setFlash('error', Yii::t('carousel', 'Slider not deleted'));
+
+        }
 
         return $this->redirect(['index']);
 
@@ -109,8 +96,9 @@ class CarouselController extends \backend\controllers\ServalController
     public function actionAddCarouselItem()
     {
 
+
         //$this->carousel
-        //use views forms from carouselitem
+        echo'use views forms from carouselitem';
 
 
     }

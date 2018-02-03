@@ -25,66 +25,121 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $data_provider,
         'filterModel' => $search_model,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered'
+        ],
         'columns' => [
 
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-2-chars'],
+            ],
 
             [
                 'attribute' => 'id',
-                'headerOptions' => ['class' => 'col-4-chars'],
-                'filterOptions' => ['class' => 'col-4-chars'],
-                'contentOptions' => ['class' => 'col-4-chars'],
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-3-chars'],
             ],
 
             [
                 'attribute' => 'title',
                 'label' => Yii::t('carousel', 'Name'),
-                'contentOptions' => ['class' => 'col-550px'],
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-350px'],
             ],
 
             [
+                'headerOptions' => ['class' => 'font-size-13px'],
                 'attribute' => 'description',
                 'label' => Yii::t('carousel', 'Description'),
             ],
 
             [
+                'attribute' => 'carousel_items_count',
+                'label' => Yii::t('carousel', 'Slides Count'),
+                'format' => 'html',
+                'value' => function ($carousel) {
+
+                    if ($carousel->carousel_items_count > 0) {
+
+                        return GridViewHelper::wrapToTag($carousel->carousel_items_count, ['class' => 'green font-size-20px']);
+
+                    }
+
+                    return GridViewHelper::wrapToTag($carousel->carousel_items_count, ['class' => 'red font-size-20px']);
+
+                },
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-91px'],
+                'contentOptions' => ['class' => 'text-align-center'],
+            ],
+
+            [
                 'attribute' => 'created_at',
-                'format' => 'datetime',
                 'label' => Yii::t('serval', 'Created'),
-                'contentOptions' => ['class' => 'col-data-time seconds'],
+                'format' => 'html',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->created_at);
+                },
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
             [
                 'attribute' => 'updated_at',
                 'label' => Yii::t('serval', 'Updated'),
-                'format' => 'datetime',
-                'contentOptions' => ['class' => 'col-data-time seconds'],
+                'format' => 'html',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->updated_at);
+                },
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-data-time rows'],
+            ],
+            [
+                'attribute' => 'last_activation_at',
+                'label' => Yii::t('serval', 'Last Activation'),
+                'format' => 'html',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->last_activation_at);
+                },
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
             [
                 'attribute' => 'activate_at',
                 'label' => Yii::t('carousel', 'Activate at'),
+                'format' => 'html',
                 'value' => function ($carousel) {
-                    return DateTimeHelper::getDatetimeWithoutSeconds($carousel->activate_at);
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->activate_at, $date_format = null, DateTimeHelper::getTimeFormatWithoutSeconds());//DateTimeHelper::getDatetimeWithoutSeconds($carousel->activate_at);
                 },
-                'contentOptions' => ['class' => 'col-data-time'],
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
             [
                 'attribute' => 'is_active',
                 'label' => Yii::t('carousel', 'is Active'),
-                'value' => function ($carousel) {
-                    return GridViewHelper::yesNo($carousel->is_active);
-                },
                 'filter' => ['no' => Yii::t('serval', 'No'), 'yes' => Yii::t('serval', 'Yes')],
                 'format' => 'html',
-                'contentOptions' => ['class' => 'col-yes-no'],
+                'filterInputOptions' => [
+                    'class' => 'form-control grid-drop-down-font-13px',
+                    'id' => null
+                ],
+                'value' => function ($carousel) {
+                    return GridViewHelper::yesNo($carousel->is_active, ['class' => 'font-size-20px']);
+                },
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'col-yes-no font-13px'],
+                'contentOptions' => ['class' => 'text-align-center'],
             ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
-                'headerOptions' => ['class' => 'action-3-items'],
+                'headerOptions' => ['class' => 'font-size-13px'],
+                'filterOptions' => ['class' => 'action-3-items'],
             ],
         ],
     ]); ?>

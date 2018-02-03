@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($carousel_item_form, 'description')->textArea(['maxlength' => true]) ?>
 
-    <?= $form->field($carousel_item_form, 'order')->textInput() ?>
-
     <?php
 
     //$img_tag = ($carousel_form->carousel_image->getFileUrl() != null) ? Html::img($carousel_form->carousel_image->getFileUrl(), ['width' => '200px', 'height' => 'auto']) . '<br /><br />' : '';

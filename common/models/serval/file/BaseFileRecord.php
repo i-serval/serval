@@ -27,10 +27,10 @@ class BaseFileRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['size', 'upload_user', 'upload_timestamp'], 'integer'],
-            [['file_name', 'file_orign_name'], 'string', 'max' => 255],
-            [['file_ext'], 'string', 'max' => 10],
-            [['file_type'], 'string', 'max' => 25],
+            [['size', 'upload_user'], 'integer'],
+            [['name', 'original_name'], 'string', 'max' => 255],
+            [['ext'], 'string', 'max' => 10],
+            [['type'], 'string', 'max' => 25],
         ];
     }
 
@@ -38,30 +38,30 @@ class BaseFileRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('serval/files', 'ID'),
-            'file_name' => Yii::t('serval/files', 'File Name'),
-            'file_orign_name' => Yii::t('serval/files', 'File Orign Name'),
-            'file_ext' => Yii::t('serval/files', 'File Ext'),
-            'file_type' => Yii::t('serval/files', 'File Type'),
+            'name' => Yii::t('serval/files', 'File Name'),
+            'original_name' => Yii::t('serval/files', 'File Orign Name'),
+            'ext' => Yii::t('serval/files', 'File Ext'),
+            'type' => Yii::t('serval/files', 'File Type'),
             'size' => Yii::t('serval/files', 'Size'),
             'category' => Yii::t('serval/files', 'Category'),
-            'upload_timestamp' => Yii::t('serval/files', 'Upload Date'),
+            'upload_time' => Yii::t('serval/files', 'Uploaded'),
             'upload_user' => Yii::t('serval/files', 'Upload User'),
         ];
     }
 
     public function getFileOrignName()
     {
-        return $this->file_orign_name;
+        return $this->original_name;
     }
 
     public function getFileName()
     {
-        return $this->file_name;
+        return $this->name;
     }
 
     public function getFileExtension()
     {
-        return $this->file_ext;
+        return $this->ext;
     }
 
     public function getId()
@@ -86,7 +86,7 @@ class BaseFileRecord extends \yii\db\ActiveRecord
     public function delete()
     {
 
-        $file_path = $this->getFilePath() . '/' . $this->file_name . '.' . $this->file_ext;
+        $file_path = $this->getFilePath() . '/' . $this->name . '.' . $this->ext;
 
         if (file_exists($file_path) && is_file($file_path)) {
 

@@ -22,6 +22,7 @@ class m180125_201007_carousel extends Migration
             'description' => $this->string(),
             'created_at' => Schema::TYPE_DATETIME . ' NOT NULL',
             'updated_at' => Schema::TYPE_DATETIME . ' NOT NULL',
+            'last_activation_at' => Schema::TYPE_DATETIME . ' NULL DEFAULT NULL',
             'activate_at' => Schema::TYPE_DATETIME . ' NULL DEFAULT NULL',
             'is_active' => "ENUM('yes','no') NOT NULL DEFAULT 'no' ",
         ], $tableOptions);

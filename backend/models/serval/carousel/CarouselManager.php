@@ -3,7 +3,7 @@
 namespace backend\models\serval\carousel;
 
 use common\models\serval\carousel\CarouselRecord;
-
+use common\models\serval\helper\DateTimeHelper;
 
 class CarouselManager
 {
@@ -26,15 +26,31 @@ class CarouselManager
 
     }
 
-    public function tryDeactivateAllExeptCurrent($current_carousel)
+    public function tryDeactivateAllExeptCurrent($current_carousel_id)
     {
 
-        $active_carousels = CarouselRecord::find()->Where(['<>', 'id', $current_carousel->id])->andWhere(['is_active' => 1])->All();
+        $active_carousels = CarouselRecord::find()->Where(['<>', 'id', $current_carousel_id])->andWhere(['is_active' => 1])->All();
 
-        foreach ($active_carousels as $carousel) {
-            $carousel->is_active = 0;
-            $carousel->save();
+        foreach ($active_carousels as $carousel_item) {
+            $carousel_item->is_active = 0;
+            $carousel_item->save();
         }
+
+        return $this;
+
+    }
+
+    public function setNullForExpiredActivationTime()
+    {
+
+        $with_expired_activation_time = CarouselRecord::find()->Where(['<=', 'activate_at', DateTimeHelper::getCurrentMysqlTimestamp()])->All();
+
+        foreach ($with_expired_activation_time as $carousel_item) {
+            $carousel_item->activate_at = null;
+            $carousel_item->save();
+        }
+
+        return $this;
 
     }
 

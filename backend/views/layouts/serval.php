@@ -109,7 +109,12 @@ ServalAsset::register($this);
 
                                 [
                                     'label' => Yii::t('serval','Slider'),
-                                    'url' => ['/carousel', '/carousel/index', '/carousel/view', '/carousel/update', '/carousel/create', 'carousel-item/create'],
+                                    'url' => ['/carousel', '/carousel/index', '/carousel/view', '/carousel/update', '/carousel/create'],
+                                ],
+
+                                [
+                                    'label' => Yii::t('serval','Slides'),
+                                    'url' => ['/carousel-item', '/carousel-item/index', '/carousel-item/view', '/carousel-item/update', '/carousel-item/create', 'carousel-item/create'],
                                 ],
 
                                 [
