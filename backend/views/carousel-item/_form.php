@@ -8,7 +8,17 @@ use yii\widgets\ActiveForm;
 
 <div class="carousel-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php
+
+    $form = ActiveForm::begin([
+
+        'options' => [
+            'class' => 'col-sm-5',
+            'enctype' => 'multipart/form-data'
+        ]
+    ]);
+
+    ?>
 
     <?= $form->field($carousel_item_form, 'title')->textInput() ?>
 
@@ -16,9 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?php
 
-    //$img_tag = ($carousel_form->carousel_image->getFileUrl() != null) ? Html::img($carousel_form->carousel_image->getFileUrl(), ['width' => '200px', 'height' => 'auto']) . '<br /><br />' : '';
-
-    $img_tag = 'erfgergergergerg';
+    $img_tag = ($carousel_item_form->getImageUrl() != null) ? Html::img($carousel_item_form->getImageUrl(), ['width' => '200px', 'height' => 'auto']) . '<br /><br />' : '';
 
     $input_options = ['template' => '
             

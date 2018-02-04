@@ -26,31 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $data_provider,
         'filterModel' => $search_model,
         'tableOptions' => [
-            'class' => 'table table-striped table-bordered'
+            'class' => 'table table-striped table-bordered table-titles-font-size-13px'
         ],
         'columns' => [
 
             [
                 'class' => 'yii\grid\SerialColumn',
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-2-chars'],
             ],
 
             [
                 'attribute' => 'id',
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-3-chars'],
             ],
 
             [
                 'attribute' => 'title',
                 'label' => Yii::t('carousel', 'Name'),
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-350px'],
             ],
 
             [
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'attribute' => 'description',
                 'label' => Yii::t('carousel', 'Description'),
             ],
@@ -70,7 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return GridViewHelper::wrapToTag($carousel->carousel_items_count, ['class' => 'red font-size-20px']);
 
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-91px'],
                 'contentOptions' => ['class' => 'text-align-center'],
             ],
@@ -82,7 +77,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($carousel) {
                     return GridViewHelper::DateTimeRowsWithIcons($carousel->created_at);
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
@@ -93,7 +87,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($carousel) {
                     return GridViewHelper::DateTimeRowsWithIcons($carousel->updated_at);
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-data-time rows'],
             ],
             [
@@ -103,7 +96,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($carousel) {
                     return GridViewHelper::DateTimeRowsWithIcons($carousel->last_activation_at);
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
@@ -114,7 +106,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($carousel) {
                     return GridViewHelper::DateTimeRowsWithIcons($carousel->activate_at, $date_format = null, DateTimeHelper::getTimeFormatWithoutSeconds());//DateTimeHelper::getDatetimeWithoutSeconds($carousel->activate_at);
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-data-time rows'],
             ],
 
@@ -130,7 +121,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($carousel) {
                     return GridViewHelper::yesNo($carousel->is_active, ['class' => 'font-size-20px']);
                 },
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'col-yes-no font-13px'],
                 'contentOptions' => ['class' => 'text-align-center'],
             ],
@@ -138,7 +128,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
-                'headerOptions' => ['class' => 'font-size-13px'],
                 'filterOptions' => ['class' => 'action-3-items'],
             ],
         ],

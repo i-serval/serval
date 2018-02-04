@@ -57,24 +57,26 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionUpdate($id)
     {
 
-        var_dump("update");
-        die();
-        $carousel = CarouselRecord::findOne($id);
-        var_dump($carousel);
+        $carousel_item = (new CarouselItemManager())->getModelByID($id);
 
-        die();
+        $carousel_item_form = new CarouselItemForm();
+        $carousel_item_form->setAttributes($carousel_item->getAttributes());
+        $carousel_item_form->id = $carousel_item->id;
+        $carousel_item_form->carousel_item_instance = clone $carousel_item;
 
-        if ($carousel->load(Yii::$app->request->post()) && $carousel->save()) {
+        if ($carousel_item_form->load(Yii::$app->request->post())) {
 
-            return $this->redirect(['view', 'id' => $carousel->id]);
+            if ($updated_carousel_item = $carousel_item_form->update($carousel_item)) {
 
-        } else {
+                Yii::$app->session->setFlash('success', Yii::t('carousel', 'Slide updated successfully'));
 
-            return $this->render('update', [
-                'carousel' => $carousel,
-            ]);
-
+                return $this->redirect(['view', 'id' => $updated_carousel_item->id]);
+            }
         }
+
+        return $this->render('update', compact('carousel_item_form'));
+
+
     }
 
     public function actionDelete($id)

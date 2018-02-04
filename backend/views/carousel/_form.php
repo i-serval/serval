@@ -12,20 +12,10 @@ $yes_no_items = [
 
 ?>
 
-<div class="carousel-record-form">
+<div class="carousel-record-form" style="width: 720px;">
 
-    <?php
+    <?php $form = ActiveForm::begin(); ?>
 
-    $form = ActiveForm::begin([
-        'fieldConfig' => [
-            'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
-        ],
-        'options' => [
-            'class' => 'col-sm-5',
-        ]
-    ]);
-
-    ?>
     <?= $form->field($carousel_form, 'title')->textInput() ?>
 
     <?= $form->field($carousel_form, 'description')->textarea(['rows' => '4']) ?>

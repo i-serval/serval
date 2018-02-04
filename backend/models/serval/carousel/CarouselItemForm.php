@@ -15,6 +15,8 @@ class CarouselItemForm extends \yii\base\Model
     public $order;
     public $carousel_image;
 
+    public $carousel_item_instance;
+
     public function __construct(array $config = [])
     {
 
@@ -50,22 +52,51 @@ class CarouselItemForm extends \yii\base\Model
 
         if ($carousel_image->save()) {
 
-            $carousel_item->image_id = $carousel_image->id;
+            $carousel_item->link('image', $carousel_image);  // like $carousel_item->image_id = $carousel_image->id;
 
         } else {
 
             return null;
         }
 
+        return $carousel_item->save() ? $carousel_item : null;
 
-        /*
-                $r = $carousel_item->save();
-                $errors =  $carousel_item->getErrors();
+    }
 
-                $a = 234;*/
+    public function update($carousel_item)
+    {
+        $this->scenario = 'update';
+
+        $carousel_image = (new CarouselItemImageUploadRecord())
+            ->initFrom($carousel_item->image)
+            ->bind($this, 'carousel_image');
+
+        if (!$this->validate()) {
+
+            return null;
+        }
+
+        $carousel_item->title = $this->title;
+        $carousel_item->description = $this->description;
+
+        if ($carousel_image->save()) { //if set new image save it and link to carousel item
+
+            $carousel_item->link('image', $carousel_image);
+
+        }
 
         return $carousel_item->save() ? $carousel_item : null;
 
+    }
+
+    public function getImageUrl()
+    {
+
+        if (!isset($this->carousel_item_instance) || !isset($this->carousel_item_instance->image)) {
+            return null;
+        }
+
+        return $this->carousel_item_instance->image->getFileUrl();
 
     }
 

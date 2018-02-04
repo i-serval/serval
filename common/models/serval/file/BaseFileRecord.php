@@ -98,6 +98,17 @@ class BaseFileRecord extends \yii\db\ActiveRecord
 
     }
 
+    public function deleteFileInDisk($file_path)  // delete file in disk by path witout delete row in db
+    {
+
+        if (file_exists($file_path) && is_file($file_path)) {
+
+            unlink($file_path);
+
+        }
+
+    }
+
     protected function getFilePath()
     {
 

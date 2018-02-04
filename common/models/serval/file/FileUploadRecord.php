@@ -19,6 +19,18 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
 
     }
 
+    public function initFrom($model)
+    {
+
+        $this->setAttributes($model->getAttributes());
+        $this->id = $model->id;
+
+        $this->isNewRecord = false; // because need update instead of insert
+
+        return $this;
+
+    }
+
     public function bind($model, $property_name)
     {
 
@@ -59,8 +71,17 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
     public function beforeSave($insert)
     {
 
+        $path_to_old_file = '';
+
+        if(  !$insert ){
+            $path_to_old_file = $this->getFilePath() . '/' . $this->name . '.' . $this->ext;
+        }
+
         if (parent::beforeSave($insert)) {
 
+            if ($this->uploaded_file == null) {
+                return false;
+            }
 
             $this->name = md5(uniqid(mt_rand(), true));
 
@@ -78,6 +99,9 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
             $this->upload_user = Yii::$app->user->id;
 
             if ($this->moveUploadedFile()) {
+                if( !$insert ){ // if update delet prev file in disk
+                    $this->deleteFileInDisk($path_to_old_file);
+                }
                 return true;
             }
         }

@@ -33,7 +33,7 @@ class CarouselSearch extends CarouselRecord
 
         $query = CarouselRecord::find()
             ->joinWith('carousel_items')
-            ->addSelect('carousel.*, COUNT(carousel_id) AS carousel_items_count')
+            ->addSelect('carousel.*, COUNT(carousel_item.id) AS carousel_items_count')
             ->groupBy('carousel.id');
 
         $dataProvider = new ActiveDataProvider([
@@ -49,15 +49,15 @@ class CarouselSearch extends CarouselRecord
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'carousel.id' => $this->id,
             /*'created_at' => DateTimeHelper::convertToUTC($this->created_at),
             'updated_at' => DateTimeHelper::convertToUTC($this->updated_at),
             'activate_at' => $this->activate_at,*/
             'is_active' => $this->is_active,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'carousel.title', $this->title])
+            ->andFilterWhere(['like', 'carousel.description', $this->description]);
 
         // custom sorting
         $dataProvider->sort->attributes['carousel_items_count'] = [

@@ -143,7 +143,7 @@ class CarouselForm extends Model
 
         }
 
-        if ($this->carousel_instance->is_active == 'no' && $this->is_active == 'yes') {
+        if ($this->carousel_instance->is_active == 'yes' && $this->is_active == 'no') {
 
             $this->addError('is_active', Yii::t('carousel', 'You cannot deactivate the slider, just activate the other one and this is automatically deactivated'));
 

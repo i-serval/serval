@@ -1,9 +1,3 @@
-
-.nowrap{ white-space: nowrap; }
-.red{ color: red; }
-.green{ color: #5cb85c; }
-.text-align-center{   text-align: center;}
-
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
 /* GridView Global */
 
@@ -43,12 +37,18 @@ th.col-450px{ width: 450px; }
 td.col-450px-min{ min-width: 450px; }
 th.col-450px-min{ min-width: 450px; }
 
+td.col-200px{ width: 200px; }
+th.col-200px{ width: 200px; }
+
+td.col-200px.image-182px img{ width: 182px; height: auto; }
+th.col-200px.image-182px img{ width: 182px; height: auto; }
+
 td.col-550px{ width: 550px; }
 th.col-550px{ width: 550px; }
 
-
+/*
 td.col-yes-no{ width: 84px; }
-th.col-yes-no{ width: 84px; }
+th.col-yes-no{ width: 84px; }*/
 
 td.col-yes-no.font-13px{ width: 83px; }
 th.col-yes-no.font-13px{ width: 83px; }
@@ -103,6 +103,10 @@ div.grid-date-time-wrapper .glyphicon{
 .font-size-20px{font-size:20px;}
 .font-size-24px{font-size:24px;}
 .font-size-23px{font-size:23px;}
+
+table.table-titles-font-size-13px thead:first-child{
+    font-size: 13px;
+}
 
 
 

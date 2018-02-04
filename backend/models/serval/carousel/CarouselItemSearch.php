@@ -27,9 +27,7 @@ class CarouselItemSearch extends CarouselItemRecord
     {
         $query = CarouselItemRecord::find();
 
-        // add conditions that should always apply here
-
-        //$query->joinWith('image');   minimaze db queries from 16 to 12
+        $query->joinWith('image');
 
         $data_provider = new ActiveDataProvider([
             'query' => $query,
@@ -45,7 +43,7 @@ class CarouselItemSearch extends CarouselItemRecord
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'carousel_item.id' => $this->id,
 
         ]);
 

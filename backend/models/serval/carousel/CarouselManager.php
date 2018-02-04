@@ -2,6 +2,7 @@
 
 namespace backend\models\serval\carousel;
 
+use Yii;
 use common\models\serval\carousel\CarouselRecord;
 use common\models\serval\helper\DateTimeHelper;
 
@@ -19,6 +20,16 @@ class CarouselManager
 
     }
 
+    public function getModelByIDWithSlides($id)
+    {
+
+        return CarouselRecord::find()
+            ->joinWith('carousel_items.image')
+            ->Where(['carousel.id' => $id])
+            ->one();
+
+    }
+
     public function getActiveCarousel()
     {
 
@@ -29,12 +40,9 @@ class CarouselManager
     public function tryDeactivateAllExeptCurrent($current_carousel_id)
     {
 
-        $active_carousels = CarouselRecord::find()->Where(['<>', 'id', $current_carousel_id])->andWhere(['is_active' => 1])->All();
-
-        foreach ($active_carousels as $carousel_item) {
-            $carousel_item->is_active = 0;
-            $carousel_item->save();
-        }
+        Yii::$app->db->createCommand("UPDATE carousel SET is_active = 'no' WHERE id != :current_id AND is_active = 'yes'")
+            ->bindValue(':current_id', $current_carousel_id)
+            ->execute();
 
         return $this;
 
@@ -43,12 +51,9 @@ class CarouselManager
     public function setNullForExpiredActivationTime()
     {
 
-        $with_expired_activation_time = CarouselRecord::find()->Where(['<=', 'activate_at', DateTimeHelper::getCurrentMysqlTimestamp()])->All();
-
-        foreach ($with_expired_activation_time as $carousel_item) {
-            $carousel_item->activate_at = null;
-            $carousel_item->save();
-        }
+        Yii::$app->db->createCommand("UPDATE carousel SET activate_at = NULL WHERE activate_at <= :current_time")
+            ->bindValue(':current_time', DateTimeHelper::getCurrentMysqlTimestamp())
+            ->execute();
 
         return $this;
 

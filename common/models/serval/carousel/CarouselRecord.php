@@ -33,7 +33,7 @@ class CarouselRecord extends \yii\db\ActiveRecord
             'description' => 'Description',
             'created_at' => 'Created',
             'updated_at' => 'Updated',
-            'activate_at' => 'Time of activation',
+            'activate_at' => 'Time of Activation',
             'is_active' => 'Is Active',
         ];
     }

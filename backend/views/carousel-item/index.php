@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\serval\helper\GridViewHelper;
 
 $this->title = Yii::t('carousel','Slides');
 $this->params['breadcrumbs'][] = $this->title;
@@ -21,36 +22,46 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $data_provider,
         'filterModel' => $search_model,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-titles-font-size-13px'
+        ],
         'columns' => [
+
             [
                 'class' => 'yii\grid\SerialColumn',
-                'contentOptions' => ['class' => 'number-col'],
+                'filterOptions' => ['class' => 'col-2-chars'],
             ],
 
             [
                 'attribute' => 'id',
-                'contentOptions' => ['class' => 'col-4-chars'],
+                'filterOptions' => ['class' => 'col-3-chars'],
             ],
-            'title',
-            'description',
+
+            [
+                'attribute' => 'title',
+                'filterOptions' => ['class' => 'col-350px'],
+            ],
+
+            [
+                'attribute' => 'description',
+            ],
 
             [
                 'attribute' => 'image',
                 'value' => function ($carousel_item) {
-
-                    return Html::img($carousel_item->getImageUrl(), ['width' => '150px', 'height' => 'auto']);
-
-
+                    return Html::img( $carousel_item->getImageUrl());
                 },
+
                 'format' => 'html',
-                'contentOptions' => ['class' => 'col-150px-chars'],
+                'filterOptions' => ['class' => 'col-200px'],
+                'contentOptions' => ['class' => 'col-200px image-182px'],
 
             ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => 'Action',
-                'headerOptions' => ['class' => 'action-3-items'],
+                'header' => Yii::t('grid-view', 'Action'),
+                'filterOptions' => ['class' => 'action-3-items'],
             ],
         ],
     ]); ?>
