@@ -129,6 +129,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
                 'filterOptions' => ['class' => 'action-3-items'],
+
+                'template' => '{view}  {update}  {sort} {add-slide}  {delete}',
+                'buttons' => [
+
+                    'sort' => function ($url, $carousel, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-th-list"></span>',
+                            ['sort-carousel-items', 'carousel_id' => $carousel->id],
+                            ['title' => Yii::t('carousel', 'Sorting Items')]
+                        );
+
+                    },
+
+                    'add-slide' => function ($url, $carousel, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-plus"></span>',
+                            ['carousel/add-carousel-item', 'carousel_id' => $carousel->id],
+                            ['title' => Yii::t('carousel', 'Add Slide')]
+                        );
+
+                    },
+
+
+
+
+                ]
+
+
             ],
         ],
     ]); ?>

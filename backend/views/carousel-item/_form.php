@@ -6,14 +6,12 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="carousel-form">
+<div class="carousel-item-form">
 
     <?php
 
     $form = ActiveForm::begin([
-
         'options' => [
-            'class' => 'col-sm-5',
             'enctype' => 'multipart/form-data'
         ]
     ]);
@@ -22,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($carousel_item_form, 'title')->textInput() ?>
 
-    <?= $form->field($carousel_item_form, 'description')->textArea(['maxlength' => true]) ?>
+    <?= $form->field($carousel_item_form, 'description')->textArea(['rows' => 5]) ?>
 
     <?php
 

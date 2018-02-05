@@ -38,11 +38,22 @@ class CarouselRecord extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getCarousel_items()  // use underscore for right property name
+    public function getCarousel_items()   //simple relation via table
     {
 
         return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
             ->viaTable('carousel_carousel_item', ['carousel_id' => 'id']);
+
+    }
+
+    public function getCarousel_items_sorted()  //  use underscore for right property name, relation wit sorting on order in table carousel_carousel_item
+    {
+
+        return $this->hasMany(CarouselItemRecord::className(), ['id' => 'carousel_item_id'])
+            ->viaTable('carousel_carousel_item', ['carousel_id' => 'id'])
+            ->addSelect('`carousel_item`.*, carousel_carousel_item.order')
+            ->leftJoin('carousel_carousel_item', 'carousel_item.id = carousel_carousel_item.carousel_item_id')
+            ->orderBy(['carousel_carousel_item.order' => SORT_ASC]);
 
     }
 

@@ -16,10 +16,9 @@ th.col-4-chars{ width: 75px; }
 td.col-10-chars{ width: 90px; }
 th.col-10-chars{ width: 90px; }
 
-/*td.col-13-chars-t{ width: 121px; }
-td.col-13-chars{ width: 150px; }*/ /* 7,2 px per char + 18 px */
 
-td.col-150px{ width: 167px; } /*+17px*/
+
+td.col-150px{ width: 167px; }
 th.col-150px{ width: 167px; }
 
 td.col-80px{ width: 80px; }
@@ -46,10 +45,6 @@ th.col-200px.image-182px img{ width: 182px; height: auto; }
 td.col-550px{ width: 550px; }
 th.col-550px{ width: 550px; }
 
-/*
-td.col-yes-no{ width: 84px; }
-th.col-yes-no{ width: 84px; }*/
-
 td.col-yes-no.font-13px{ width: 83px; }
 th.col-yes-no.font-13px{ width: 83px; }
 
@@ -65,7 +60,6 @@ th.col-data-time.rows{ width: 112px; }
 td.action-3-items{ width: 75px; }
 th.action-3-items{ width: 75px; }
 
-
 .form-control.grid-drop-down-font-13px{
     font-size: 13px;
 }
@@ -73,79 +67,23 @@ th.action-3-items{ width: 75px; }
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
+/* Table Global */
+
+table.table-titles-font-size-13px thead:first-child{ font-size: 13px; }
+
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 /*  Forms Elements */
 
-
-.yes-no-drop-down{
-    width: 95px;
-}
-
-
-
+.yes-no-drop-down{ width: 95px; }
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-/*   ICONS */
+/* ICONS */
 
 div.grid-date-time-wrapper .glyphicon{
     color: #337ab7;
     top:2px;
     padding-right: 3px;
 }
-
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-/*   FONTS */
-
-.font-size-13px{font-size:13px;}
-.font-size-14px{font-size:14px;}
-.font-size-20px{font-size:20px;}
-.font-size-24px{font-size:24px;}
-.font-size-23px{font-size:23px;}
-
-table.table-titles-font-size-13px thead:first-child{
-    font-size: 13px;
-}
-
-
-
-/*.country-index table { width: 600px; }
-.country-view table{ width: 600px; }
-.country-form{ width: 300px; min-width: 300px;}
-
-.tour-form{ width: 1190px; min-width: 1190px; }
-.tour-form #tourform-price{ width: 100px; }
-.tour-form #tourform-country_id{ width: 150px; }
-.tour-form #tourform-is_promo_tour{ width: 80px; }
-.tour-form #tourform-is_hot{ width: 80px; }
-.tour-form #tourform-is_active{ width: 80px; }
-.tour-view table{ width: 600px; }
-.tour-form #tourform-description{ visibility:hidden; position: absolute;}
-
-div.grid-view table.article-table{ width: 1240px; max-width: 1240px; }
-.article-view table{ width: 1240px; max-width: 1240px; }
-.article-form { width: 1185px; min-width: 900px; }
-.article-form #article-title { visibility:hidden; position: absolute;}
-.article-form #article-description { visibility:hidden; position: absolute;}
-
-.carousel-form { width: 600px; }
-#carouselform-order { width: 45px; }
-.carousel-view table{ width: 1200px; max-width: 1200px; }
-
-
-.page-form{ width: 1185px; }
-.page-form #page-title { visibility:hidden; position: absolute; }
-.page-form #page-content { visibility:hidden; position: absolute; }
-div.page-view table.detail-view{ max-width:1200px; width:1200px;}
-div.page-view table.detail-view tr td { flex-wrap: nowrap;}
-
-.user-create form{ width: 400px;}
-.user-update form{ width: 400px;}
-.user-view table.detail-view{ width: 600px; max-width: 600px;}
-.user-index table { width: 1500px; }
-
-.meta-tags-form{
-    width: 900px;
-}*/
-

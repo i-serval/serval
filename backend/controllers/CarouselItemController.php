@@ -4,8 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
+use backend\assets\carousel\CarouselAsset;
 use backend\models\serval\carousel\CarouselItemForm;
 use backend\models\serval\carousel\CarouselItemManager;
 use backend\models\serval\carousel\CarouselItemSearch;
@@ -13,6 +12,12 @@ use backend\models\serval\carousel\CarouselItemSearch;
 
 class CarouselItemController extends \backend\controllers\ServalController
 {
+
+    public function init()
+    {
+        parent::init();
+        CarouselAsset::register($this->view);
+    }
 
     public function actionIndex()
     {
@@ -94,6 +99,22 @@ class CarouselItemController extends \backend\controllers\ServalController
         }
 
         return $this->redirect(['index']);
+
+    }
+
+    public function actionUpdateOrder($carousel_id) // use via ajax
+    {
+
+        $carousel_id = (int)$carousel_id;
+
+        $update_data = json_decode(Yii::$app->request->post('update_data'), true);
+        (new CarouselItemManager())->updateSlidesOrder($update_data, $carousel_id);
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return [
+            'result' => 'successs',
+        ];
 
     }
 

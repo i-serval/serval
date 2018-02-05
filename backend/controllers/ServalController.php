@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -62,6 +63,35 @@ class ServalController extends \yii\web\Controller
 
 
         }
+
+    }
+
+    // remember current url(route+params) for target named as 'controller/action'
+
+    protected function rememberCurrentUrl($target_controller_and_action)
+    {
+
+        Url::remember(Yii::$app->request->url, $target_controller_and_action);
+
+    }
+
+    // extract rememberes url(route+params) for current route if exists remembered
+
+    protected function getRememberedUrl($remove = true)
+    {
+
+        if (($url = Url::previous($this->getRoute())) != null) {
+
+            if ($remove) {
+
+                Url::remember(null, $this->getRoute());
+
+            }
+
+            return $url;
+        }
+
+        return null;
 
     }
 

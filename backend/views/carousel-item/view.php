@@ -29,8 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= DetailView::widget([
         'model' => $carousel_item,
+        'options' => [
+            'class' => 'table table-striped table-bordered detail-view',
+            'style' => 'width:500px;',
+        ],
+
         'attributes' => [
-            'id',
+            [
+                'attribute' => 'id',
+                'captionOptions' => ['style' => 'width:100px;'],
+            ],
             'title',
             'description',
             [

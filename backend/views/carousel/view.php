@@ -17,108 +17,98 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= $this->title ?></h1>
     </div>
 
-    <div class="flex-container" style="width: 1265px;">
+    <p>
+        <?= Html::a(Yii::t('serval', 'Edit'), ['update', 'id' => $carousel->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('serval', 'Delete'), ['delete', 'id' => $carousel->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+    <?= DetailView::widget([
+        'model' => $carousel,
+        'options' => [
+            'class' => 'table table-striped table-bordered detail-view',
+            'style' => 'width:625px;',
+        ],
+        'attributes' => [
 
-        <div class="flex-item">
-            <p>
-                <?= Html::a(Yii::t('serval', 'Edit'), ['update', 'id' => $carousel->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a(Yii::t('serval', 'Delete'), ['delete', 'id' => $carousel->id], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </p>
-            <?= DetailView::widget([
-                'model' => $carousel,
-                'options' => [
-                    'class' => 'table table-striped table-bordered detail-view',
-                    'style' => 'width:625px;',
-                ],
-                'attributes' => [
+            [
+                'attribute' => 'id',
+                'captionOptions' => ['style' => 'width:180px;'],
+            ],
 
-                    [
-                        'attribute' => 'id',
-                        'captionOptions' => ['style' => 'width:180px;'],
-                    ],
-                    'title',
-                    'description',
+            'title',
 
-                    [
-                        'attribute' => 'carousel_items_count',
-                        'label' => Yii::t('carousel', 'Slides Count'),
-                        'format' => 'html',
-                        'value' => function ($carousel) {
+            'description',
 
-                            $count = count($carousel->carousel_items);
-                            if ($count > 0) {
+            [
+                'attribute' => 'carousel_items_count',
+                'label' => Yii::t('carousel', 'Slides Count'),
+                'format' => 'html',
+                'value' => function ($carousel) {
 
-                                return GridViewHelper::wrapToTag($count, ['class' => 'green font-size-20px']);
+                    $count = count($carousel->carousel_items);
+                    if ($count > 0) {
 
-                            }
+                        return GridViewHelper::wrapToTag($count, ['class' => 'green font-size-20px']);
 
-                            return GridViewHelper::wrapToTag($count, ['class' => 'red font-size-20px']);
+                    }
 
-                        },
+                    return GridViewHelper::wrapToTag($count, ['class' => 'red font-size-20px']);
 
-                    ],
+                },
 
-                    [
-                        'attribute' => 'created_at',
-                        'value' => function ($carousel) {
-                            return GridViewHelper::DateTimeRowsWithIcons($carousel->created_at);
-                        },
-                        'format' => 'html'
-                    ],
+            ],
 
-                    [
-                        'attribute' => 'updated_at',
-                        'value' => function ($carousel) {
-                            return GridViewHelper::DateTimeRowsWithIcons($carousel->updated_at);
-                        },
-                        'format' => 'html'
-                    ],
+            [
+                'attribute' => 'created_at',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->created_at);
+                },
+                'format' => 'html'
+            ],
 
-                    [
-                        'attribute' => 'last_activation_at',
-                        'value' => function ($carousel) {
-                            return GridViewHelper::DateTimeRowsWithIcons($carousel->last_activation_at);
-                        },
-                        'format' => 'html'
-                    ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->updated_at);
+                },
+                'format' => 'html'
+            ],
 
-                    [
-                        'attribute' => 'activate_at',
-                        'value' => function ($carousel) {
-                            return GridViewHelper::DateTimeRowsWithIcons($carousel->activate_at);
-                        },
-                        'format' => 'html'
-                    ],
+            [
+                'attribute' => 'last_activation_at',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->last_activation_at);
+                },
+                'format' => 'html'
+            ],
 
-                    [
-                        'attribute' => 'is_active',
-                        'format' => 'html',
-                        'value' => function ($carousel) {
-                            return GridViewHelper::yesNo($carousel->is_active);
-                        },
-                    ]
-                ],
-            ]) ?>
+            [
+                'attribute' => 'activate_at',
+                'value' => function ($carousel) {
+                    return GridViewHelper::DateTimeRowsWithIcons($carousel->activate_at);
+                },
+                'format' => 'html'
+            ],
 
-        </div>
+            [
+                'attribute' => 'is_active',
+                'format' => 'html',
+                'value' => function ($carousel) {
+                    return GridViewHelper::yesNo($carousel->is_active);
+                },
+            ]
+        ],
+    ]) ?>
 
-        <div class="flex-item" style="padding-left: 15px" >
+    <br />
 
-            <p>
-                <?= Html::a(Yii::t('carousel', 'Create New Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id],  ['class' => 'btn btn-success' ] )?>
-                <?= Html::a(Yii::t('carousel', 'Attach Existing Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id], ['class' => 'btn btn-info']) ?>
-            </p>
-
-            <?= $this->render('blocks/carousel-items-list', ['carousel_items'=>$carousel->carousel_items]); ?>
-
-        </div>
-
+    <div class="carousel-view slides-list-wrapper">
+        <?= $this->render('blocks/carousel-items-list', ['carousel_items' => $carousel->carousel_items_sorted, 'carousel_id' => null]); ?>
     </div>
 
 </div>

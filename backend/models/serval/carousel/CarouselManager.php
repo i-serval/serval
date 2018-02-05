@@ -24,7 +24,7 @@ class CarouselManager
     {
 
         return CarouselRecord::find()
-            ->joinWith('carousel_items.image')
+            ->with('carousel_items_sorted.image')
             ->Where(['carousel.id' => $id])
             ->one();
 
@@ -56,6 +56,22 @@ class CarouselManager
             ->execute();
 
         return $this;
+
+    }
+
+    public function setDefaultOrderForItem($carousel_id, $carousel_item_id)
+    {
+
+        $query_count = Yii::$app->db->createCommand("SELECT count(id) FROM carousel_carousel_item WHERE carousel_id = :carousel_id ")
+            ->bindValue(':carousel_id', $carousel_id);
+
+        $items_count = $query_count->queryScalar();
+
+        Yii::$app->db->createCommand("UPDATE carousel_carousel_item SET `order`=:order  WHERE carousel_id = :carousel_id AND carousel_item_id =:carousel_item_id")
+            ->bindValue(':order', $items_count)  // count without increment because do after insert new row
+            ->bindValue(':carousel_id', $carousel_id)
+            ->bindValue(':carousel_item_id', $carousel_item_id)
+            ->execute();
 
     }
 

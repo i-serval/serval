@@ -9,6 +9,7 @@ use common\models\serval\carousel\CarouselItemImageRecord;
 
 class CarouselItemRecord extends ActiveRecord
 {
+    public $order;
 
     public static function tableName()
     {

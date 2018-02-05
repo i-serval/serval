@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\models\serval\helper\GridViewHelper;
 
 $this->title = Yii::t('carousel','Slides');
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $data_provider,
         'filterModel' => $search_model,
         'tableOptions' => [
-            'class' => 'table table-striped table-bordered table-titles-font-size-13px'
+            'class' => 'table table-striped table-bordered table-titles-font-size-13px',
+            'style' => 'max-width: 980px;'
         ],
         'columns' => [
 
