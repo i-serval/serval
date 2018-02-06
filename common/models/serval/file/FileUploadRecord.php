@@ -83,7 +83,7 @@ class FileUploadRecord extends \common\models\serval\file\BaseFileRecord
                 return false;
             }
 
-            $this->name = md5(uniqid(mt_rand(), true));
+            $this->name = md5(uniqid(mt_rand(), true)) . rand(0, 1000);
 
             if ($this->to_tmp_folder === true) {
 

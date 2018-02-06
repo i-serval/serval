@@ -25,7 +25,10 @@ class CarouselItemSearch extends CarouselItemRecord
 
     public function search($params)
     {
-        $query = CarouselItemRecord::find();
+        $query = CarouselItemRecord::find()
+            ->leftJoin('carousel_carousel_item', 'carousel_item.id = carousel_carousel_item.carousel_item_id')
+            ->addSelect('carousel_item.*, COUNT(carousel_carousel_item.carousel_item_id) AS use_count')
+            ->groupBy('carousel_item.id');
 
         $query->joinWith('image');
 

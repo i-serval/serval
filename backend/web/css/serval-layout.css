@@ -405,16 +405,18 @@ a:hover, a:active, a:focus { outline: 0; }
 .page-width{ width: 100%; min-width: 1320px; }
 .text-decoration-off{ text-decoration: none; }
 .text-decoration-off:hover{ text-decoration: none; }
+.nowrap{ white-space: nowrap; }
 
 .outline-red{ outline: 1px solid red; }
 .outline-blue{ outline: 2px solid blue; }
 .outline-green{ outline: 3px solid green; }
-
-.nowrap{ white-space: nowrap; }
 .red{ color: red; }
 .green{ color: #5cb85c; }
 .text-align-center{ text-align: center;}
+
 .vertical-align-middle{vertical-align:middle;}
+table tr td.vertical-align-middle{vertical-align:middle;}
+
 thead.blue-thead{background-color: #d9edf7;}
 
 
@@ -422,6 +424,9 @@ thead.blue-thead{background-color: #d9edf7;}
 
 .font-size-13px{font-size:13px;}
 .font-size-14px{font-size:14px;}
+.font-size-15px{font-size:15px;}
+.font-size-16px{font-size:16px;}
+.font-size-17px{font-size:17px;}
 .font-size-20px{font-size:20px;}
 .font-size-24px{font-size:24px;}
 .font-size-23px{font-size:23px;}

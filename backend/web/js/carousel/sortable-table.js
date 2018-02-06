@@ -19,7 +19,6 @@ $(function () {
         forcePlaceholderSize: true,
         forceHelperSize: true,
         cursor: "move",
-//        axis: 'y',
 
         update: function (event, ui) {
 
@@ -32,8 +31,6 @@ $(function () {
                 order_td.find('span').html(index + 1);
                 order_td.attr('data-order', index + 1);
 
-                console.log( index );
-
             });
 
             var data = [];
@@ -45,6 +42,7 @@ $(function () {
             });
 
             $.ajax({
+
                 url: '/carousel-item/update-order?carousel_id=' + carousel_id,
                 method: 'POST',
                 data: {'update_data': JSON.stringify(data)},

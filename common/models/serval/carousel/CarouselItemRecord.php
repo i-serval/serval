@@ -9,7 +9,10 @@ use common\models\serval\carousel\CarouselItemImageRecord;
 
 class CarouselItemRecord extends ActiveRecord
 {
+
     public $order;
+    public $use_count;
+    public $is_used;
 
     public static function tableName()
     {
@@ -39,11 +42,12 @@ class CarouselItemRecord extends ActiveRecord
         ];
     }
 
-    public function getImageUrl(){
+    public function getImageUrl()
+    {
 
-        if( $this->image != null ) {
+        if ($this->image != null) {
             return $this->image->getFileUrl();
-        } else{
+        } else {
             return '/img/no_image.png';
         }
 
@@ -52,7 +56,7 @@ class CarouselItemRecord extends ActiveRecord
     public function delete()
     {
 
-        if( $this->image !== null ){
+        if ($this->image !== null) {
             $this->image->delete();
         }
 

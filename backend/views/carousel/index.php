@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 },
                 'filterOptions' => ['class' => 'col-91px'],
-                'contentOptions' => ['class' => 'text-align-center'],
+                'contentOptions' => ['class' => 'text-align-center vertical-align-middle'],
             ],
 
             [
@@ -122,15 +122,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return GridViewHelper::yesNo($carousel->is_active, ['class' => 'font-size-20px']);
                 },
                 'filterOptions' => ['class' => 'col-yes-no font-13px'],
-                'contentOptions' => ['class' => 'text-align-center'],
+                'contentOptions' => ['class' => 'text-align-center vertical-align-middle'],
             ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
-                'filterOptions' => ['class' => 'action-3-items'],
 
                 'template' => '{view}  {update}  {sort} {add-slide}  {delete}',
+
                 'buttons' => [
 
                     'sort' => function ($url, $carousel, $key) {
@@ -149,13 +149,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     },
 
+                ],
 
-
-
-                ]
-
+                'filterOptions' => ['class' => 'action-3-items'],
+                'contentOptions' => ['class' => 'font-size-17px'],
 
             ],
         ],
-    ]); ?>
+
+    ]);
+
+    ?>
+
 </div>

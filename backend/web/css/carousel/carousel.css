@@ -3,39 +3,27 @@
 
 
 
-.slides-list-wrapper{ width: 1000px; }
+/* carousel list simple table*/
+.slides-list-wrapper{ width: 800px; }
 .slides-list-wrapper .slides-list-id{  width: 58px; }
 .slides-list-wrapper .slides-list-order{  width: 116px; }
-.slides-list-wrapper .slides-list-title{  width: 618px; }
+.slides-list-wrapper .slides-list-title{  width: 418px; }
 .slides-list-wrapper .slides-list-image{  width: 208px; }
+.slides-list-wrapper .slides-list-detach{  width: 116px; }
+.slides-list-wrapper .slides-list-detach-content{  font-size: 25px; vertical-align: middle; text-align: center; }
 .slides-list-wrapper tr td.vertical-align-middle{ vertical-align:middle; }
 .bg-white tbody > tr:nth-of-type(even) { background-color: white; }
 
 /* /carousel/sort-carousel-items */
-.carousel-sort-items.slides-list-wrapper{ width: 1300px; }
+.carousel-sort-items.slides-list-wrapper{ width: 1100px; }
 
+/* /carousel/update */
+.carousel-update.slides-list-wrapper{ width: 916px; }
 
-/* carousel/view */
-/*.carousel-view.slides-list-wrapper{ width: 1000px; }
-.carousel-view.slides-list-wrapper .slides-list-id{  width: 50px; }
-.carousel-view.slides-list-wrapper .slides-list-image{  width: 208px; }
-.carousel-view.slides-list-wrapper .slides-list-order{  width: 116px; }
-.carousel-view.slides-list-wrapper tr td.vertical-align-middle{ vertical-align:middle; }
-.carousel-update .bg-white tbody > tr:nth-of-type(even) { background-color: white; }*/
-
-/* carousel/update */
-/*.carousel-update.slides-list-wrapper{ width: 1000px; }
-.carousel-update.slides-list-wrapper .slides-list-id{  width: 50px; }
-.carousel-update.slides-list-wrapper .slides-list-image{  width: 208px; }
-.carousel-update.slides-list-wrapper .slides-list-order{  width: 116px; }
-.carousel-update.slides-list-wrapper tr td.vertical-align-middle{ vertical-align:middle; }
-.carousel-update .bg-white tbody > tr:nth-of-type(even) { background-color: white; }*/
-
-/*.carousel-items-sort.slides-list-wrapper{ width: 1000px; }
-.carousel-items-sort.slides-list-wrapper .slides-list-id{  width: 50px; }
-.carousel-items-sort.slides-list-wrapper .slides-list-image{  width: 208px; }
-.carousel-items-sort.slides-list-wrapper .slides-list-order{  width: 116px; }
-.carousel-items-sort.slides-list-wrapper tr td.vertical-align-middle{ vertical-align:middle; }
-.carousel-items-sort.bg-white tbody > tr:nth-of-type(even) { background-color: white; }*/
+/* carousel/attach-carousel-items*/
+.attach-detach-carousel-item{
+    width: 16px;
+    height: 16px;
+}
 
 

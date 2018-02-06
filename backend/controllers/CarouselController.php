@@ -2,9 +2,10 @@
 
 namespace backend\controllers;
 
-
 use Yii;
+use backend\models\serval\carousel\CarouselItemManager;
 use backend\models\serval\carousel\CarouselSearch;
+use backend\models\serval\carousel\CarouselItemAttachSearch;
 use backend\models\serval\carousel\CarouselForm;
 use backend\models\serval\carousel\CarouselManager;
 use backend\models\serval\carousel\CarouselItemForm;
@@ -143,7 +144,7 @@ class CarouselController extends \backend\controllers\ServalController
     public function actionSortCarouselItems($carousel_id)
     {
 
-        if( ($carousel = (new CarouselManager())->getModelByIDWithSlides($carousel_id)) === null){
+        if (($carousel = (new CarouselManager())->getModelByIDWithSlides($carousel_id)) === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -151,6 +152,50 @@ class CarouselController extends \backend\controllers\ServalController
                 'carousel_id' => $carousel_id]
         );
 
+
+    }
+
+    public function actionAttachCarouselItems($carousel_id)
+    {
+
+        $search_model = new CarouselItemAttachSearch();
+        $search_model->search_carousel_id = $carousel_id;
+
+        $data_provider = $search_model->search(Yii::$app->request->queryParams);
+
+        return $this->render('attach-carousel-items', compact('search_model', 'data_provider', 'carousel_id'));
+
+    }
+
+    public function actionDetachCarouselItem() // use via ajax
+    {
+
+        $carousel = (new CarouselManager())->getModelByID(json_decode(Yii::$app->request->post('carousel_id'), true));
+        $carousel_item = (new CarouselItemManager())->getModelByID(json_decode(Yii::$app->request->post('carousel_item_id'), true));
+
+        $carousel->unlink('carousel_items', $carousel_item, true);
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return [
+            'result' => 'successs',
+        ];
+
+    }
+
+    public function actionAttachCarouselItem() // use via ajax
+    {
+
+        $carousel = (new CarouselManager())->getModelByID(json_decode(Yii::$app->request->post('carousel_id'), true));
+        $carousel_item = (new CarouselItemManager())->getModelByID(json_decode(Yii::$app->request->post('carousel_item_id'), true));
+
+        $carousel->link('carousel_items', $carousel_item);
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        return [
+            'result' => 'successs',
+        ];
 
     }
 

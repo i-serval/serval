@@ -7,7 +7,7 @@ use backend\assets\DateTimePickerAsset;
 /* @var $this yii\web\View */
 /* @var $model common\models\serval\carousel\CarouselRecord */
 
-$this->title = Yii::t('carousel', 'Create Slide');
+$this->title = Yii::t('carousel', 'Add Slide');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Sliders List'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Slider'), 'url' => ['view', 'id' => $carousel_id]];
 $this->params['breadcrumbs'][] = $this->title;
