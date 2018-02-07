@@ -53,6 +53,7 @@ class CarouselRecord extends \yii\db\ActiveRecord
             ->viaTable('carousel_carousel_item', ['carousel_id' => 'id'])
             ->addSelect('`carousel_item`.*, carousel_carousel_item.order')
             ->leftJoin('carousel_carousel_item', 'carousel_item.id = carousel_carousel_item.carousel_item_id')
+            ->Where('carousel_carousel_item.carousel_id = :current_carousel', [':current_carousel' => $this->id])
             ->orderBy(['carousel_carousel_item.order' => SORT_ASC]);
 
     }

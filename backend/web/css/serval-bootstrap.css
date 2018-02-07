@@ -27,8 +27,14 @@ th.col-80px{ width: 80px; }
 td.col-91px{ width: 91px; }
 th.col-91px{ width: 91px; }
 
+td.col-140px{ width: 140px; }
+th.col-140px{ width: 140px; }
+
 td.col-160px{ width: 160px; }
 th.col-160px{ width: 160px; }
+
+td.col-174px{ width: 174px; }
+th.col-174px{ width: 174px; }
 
 td.col-350px{ width: 350px; }
 th.col-350px{ width: 350px; }
@@ -62,6 +68,9 @@ th.col-data-time.rows{ width: 112px; }
 
 td.action-3-items{ min-width: 76px; width: 76px; }
 th.action-3-items{ min-width: 76px; width: 76px; }
+
+td.action-4-items{ min-width: 100px; width: 100px; }
+th.action-4-items{ min-width: 100px; width: 100px; }
 
 .form-control.grid-drop-down-font-13px{
     font-size: 13px;

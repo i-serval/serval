@@ -59,12 +59,6 @@ ServalAsset::register($this);
         Copyright &copy; <?= $copyright_year ?> <a class="link-copyright" href="http://google.com" target="_blank"
                                                    title="Google">Serval</a>. All rights reserved.
 
-        <?= \lajax\languagepicker\widgets\LanguagePicker::widget([
-            'skin' => \lajax\languagepicker\widgets\LanguagePicker::SKIN_BUTTON,
-            'size' => \lajax\languagepicker\widgets\LanguagePicker::SIZE_SMALL
-        ]); ?>
-
-        <?= Yii::$app->language?>
     </div>
 </footer>
 <?php $this->endBody() ?>

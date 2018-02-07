@@ -16,7 +16,7 @@ class CarouselItemAttachSearch extends CarouselItemRecord
     public function rules()
     {
         return [
-            [['id','use_count'], 'integer'],
+            [['id', 'use_count'], 'integer'],
             [['title', 'description', 'attach_status'], 'safe'],
         ];
     }
@@ -34,10 +34,8 @@ class CarouselItemAttachSearch extends CarouselItemRecord
             ->leftJoin('carousel_carousel_item AS cci', 'carousel_item.id = cci.carousel_item_id AND cci.carousel_id = :carousel_id ', [':carousel_id' => $this->search_carousel_id])
             ->groupBy('carousel_item.id');
 
-
         $a = '
-
-        SELECT `carousel_item`.*, COUNT(carousel_carousel_item.carousel_item_id) AS use_count, `cci`.`carousel_id` AS is_used
+SELECT `carousel_item`.*, COUNT(carousel_carousel_item.carousel_item_id) AS use_count, `cci`.`carousel_id` AS is_used
 FROM `carousel_item` 
 
 LEFT JOIN `file` ON `carousel_item`.`image_id` = `file`.`id` 
@@ -63,27 +61,23 @@ GROUP BY `carousel_item`.`id` LIMIT 20
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'carousel_item.id' => $this->id,
-
-        ]);
-
-        $query->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['carousel_item.id' => $this->id])
+            ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterHaving(['=', 'use_count', $this->use_count]);
 
-        if( $this->attach_status == 'attached'){
+        if ($this->attach_status == 'attached') {
 
-            //$query->andFilterWhere(['<>','cci.carousel_id','NULL']);
+            $query->andWhere('cci.carousel_id IS NOT NULL');
+            //$query->andFilterWhere(['not', ['cci.carousel_id' => null]]);
 
-            //$query->andFilterWhere([ 'not in','cci.carousel_id',null]);
+        } elseif ($this->attach_status == 'detached') {
 
-
-        }elseif( $this->attach_status == 'detached'){
-
-            //$query->andFilterWhere(['<>','cci.carousel_id','NOT NULL']);
+            $query->andWhere('cci.carousel_id IS NULL');
 
         }
+
+        //sorting
 
         $data_provider->sort->attributes['use_count'] = [
             'asc' => ['use_count' => SORT_ASC],
@@ -92,7 +86,8 @@ GROUP BY `carousel_item`.`id` LIMIT 20
 
         $data_provider->sort->defaultOrder = ['id' => SORT_ASC];
 
-
         return $data_provider;
+
     }
+
 }

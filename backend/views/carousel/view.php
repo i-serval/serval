@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br />
 
     <div class="carousel-view slides-list-wrapper">
-        <?= $this->render('blocks/carousel-items-list', ['carousel_items' => $carousel->carousel_items_sorted, 'carousel_id' => null]); ?>
+        <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel]); ?>
     </div>
 
 </div>

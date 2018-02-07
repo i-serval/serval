@@ -26,17 +26,15 @@ $this->params['breadcrumbs'][] = Yii::t('carousel', 'Edit');
         <hr/>
 
         <p>
-            <?= Html::a(Yii::t('carousel', 'Create New Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel_form->id], ['class' => 'btn btn-success']) ?>
-            <?= Html::a(Yii::t('carousel', 'Attach Existing Slide'), ['/carousel/attach-carousel-items', 'carousel_id' => $carousel_form->id], ['class' => 'btn btn-info']) ?>
+            <?= Html::a(Yii::t('carousel', 'Add New Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('carousel', 'Attach Existing Slide'), ['/carousel/attach-carousel-items', 'carousel_id' => $carousel->id], ['class' => 'btn btn-info']) ?>
         </p>
 
-        <h4><span class="label label-info"><?= Yii::t('carousel', 'click and drag to sort the items') ?></span></h4>
-
         <div class="carousel-update slides-list-wrapper">
-            <?= $this->render('blocks/carousel-items-list', ['carousel_items' => $carousel_items,
-                'carousel_id' => $carousel_form->id,
-                'with_detach' => true
-            ]); ?>
+            <div class="alert alert-info">
+                <strong><?= Yii::t('carousel', 'Click and drag to sort the items') ?> !</strong>
+            </div>
+            <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel,'with_detach' => true ]); ?>
         </div>
 
     <?php } ?>

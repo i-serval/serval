@@ -14,9 +14,9 @@ $(function () {
 
           if( carousel_item_id !== undefined ){
 
-              var data = {'carousel_id':carousel_id, 'carousel_item_id':carousel_item_id}
+              var counter = $(row).find('.use-count-value').find('span');
 
-              console.log(checkbox.is(':checked'));
+              var data = {'carousel_id':carousel_id, 'carousel_item_id':carousel_item_id}
 
               $("body").css("cursor", "progress");
               $(checkbox).css("cursor", "progress");
@@ -30,8 +30,12 @@ $(function () {
                       data: data,
 
                       success: function(response) {
+
+                          counter.html(parseInt(counter.html())-1);
+
                           $("body").css("cursor", "default");
                           $(checkbox).css("cursor", "default");
+
                       }
 
                   });
@@ -45,8 +49,12 @@ $(function () {
                       data: data,
 
                       success: function(response) {
+
+                          counter.html(parseInt(counter.html())+1);
+
                           $("body").css("cursor", "default");
                           $(checkbox).css("cursor", "default");
+
                       }
 
                   });

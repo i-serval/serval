@@ -9,7 +9,7 @@ AttachSlideAsset::register($this);
 
 $this->title = Yii::t('carousel', 'Attach Slides to Slider');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Sliders List'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Slider'), 'url' => ['update', 'id' => $carousel_id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Slider'), 'url' => ['update', 'id' => $carousel->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <h4>
-        <span class="label label-info"><?= Yii::t('carousel', 'Click on table row for attach/detach item') ?></span>
+        <b><?=Yii::t('carousel', 'Slider : ')?></b>"<?=$carousel->title?>"
     </h4>
 
     <?= GridView::widget([
@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-titles-font-size-13px',
-            'style' => 'max-width: 1100px;',
+            'style' => 'max-width: 1200px;',
             'id' => 'attach-detach-items',
-            'data-carousel-id' => $carousel_id,
+            'data-carousel-id' => $carousel->id,
         ],
 
         'rowOptions' => function ($carousel_item, $key, $index, $grid) {
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' => 'use_count',
-                'format' => 'html',
+                'format' => 'raw',
                 'value' => function ($carousel_item) {
 
                     $content = '';
@@ -70,7 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($carousel_item->use_count > 0) {
 
                         $content = GridViewHelper::wrapToTag($carousel_item->use_count, ['class' => 'font-size-24px']);
-                        $content .= '<br />' . Html::a(Yii::t('carousel', 'View Sliders'), ['carousel/list/', 'carousel_item_id' => $carousel_item->id]);
+                        $content .= '<br />' . Html::a(Yii::t('carousel', 'Open List'),
+                                ['carousel/list-by-item/', 'carousel_item_id' => $carousel_item->id],
+                                ['target' => '_blank']
+                            );
 
                     } else {
 
@@ -81,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
 
                 'contentOptions' => ['class' => 'text-align-center vertical-align-middle use-count-value'],
-                'filterOptions' => ['class' => 'col-160px'],
+                'filterOptions' => ['class' => 'col-140px'],
 
             ],
 
@@ -99,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             [
+
                 'attribute' => 'attach_status',
                 'header' => Yii::t('grid-view', 'Attach/Detach'),
                 'filter' => [
@@ -107,6 +111,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'detached' => Yii::t('carousel', 'Detached')
 
                 ],
+
+                'filterInputOptions' => [
+                    'class' => 'form-control grid-drop-down-font-13px',
+                    'id' => null
+                ],
+
                 'value' => function ($carousel_item) {
 
                     $checked = false;
@@ -116,12 +126,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
 
                     return Html::checkbox('carousel-item-' . $carousel_item->id, $checked, ['class' => 'attach-detach-carousel-item']);
-                    return "sdfsdfsdfsf";
 
                 },
 
                 'format' => 'raw',
-                'filterOptions' => ['class' => 'action-3-items'],
+                'filterOptions' => ['class' => 'col-174px'],
                 'contentOptions' => ['class' => 'vertical-align-middle text-align-center'],
 
             ],

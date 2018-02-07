@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'use_count',
-                'format' => 'html',
+                'format' => 'raw',
                 'value' => function ($carousel_item) {
 
                     $content = '';
@@ -56,7 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($carousel_item->use_count > 0) {
 
                         $content = GridViewHelper::wrapToTag($carousel_item->use_count, ['class' => 'font-size-24px']);
-                        $content .= '<br />' . Html::a(Yii::t('carousel', 'View Sliders'), ['carousel/list/', 'carousel_item_id' => $carousel_item->id]);
+                        $content .= '<br />' . Html::a(Yii::t('carousel', 'Open List'),
+                                ['carousel/list-by-item/', 'carousel_item_id' => $carousel_item->id],
+                                ['target' => '_blank']
+                            );
 
                     } else {
 
@@ -67,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
 
                 'contentOptions' => ['class' => 'text-align-center vertical-align-middle'],
+                'filterOptions' => ['class' => 'col-140px'],
 
             ],
 

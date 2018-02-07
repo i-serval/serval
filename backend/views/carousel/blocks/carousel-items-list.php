@@ -15,9 +15,9 @@ if (isset($with_detach) && $with_detach == true) {
 
 ?>
 
-<table id="slides-list" data-carousel-id="<?= $carousel_id ?>" class="table table-striped bg-white table-bordered">
+<table id="slides-list" data-carousel-id="<?= $carousel->id ?>" class="table table-striped bg-white table-bordered">
 
-    <thead class="blue-thead">
+    <thead class="green-thead">
 
     <tr>
 
@@ -57,7 +57,7 @@ if (isset($with_detach) && $with_detach == true) {
 
     <tbody>
 
-    <?php foreach ($carousel_items as $carousel_item) { ?>
+    <?php foreach ($carousel->carousel_items_sorted as $carousel_item) { ?>
         <tr data-id="<?= $carousel_item->id ?>">
 
             <td>
@@ -93,7 +93,7 @@ if (isset($with_detach) && $with_detach == true) {
                     <?php
 
                     echo Html::a('<span class="glyphicon glyphicon-remove"></span>',
-                        ['carousel/detach-carousel-item', 'carousel_id' => $carousel_id, 'carousel_item_id' => $carousel_item->id],
+                        ['carousel/detach-carousel-item', 'carousel_id' => $carousel->id, 'carousel_item_id' => $carousel_item->id],
                         ['title' => Yii::t('carousel', 'Detach Slide'), 'class' => 'slides-list-detach-link']
                     );
 

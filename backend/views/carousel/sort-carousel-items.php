@@ -7,6 +7,7 @@ SortableTableAsset::register($this);
 
 $this->title = Yii::t('carousel', 'Sort Slider Items');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Sliders List'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Slider'), 'url' => ['update', 'id' => $carousel->id]];
 $this->params['breadcrumbs'][] = Yii::t('carousel', 'Sort');
 
 ?>
@@ -17,11 +18,12 @@ $this->params['breadcrumbs'][] = Yii::t('carousel', 'Sort');
         <h1><?= $this->title ?></h1>
     </div>
 
-    <h4><span class="label label-info"><?= Yii::t('carousel', 'click and drag to sort the items') ?></span></h4>
+    <h4>
+        <b><?= Yii::t('carousel', 'Slider : ') ?></b>"<?= $carousel->title ?>"
+    </h4>
 
     <div class="carousel-sort-items slides-list-wrapper">
-        <?= $this->render('blocks/carousel-items-list', ['carousel_items' => $carousel_items,
-            'carousel_id' => $carousel_id, 'with_description' => true]); ?>
+        <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel, 'with_description' => true]); ?>
     </div>
 
 </div>
