@@ -4,12 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\serval\carousel\CarouselItemManager;
-use backend\models\serval\carousel\CarouselSearch;
-use backend\models\serval\carousel\CarouselItemAttachSearch;
-use backend\models\serval\carousel\CarouselByItemSearch;
-use backend\models\serval\carousel\CarouselForm;
+use backend\models\serval\carousel\search\CarouselSearch;
+use backend\models\serval\carousel\search\CarouselItemAttachSearch;
+use backend\models\serval\carousel\search\CarouselByItemSearch;
+use backend\models\serval\carousel\form\CarouselForm;
 use backend\models\serval\carousel\CarouselManager;
-use backend\models\serval\carousel\CarouselItemForm;
+use backend\models\serval\carousel\form\CarouselItemForm;
 use backend\assets\carousel\CarouselAsset;
 use yii\web\NotFoundHttpException;
 
@@ -21,13 +21,12 @@ class CarouselController extends \backend\controllers\ServalController
         parent::init();
 
         CarouselAsset::register($this->view);
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Data')];
 
     }
 
     public function actionIndex()
     {
-
-        $this->rememberCurrentUrl('carousel/add-carousel-item');
 
         $search_model = new CarouselSearch();
         $data_provider = $search_model->search(Yii::$app->request->queryParams);
@@ -68,8 +67,6 @@ class CarouselController extends \backend\controllers\ServalController
 
     public function actionUpdate($id)
     {
-
-        $this->rememberCurrentUrl('carousel/add-carousel-item');
 
         $carousel = (new CarouselManager())->getModelByIDWithSlides($id);
 
@@ -127,16 +124,13 @@ class CarouselController extends \backend\controllers\ServalController
 
                 Yii::$app->session->setFlash('success', Yii::t('serval', 'New Slide saved successfully'));
 
-                $redirect = $this->getRememberedUrl() ?? '/carousel-item';
-
-                return $this->redirect($redirect);
+                return $this->redirect($this->getRedirect() ?? '/carousel-item');
 
             }
 
         }
 
         return $this->render('create-carousel-item', compact('carousel_item_form', 'carousel'));
-
 
     }
 
@@ -222,7 +216,9 @@ class CarouselController extends \backend\controllers\ServalController
         $search_model->carousel_item_id = $carousel_item_id;
         $data_provider = $search_model->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', compact('search_model', 'data_provider'));
+        $carousel_item = (new CarouselItemManager())->getModelByID($carousel_item_id);
+
+        return $this->render('list-by-item', compact('search_model', 'data_provider', 'carousel_item'));
 
     }
 

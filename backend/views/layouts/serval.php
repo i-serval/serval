@@ -281,10 +281,11 @@ ServalAsset::register($this);
 <main class="page-width">
     <div class="content-wrapper">
         <?= Breadcrumbs::widget([
-            'homeLink' => [
+            'homeLink' => false,
+            /*'homeLink' => [
                 'label' => Yii::t('serval', 'Dashboard'),
                 'url' => ['/'],
-            ],
+            ],*/
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>

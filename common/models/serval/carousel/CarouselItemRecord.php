@@ -56,6 +56,17 @@ class CarouselItemRecord extends ActiveRecord
     public function delete()
     {
 
+        $count_of_use = Yii::$app->db->createCommand("SELECT count(id) FROM carousel_carousel_item WHERE carousel_item_id = :carousel_item_id")
+            ->bindValue(':carousel_item_id', $this->id)
+            ->queryScalar();
+
+        if( $count_of_use > 0 ) {
+
+            Yii::$app->session->setFlash('warning', Yii::t('carousel', 'Slide used in sliders, detach it before removing from sliders'));
+            return false;
+
+        }
+
         if ($this->image !== null) {
             $this->image->delete();
         }

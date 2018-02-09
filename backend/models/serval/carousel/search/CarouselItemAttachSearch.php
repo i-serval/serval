@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\serval\carousel;
+namespace backend\models\serval\carousel\search;
 
 use Yii;
 use yii\base\Model;
@@ -33,18 +33,6 @@ class CarouselItemAttachSearch extends CarouselItemRecord
             ->leftJoin('carousel_carousel_item', 'carousel_item.id = carousel_carousel_item.carousel_item_id')
             ->leftJoin('carousel_carousel_item AS cci', 'carousel_item.id = cci.carousel_item_id AND cci.carousel_id = :carousel_id ', [':carousel_id' => $this->search_carousel_id])
             ->groupBy('carousel_item.id');
-
-        $a = '
-SELECT `carousel_item`.*, COUNT(carousel_carousel_item.carousel_item_id) AS use_count, `cci`.`carousel_id` AS is_used
-FROM `carousel_item` 
-
-LEFT JOIN `file` ON `carousel_item`.`image_id` = `file`.`id` 
-LEFT JOIN `carousel_carousel_item` ON carousel_item.id = carousel_carousel_item.carousel_item_id 
-LEFT JOIN `carousel_carousel_item` AS `cci`  ON carousel_item.id = `cci`.carousel_item_id AND `cci`.`carousel_id` = 8
-
-GROUP BY `carousel_item`.`id` LIMIT 20
-';
-
 
         $query->joinWith('image');
 

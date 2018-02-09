@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\serval\carousel;
+namespace backend\models\serval\carousel\search;
 
 use Yii;
 use yii\base\Model;

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use backend\assets\carousel\SortableTableAsset;
 use backend\assets\carousel\DetachSlideAsset;
+use backend\controllers\CarouselController;
 
 SortableTableAsset::register($this);
 DetachSlideAsset::register($this);
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = Yii::t('carousel', 'Edit');
         <hr/>
 
         <p>
-            <?= Html::a(Yii::t('carousel', 'Add New Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Yii::t('carousel', 'Add New Slide'), ['/carousel/add-carousel-item', 'carousel_id' => $carousel->id, CarouselController::REDIRECT_PARAMETER => Yii::$app->request->url], ['class' => 'btn btn-success']) ?>
             <?= Html::a(Yii::t('carousel', 'Attach Existing Slide'), ['/carousel/attach-carousel-items', 'carousel_id' => $carousel->id], ['class' => 'btn btn-info']) ?>
         </p>
 
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = Yii::t('carousel', 'Edit');
             <div class="alert alert-info">
                 <strong><?= Yii::t('carousel', 'Click and drag to sort the items') ?> !</strong>
             </div>
-            <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel,'with_detach' => true ]); ?>
+            <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel,'with_detach' => true, 'with_action_column' => true ]); ?>
         </div>
 
     <?php } ?>

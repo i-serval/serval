@@ -10,7 +10,8 @@
 .slides-list-wrapper .slides-list-title{  width: 418px; }
 .slides-list-wrapper .slides-list-image{  width: 208px; }
 .slides-list-wrapper .slides-list-detach{  width: 116px; }
-.slides-list-wrapper .slides-list-detach-content{  font-size: 25px; vertical-align: middle; text-align: center; }
+.slides-list-wrapper .slides-list-detach-content{  font-size: 22px; vertical-align: middle; text-align: center; }
+.slides-list-wrapper .slides-list-action{  font-size: 16px; vertical-align: middle; text-align: center; }
 .slides-list-wrapper tr td.vertical-align-middle{ vertical-align:middle; }
 .bg-white tbody > tr:nth-of-type(even) { background-color: white; }
 
@@ -25,5 +26,6 @@
     width: 16px;
     height: 16px;
 }
+
 
 

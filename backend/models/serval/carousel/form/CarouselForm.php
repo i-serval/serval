@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\serval\carousel;
+namespace backend\models\serval\carousel\form;
 
 use Yii;
 use DateTime;

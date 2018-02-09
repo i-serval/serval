@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\serval\helper\GridViewHelper;
+use backend\controllers\CarouselItemController;
 
 $this->title = Yii::t('carousel', 'Slides');
 $this->params['breadcrumbs'][] = $this->title;
@@ -89,6 +90,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
+
+                'template' => '{view}  {update}  {delete}',
+
+                'buttons' => [
+
+                    'delete' => function ($url, $carousel_item, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                            ['/carousel-item/delete', 'id' => $carousel_item->id, CarouselItemController::REDIRECT_PARAMETER => Yii::$app->request->url],
+                            ['title' => Yii::t('carousel', 'Sorting Items')]
+                        );
+
+                    },
+                ],
+
                 'filterOptions' => ['class' => 'action-3-items'],
             ],
         ],

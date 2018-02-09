@@ -23,6 +23,9 @@ $this->params['breadcrumbs'][] = Yii::t('carousel', 'Sort');
     </h4>
 
     <div class="carousel-sort-items slides-list-wrapper">
+        <div class="alert alert-info">
+            <strong><?= Yii::t('carousel', 'Click and drag to sort the items') ?> !</strong>
+        </div>
         <?= $this->render('blocks/carousel-items-list', ['carousel' => $carousel, 'with_description' => true]); ?>
     </div>
 

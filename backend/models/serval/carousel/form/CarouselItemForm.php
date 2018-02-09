@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models\serval\carousel;
+namespace backend\models\serval\carousel\form;
 
 use backend\models\serval\carousel\CarouselItemImageUploadRecord;
 use common\models\serval\carousel\CarouselItemRecord;

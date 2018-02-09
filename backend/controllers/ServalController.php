@@ -11,6 +11,8 @@ use yii\web\NotFoundHttpException;
 class ServalController extends \yii\web\Controller
 {
 
+    const REDIRECT_PARAMETER = 'redirect';
+
     public function behaviors()
     {
         return [
@@ -61,23 +63,29 @@ class ServalController extends \yii\web\Controller
 
             throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
-
         }
+
+    }
+
+    public function getRedirect()
+    {
+
+        return Yii::$app->request->get(self::REDIRECT_PARAMETER);
 
     }
 
     // remember current url(route+params) for target named as 'controller/action'
 
-    protected function rememberCurrentUrl($target_controller_and_action)
-    {
+    /*    protected function rememberCurrentUrl($target_controller_and_action)
+        {
 
-        Url::remember(Yii::$app->request->url, $target_controller_and_action);
+            Url::remember(Yii::$app->request->url, $target_controller_and_action);
 
-    }
+        }*/
 
     // extract rememberes url(route+params) for current route if exists remembered
 
-    protected function getRememberedUrl($remove = true)
+    /*protected function getRememberedUrl($remove = true)
     {
 
         if (($url = Url::previous($this->getRoute())) != null) {
@@ -93,6 +101,6 @@ class ServalController extends \yii\web\Controller
 
         return null;
 
-    }
+    }*/
 
 }

@@ -4,6 +4,7 @@ namespace common\models\serval\carousel;
 
 use common\models\serval\carousel\CarouselItemRecord;
 use common\models\serval\helper\DateTimeHelper;
+use Yii;
 
 
 class CarouselRecord extends \yii\db\ActiveRecord
@@ -122,6 +123,17 @@ class CarouselRecord extends \yii\db\ActiveRecord
 
         $this->is_active = $yes_no;
         return $this;
+
+    }
+
+    public function delete()
+    {
+
+        Yii::$app->db->createCommand("DELETE FROM carousel_carousel_item WHERE carousel_id = :carousel_id")
+            ->bindValue(':carousel_id', $this->id)
+            ->execute();
+
+        return parent::delete();
 
     }
 

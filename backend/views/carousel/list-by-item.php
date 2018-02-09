@@ -1,27 +1,23 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\serval\helper\GridViewHelper;
 use common\models\serval\helper\DateTimeHelper;
-use backend\controllers\CarouselController;
 
-$this->title = Yii::t('carousel', 'Sliders List');
+$this->title = Yii::t('carousel', 'Sliders List By Slide Item');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<div class="carousel-record-index">
+<div class="carousel-record-list-by-item">
 
     <div class="page-title-wrapper">
         <h1><?= $this->title ?></h1>
     </div>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('carousel', 'Create Slider'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h4>
+        <b><?= Yii::t('carousel', 'List For Slide : ') ?></b>"<?= $carousel_item->title ?>"
+    </h4>
 
     <?= GridView::widget([
         'dataProvider' => $data_provider,
@@ -130,42 +126,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('grid-view', 'Action'),
 
-                'template' => '{view}  {update}  {sort} {add-slide} {attach-slide} {preview-slider} <div style="display: inline-block; width: 17px;"></div> {delete}',
+                'template' => '{view}  {update}',
 
                 'buttons' => [
 
-                    'sort' => function ($url, $carousel, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-th-list"></span>',
-                            ['sort-carousel-items', 'carousel_id' => $carousel->id],
-                            ['title' => Yii::t('carousel', 'Sorting Items')]
-                        );
+                    'view' => function ($url, $carousel, $key) {
 
-                    },
-
-                    'add-slide' => function ($url, $carousel, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-plus"></span>',
-                            ['carousel/add-carousel-item', 'carousel_id' => $carousel->id, CarouselController::REDIRECT_PARAMETER => Yii::$app->request->url],
-                            ['title' => Yii::t('carousel', 'Add Slide')]
-                        );
-
-                    },
-
-                    'attach-slide' => function ($url, $carousel, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-check"></span>',
-                            ['carousel/attach-carousel-items', 'carousel_id' => $carousel->id],
-                            ['title' => Yii::t('carousel', 'Attach Existing Slide')]
-                        );
-
-                    },
-
-                    'preview-slider' => function ($url, $carousel, $key) {
-
-                        return '<a href="' . \yii\helpers\Url::to(['carousel/preview', 'carousel_id' => $carousel->id]) . '" 
-                                    title="' . Yii::t('carousel', 'Preview Slider') . '"
+                        return '<a href="' . \yii\helpers\Url::to(['carousel/view', 'id' => $carousel->id]) . '" 
+                                    title="' . Yii::t('carousel', 'View Slider') . '"
                                     target="blank"
                                     class="text-decoration-off"
                                     >
-                                    <span class="glyphicon glyphicon-picture"></span>
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                 </a>';
+
+                    },
+
+                    'update' => function ($url, $carousel, $key) {
+
+                        return '<a href="' . \yii\helpers\Url::to(['carousel/update', 'id' => $carousel->id]) . '" 
+                                    title="' . Yii::t('carousel', 'Update') . '"
+                                    target="blank"
+                                    class="text-decoration-off"
+                                    >
+                                    <span class="glyphicon glyphicon-pencil"></span>
                                  </a>';
 
                     },

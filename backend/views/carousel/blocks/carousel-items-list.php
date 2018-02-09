@@ -1,9 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use backend\controllers\CarouselController;
 
 $is_show_description = false;
 $is_show_detach_column = false;
+$is_show_action_column = false;
 
 if (isset($with_description) && $with_description == true) {
     $is_show_description = true;
@@ -11,6 +13,10 @@ if (isset($with_description) && $with_description == true) {
 
 if (isset($with_detach) && $with_detach == true) {
     $is_show_detach_column = true;
+}
+
+if (isset($with_action_column) && $with_action_column == true) {
+    $is_show_action_column = true;
 }
 
 ?>
@@ -47,6 +53,14 @@ if (isset($with_detach) && $with_detach == true) {
 
             <td class="slides-list-detach">
                 <b><?= Yii::t('carousel', 'Detach') ?></b>
+            </td>
+
+        <?php } ?>
+
+        <?php if ($is_show_action_column == true) { ?>
+
+            <td class="slides-list-detach">
+                <b><?= Yii::t('carousel', 'Action') ?></b>
             </td>
 
         <?php } ?>
@@ -95,6 +109,26 @@ if (isset($with_detach) && $with_detach == true) {
                     echo Html::a('<span class="glyphicon glyphicon-remove"></span>',
                         ['carousel/detach-carousel-item', 'carousel_id' => $carousel->id, 'carousel_item_id' => $carousel_item->id],
                         ['title' => Yii::t('carousel', 'Detach Slide'), 'class' => 'slides-list-detach-link']
+                    );
+
+                    ?>
+                </td>
+
+            <?php } ?>
+
+            <?php if ($is_show_action_column == true) { ?>
+
+                <td class="slides-list-action">
+                    <?php
+
+                    echo  Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                        ['carousel-item/view', 'id' => $carousel_item->id],
+                        ['title' => Yii::t('carousel', 'View Slide')]
+                    );
+                    echo " ";
+                    echo Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                        ['carousel-item/update', 'id' => $carousel_item->id, CarouselController::REDIRECT_PARAMETER => Yii::$app->request->url ],
+                        ['title' => Yii::t('carousel', 'Edit Slide')]
                     );
 
                     ?>

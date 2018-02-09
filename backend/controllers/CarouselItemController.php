@@ -5,9 +5,9 @@ namespace backend\controllers;
 use Yii;
 use yii\web\NotFoundHttpException;
 use backend\assets\carousel\CarouselAsset;
-use backend\models\serval\carousel\CarouselItemForm;
+use backend\models\serval\carousel\form\CarouselItemForm;
 use backend\models\serval\carousel\CarouselItemManager;
-use backend\models\serval\carousel\CarouselItemSearch;
+use backend\models\serval\carousel\search\CarouselItemSearch;
 
 
 class CarouselItemController extends \backend\controllers\ServalController
@@ -17,6 +17,7 @@ class CarouselItemController extends \backend\controllers\ServalController
     {
         parent::init();
         CarouselAsset::register($this->view);
+        $this->view->params['breadcrumbs'][] = ['label' => Yii::t('carousel', 'Data')];
     }
 
     public function actionIndex()
@@ -75,7 +76,7 @@ class CarouselItemController extends \backend\controllers\ServalController
 
                 Yii::$app->session->setFlash('success', Yii::t('carousel', 'Slide updated successfully'));
 
-                return $this->redirect(['view', 'id' => $updated_carousel_item->id]);
+                return $this->redirect($this->getRedirect() ?? ['view', 'id' => $updated_carousel_item->id]);
             }
         }
 
@@ -87,9 +88,8 @@ class CarouselItemController extends \backend\controllers\ServalController
     public function actionDelete($id)
     {
 
-        if (($carousel_item = (new CarouselItemManager())->getModelByID($id)) != null) {
+        if (($carousel_item = (new CarouselItemManager())->getModelByID($id)) != null && $carousel_item->delete()) {
 
-            $carousel_item->delete();
             Yii::$app->session->setFlash('success', Yii::t('carousel', 'Slide deleted successfully'));
 
         } else {
@@ -98,7 +98,7 @@ class CarouselItemController extends \backend\controllers\ServalController
 
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect($this->getRedirect() ?? ['index']);
 
     }
 
