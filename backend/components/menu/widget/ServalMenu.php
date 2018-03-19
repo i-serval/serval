@@ -1,18 +1,31 @@
 <?php
 
-namespace backend\widgets\serval_menu;
+namespace backend\components\menu\widget;
 
 use Yii;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use backend\components\menu\widget\ServalMenuAsset;
 
 class ServalMenu extends Widget
 {
 
-    public $items = [];
-    public $options = [];
+    static $configPath;
+    static $defaultConfigLocation = 'config' . DS . 'menu' . DS . 'serval-menu.php';
+
+    /**
+     * @var array
+     * options for menu wrapper tag
+     */
+
+    public $options = [
+        'id' => 'ul-menu',
+        'tag' => 'ul',
+    ];
+
+    public $menuItems = [];
     public $route;
     public $params;
     public $itemOptions = [];
@@ -37,9 +50,7 @@ class ServalMenu extends Widget
 
     public function init()
     {
-
         parent::init();
-
     }
 
     public function run()
@@ -53,16 +64,17 @@ class ServalMenu extends Widget
             $this->params = Yii::$app->request->getQueryParams();
         }
 
-        if (!empty($this->items)) {
+        if (!empty($this->menuItems)) {
 
             $options = $this->options;
             $tag = ArrayHelper::remove($options, 'tag', 'ul');
 
             $this->prepareData();
-
             echo Html::tag($tag, $this->renderItems(), $options) . Html::tag('div', '', ['id' => 'fake-nav']);
 
         }
+
+        ServalMenuAsset::register($this->getView());
 
     }
 
@@ -71,7 +83,7 @@ class ServalMenu extends Widget
 
         $lines = [];
 
-        foreach ($this->items as $i => $item) {
+        foreach ($this->menuItems as $i => $item) {
 
             $options = array_merge($this->itemOptions, ArrayHelper::getValue($item, 'options', []));
 
@@ -114,6 +126,9 @@ class ServalMenu extends Widget
             $classes[] = $this->active_css_class;
         }
 
+        if (!isset($menu_item['id'])) {
+            $menu_item['id'] = strtolower(str_replace(' ', '-', $menu_item['label']));
+        }
 
         return strtr($template, [
             '{url}' => $url,
@@ -122,7 +137,6 @@ class ServalMenu extends Widget
             '{script}' => $script,
             '{sub_menu}' => $sub_menu,
             '{classes}' => implode(' ', $classes),
-
         ]);
 
     }
@@ -190,26 +204,19 @@ class ServalMenu extends Widget
 
     protected function renderSubMenuBlockItems(&$sub_block_items)
     {
-
         $block_label = '';
-
         if (isset($sub_block_items['label'])) {
-
             $block_label = Html::tag('span',
                 Html::tag('span', $sub_block_items['label']),
                 ['class' => $this->default_submenu_block_item_title_css]
             );
-
             unset($sub_block_items['label']);
-
         }
 
         $li = [];
 
         foreach ($sub_block_items as $i => $block_item) {
-
             $li[] = $this->renderSubMenuBlockItem($block_item);
-
         }
 
         return $block_label
@@ -221,66 +228,46 @@ class ServalMenu extends Widget
                     ['class' => $this->default_submenu_block_items_css]
                 )
             );
-
     }
 
     protected function renderSubMenuBlockItem(&$block_item)
     {
-
         $template = ArrayHelper::getValue($block_item, 'template', $this->sub_menu_link_template);
-
         return Html::tag('li', strtr($template, ['{label}' => $block_item['label'], '{url}' => $block_item['url'][0], '{class}' => $this->default_submenu_block_item_css]));
-
     }
 
     protected function prepareData()
     {
-
-        foreach ($this->items as $i => $menu_item) {
-
+        foreach ($this->menuItems as $i => $menu_item) {
             if (isset($menu_item['url']) && is_array($menu_item['url']) && isset($menu_item['url'][0])) { // check for menu
-
                 if ($this->checkIsItemActive($menu_item['url']) === true) {
-                    $this->items[$i]['active'] = true;
+                    $this->menuItems[$i]['active'] = true;
                     break;
                 }
             }
-
             if (isset($menu_item['sub_menu']['menu_items']) && is_array($menu_item['sub_menu']['menu_items'])) { // check in submenu
-
                 foreach ($menu_item['sub_menu']['menu_items'] as $menu_column) {
-
                     foreach ($menu_column as $menu_groups) {
-
                         foreach ($menu_groups as $group_item) {
-
                             if (isset($group_item['url']) && is_array($group_item['url']) && isset($group_item['url'][0])) { // check for submenu item
-
                                 if ($this->checkIsItemActive($group_item['url']) === true) {
-                                    $this->items[$i]['active'] = true;
+                                    $this->menuItems[$i]['active'] = true;
                                     break;
                                 }
                             }
-
                         }
                     }
                 }
-
             }
-
         }
-
     }
 
     protected function checkIsItemActive(&$urls)
     {
-
         $route = Yii::getAlias($urls[0]);
 
         if ($route[0] !== '/' && Yii::$app->controller) {
-
             $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
-
         }
 
         if (ltrim($route, '/') == $this->route) {
@@ -290,41 +277,43 @@ class ServalMenu extends Widget
         unset($urls[0]);
 
         foreach ($urls as $url) {
-
             $current_url = [$url];
-
             if ($this->checkIsItemActive($current_url) === true) {
-
                 return true;
-
             }
-
         }
-
         return false;
-
     }
 
     protected function setDefaultOption(&$options, $option_name, &$option_default_value)
     {
-
         if (!isset($options[$option_name])) {
-
             $options[$option_name] = $option_default_value;
-
         }
-
     }
 
     protected function getValue(&$node_info)
     {
-
         if (is_array($node_info)) {
             return $node_info[0];
         }
-
         return $node_info;
+    }
 
+    public static function setConfigPath($path = null)
+    {
+        self::$configPath = $path;
+    }
+
+    public static function widget($config = [])
+    {
+        if (empty($config)) {
+            if (self::$configPath == null) {
+                self::$configPath = Yii::$app->basePath . DS . self::$defaultConfigLocation;
+            }
+            $config = require(self::$configPath);
+        }
+        return parent::widget($config);
     }
 
 }

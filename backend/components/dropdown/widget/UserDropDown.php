@@ -1,12 +1,13 @@
 <?php
 
-namespace backend\widgets\user_dropdown;
+namespace backend\components\dropdown\widget;
 
 use Yii;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use backend\components\dropdown\widget\UserDropDownAsset;
 
 class UserDropDown extends Widget
 {
@@ -18,14 +19,11 @@ class UserDropDown extends Widget
 
     public function init()
     {
-
         parent::init();
-
     }
 
     public function run()
     {
-
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
@@ -35,11 +33,10 @@ class UserDropDown extends Widget
         }
 
         if (!empty($this->items)) {
-
             echo Html::tag('div', $this->renderDropDown(), ['id' => 'user-dropdown-menu']);
-
         }
 
+        UserDropDownAsset::register($this->getView());
     }
 
     protected function renderDropDown()

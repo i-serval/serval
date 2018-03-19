@@ -7,8 +7,8 @@
 
 use backend\assets\ServalAsset;
 use yii\helpers\Html;
-use backend\widgets\serval_menu\ServalMenu;
-use backend\widgets\user_dropdown\UserDropDown;
+use backend\components\menu\widget\ServalMenu;
+use backend\components\dropdown\widget\UserDropDown;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\widgets\Menu;
@@ -69,223 +69,15 @@ ServalAsset::register($this);
         ]); ?>
     </div>
 </header>
+
 <nav>
-    <?= ServalMenu::widget([
-
-        'options' => [
-            'id' => 'ul-menu',
-            'tag' => 'ul',
-
-        ],
-
-        'items' => [
-
-            [
-                'label' => 'Dashboard',
-                'id' => 'dashboard',
-                'url' => ['/', '/dashboard/index'],
-            ],
-
-            [
-                'label' => 'Users',
-                'id' => 'user',
-                'url' => ['/user', '/user/index', '/user/view', '/user/update', '/user/create'],
-            ],
-
-            [
-                'label' => 'Data',
-                'id' => 'data',
-                'url' => '#',
-
-                'sub_menu' => [
-                    'options' => [
-                        'class' => '',
-                        'tag' => 'div',
-                    ],
-                    'label' => 'Data',
-                    'menu_items' => [
-                        [
-                            [
-
-                                [
-                                    'label' => Yii::t('serval','Sliders'),
-                                    'url' => ['/carousel', '/carousel/index', '/carousel/view', '/carousel/update', '/carousel/create'],
-                                ],
-
-                                [
-                                    'label' => Yii::t('serval','Slides'),
-                                    'url' => ['/carousel-item', '/carousel-item/index', '/carousel-item/view', '/carousel-item/update', '/carousel-item/create', 'carousel-item/create'],
-                                ],
-
-                                [
-                                    'label' => 'Countrys',
-                                    'url' => ['/country', '/country/index', '/country/view', '/country/update', '/country/create'],
-                                ],
-
-                                [
-                                    'label' => 'Tours',
-                                    'url' => ['/tour', '/tour/index', '/tour/view', '/tour/update', '/tour/create'],
-                                ],
-
-                                [
-                                    'label' => 'Articles',
-                                    'url' => ['/article', '/article/index', '/article/view', '/article/update', '/article/create'],
-                                ],
-
-                                [
-                                    'label' => 'Pages',
-                                    'url' => ['/page', '/page/index', '/page/view', '/page/update', '/page/create'],
-                                ],
-
-                            ],
-                        ],
-                    ]
-                ]
-            ],
-
-            [
-                'label' => 'SEO',
-                'id' => 'seo',
-                'url' => '#',
-
-                'sub_menu' => [
-                    'options' => [
-                        'class' => '',
-                        'tag' => 'div',
-                    ],
-                    'label' => 'SEO',
-                    'menu_items' => [
-                        [
-                            [
-
-                                [
-                                    'label' => 'Meta Tags',
-                                    'url' => ['/meta-tags', '/meta-tags/index', '/meta-tags/view', '/meta-tags/update', '/meta-tags/create'],
-                                ],
-                                [
-                                    'label' => 'Sitemap',
-                                    'url' => ['/sitemap', '/sitemap/index', '/sitemap/view', '/sitemap/update', '/sitemap/create'],
-                                ],
-                                [
-                                    'label' => 'Robots',
-                                    'url' => ['/robots', '/robots/index', '/robots/view', '/robots/update', '/robots/create'],
-                                ],
-
-                            ],
-                        ],
-                    ]
-                ]
-            ],
-
-            [
-                'label' => 'System',
-                'id' => 'system',
-                'url' => '#',
-
-                'sub_menu' => [
-                    'options' => [
-                        'class' => '',
-                        'tag' => 'div',
-                    ],
-                    'label' => 'System',
-                    'menu_items' =>
-                        [
-                            [
-                                [
-                                    'label' => 'Configuration',
-                                    [
-                                        'label' => 'Main',
-                                        'url' => ['/system/main'],
-                                    ],
-                                    [
-                                        'label' => 'Frontend',
-                                        'url' => ['/system/frontend'],
-                                    ],
-                                    [
-                                        'label' => 'Backend',
-                                        'url' => ['/system/backend'],
-                                    ],
-                                ],
-                            ],
-                        ],
-                ],
-            ],
-
-            /* [
-                 'label' => 'Settings',
-                 'id'    => 'settings',
-                 'url'   => '#',
-
-                 'sub_menu' => [
-                     'options' => [
-                         'class'    => '',
-                         'tag'   => 'div',
-                     ],
-                     'label' => 'Content',
-                     'menu_items' =>
-                     [
-                        [
-                            [
-                                 'label' =>'Carousels',
-                                 [
-                                     'label' => 'Main page carousel',
-                                     'url'   => ['/carousel/list'],
-                                 ],
-                                 [
-                                    'label' => 'Index page carousel',
-                                    'url'   => ['/carousel/index'],
-                                 ],
-                            ],
-                            [
-                                'label' =>'Carousels group2',
-                                [
-                                    'label' => 'Index page carousel',
-                                    'url'   => ['/carousel/index'],
-                                ],
-                            ],
-                            [
-                                [
-                                    'label' => 'Bloc without label',
-                                    'url'   => ['/carousel/index'],
-                                ],
-                            ],
-                         ],
-                         [
-                             [
-                                 'label' =>'Carousels col2 g1',
-                                 [
-                                     'label' => 'Main page carousel',
-                                     'url'   => ['/carousel/list'],
-                                 ],
-                                 [
-                                     'label' => 'Index page carousel',
-                                     'url'   => ['/carousel/index'],
-                                 ],
-                             ],
-
-                             [
-                                 'label' =>'Carousels col 2 g 2',
-                                 [
-                                     'label' => 'Index page carousel',
-                                     'url'   => ['/carousel/index'],
-                                 ],
-                             ],
-                         ],
-                     ],
-                 ],
-             ],*/
-        ],
-    ]);
-    ?>
+    <?= ServalMenu::widget(); ?>
 </nav>
+
 <main class="page-width">
     <div class="content-wrapper">
         <?= Breadcrumbs::widget([
             'homeLink' => false,
-            /*'homeLink' => [
-                'label' => Yii::t('serval', 'Dashboard'),
-                'url' => ['/'],
-            ],*/
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
